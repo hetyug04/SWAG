@@ -1,0 +1,8 @@
+{
+  "slug": "my-blog-post-slug",
+  "title": "Your Blog Post Title",
+  "excerpt": "A catchy one or two sentence summary that entices readers to click and read more.",
+  "date": "Dec 03, 2025",
+  "readTime": "5 min read",
+  "content": "# Introduction\n\nStart with a hook that grabs the reader's attention. Introduce the topic you'll be discussing.\n\n## Main Point 1\n\nDiscuss your first major point. Use clear examples and explanations.\n\n### Supporting Details\n\nProvide additional context or examples to support your point.\n\n```javascript\n// Code examples if relevant\nconst example = 'your code here';\n```\n\n## Main Point 2\n\nYour second major point goes here.\n\n![Alt text for image](https://example.com/image.jpg)\n\n## Main Point 3\n\nYour third major point.\n\n### Key Takeaways\n\n- Takeaway 1\n- Takeaway 2\n- Takeaway 3\n\n## Conclusion\n\nSummarize your main points and provide a call to action or thought-provoking closing statement.\n\n---\n\n*Questions or comments? Feel free to reach out!*"
+}

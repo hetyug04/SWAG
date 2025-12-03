@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Project Structure
+
+This portfolio is structured as follows:
+
+- `src/app/papers`: Research papers and publications.
+- `src/app/projects`: Personal and professional projects.
+- `src/app/notebooks`: Jupyter notebooks.
+- `src/app/blog`: Blog posts.
+- `src/content`: Directory to store the actual content (markdown, notebooks, etc.).
+
 ## Getting Started
 
 First, run the development server:

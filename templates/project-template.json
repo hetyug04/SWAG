@@ -1,0 +1,10 @@
+{
+  "slug": "my-project-slug",
+  "name": "project-name",
+  "description": "A short one-line description of what your project does.",
+  "stars": 0,
+  "forks": 0,
+  "language": "TypeScript",
+  "content": "# Project Name\n\nA comprehensive description of your project.\n\n## Features\n\n- Feature 1: Description\n- Feature 2: Description\n- Feature 3: Description\n\n## Installation\n\n```bash\nnpm install project-name\n```\n\n## Usage\n\n```typescript\nimport { something } from 'project-name';\n\n// Your usage example here\n```\n\n## Tech Stack\n\n- Technology 1\n- Technology 2\n- Technology 3\n\n## Contributing\n\nContributions are welcome! Please open an issue or submit a pull request.",
+  "github": "https://github.com/username/project-name"
+}

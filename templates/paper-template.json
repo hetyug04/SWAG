@@ -1,0 +1,10 @@
+{
+  "slug": "my-paper-slug",
+  "title": "Your Paper Title Here",
+  "authors": "Author Name et al.",
+  "date": "2025",
+  "tags": ["Tag1", "Tag2", "Tag3"],
+  "abstract": "A brief summary of your paper. This appears in listing views and at the top of the paper detail page. Keep it concise but informative - 2-3 sentences explaining what the paper is about and its key findings.",
+  "link": "https://arxiv.org/abs/XXXX.XXXXX",
+  "content": "# Main Content\n\nThis is where the full content of your paper goes. You can write a detailed explanation here.\n\n## Introduction\n\nProvide background and context for your research.\n\n## Methodology\n\nExplain your approach and methods.\n\n## Results\n\nDiscuss your findings and their implications.\n\n## Conclusion\n\nSummarize your work and potential future directions."
+}
