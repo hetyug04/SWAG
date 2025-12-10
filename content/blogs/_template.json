@@ -1,0 +1,8 @@
+{
+  "slug": "blog-post-slug",
+  "title": "Blog Post Title",
+  "excerpt": "Catchy summary of the blog post.",
+  "date": "Dec 03, 2025",
+  "readTime": "5 min read",
+  "content": "# Blog Post\n\nYour blog content with markdown formatting..."
+}
