@@ -9,10 +9,12 @@ const cascadiaCode = localFont({
     {
       path: "./fonts/CascadiaCode-VariableFont_wght.ttf",
       style: "normal",
+      weight: "200 900",
     },
     {
       path: "./fonts/CascadiaCode-Italic-VariableFont_wght.ttf",
       style: "italic",
+      weight: "200 900",
     },
   ],
   variable: "--font-cascadia",

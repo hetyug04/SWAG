@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { BookOpen, Calendar, Clock, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
 export function generateStaticParams() {
   return blogs.map((blog) => ({
@@ -52,6 +53,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {blog.excerpt}
           </p>
           <ReactMarkdown
+            rehypePlugins={[rehypeRaw]}
             components={{
               img: ({ node, ...props }) => (
                 <span className="block my-8">

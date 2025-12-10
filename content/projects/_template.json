@@ -1,0 +1,10 @@
+{
+  "slug": "project-slug",
+  "name": "project-name",
+  "description": "Short description of the project.",
+  "stars": 0,
+  "forks": 0,
+  "language": "TypeScript",
+  "content": "# Project Name\n\nDetailed project documentation...",
+  "github": "https://github.com/username/project-name"
+}
