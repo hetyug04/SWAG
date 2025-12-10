@@ -58,11 +58,8 @@ export default async function Home({
         <section className="bg-white">
           <div className="container mx-auto px-4 py-24 text-center max-w-5xl">
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 tracking-tight">
-              #ShadowWizardAIGang <span className="text-[#FFD21E]">✨</span>
+              i <span className="text-[#FFD21E]">❤️</span> GPUs
             </h1>
-            <p className="text-2xl md:text-3xl text-gray-600 mb-12 leading-relaxed font-light">
-              <span className="italic">This is a AI</span> - Pluto
-            </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/papers"

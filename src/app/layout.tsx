@@ -22,8 +22,8 @@ const cascadiaCode = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "#ShadowWizardAIGang",
-  description: "This is a AI - Pluto",
+  title: "i ❤️ gpus",
+  description: "i ❤️ gpus",
 };
 
 export default function RootLayout({
