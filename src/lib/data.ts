@@ -11,6 +11,7 @@ export type Paper = {
   abstract: string;
   link: string;
   content: string;
+  pdf?: string; // Added optional pdf field
 };
 
 export type Project = {
@@ -24,7 +25,7 @@ export type Project = {
   github: string;
 };
 
-export type Notebook = {
+export type Repo = {
   slug: string;
   title: string;
   description: string;
@@ -72,5 +73,5 @@ function loadContent<T>(directory: string): T[] {
 
 export const papers = loadContent<Paper>('papers');
 export const projects = loadContent<Project>('projects');
-export const notebooks = loadContent<Notebook>('notebooks');
+export const repos = loadContent<Repo>('repos');
 export const blogs = loadContent<Blog>('blogs');

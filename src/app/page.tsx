@@ -10,7 +10,7 @@ import {
   GitFork,
   Calendar,
 } from "lucide-react";
-import { papers, projects, notebooks, blogs } from "@/lib/data";
+import { papers, projects, repos, blogs } from "@/lib/data";
 
 export default async function Home({
   searchParams,
@@ -33,10 +33,10 @@ export default async function Home({
       p.language.toLowerCase().includes(query)
   );
 
-  const filteredNotebooks = notebooks.filter(
-    (n) =>
-      n.title.toLowerCase().includes(query) ||
-      n.description.toLowerCase().includes(query)
+  const filteredRepos = repos.filter(
+    (r) =>
+      r.title.toLowerCase().includes(query) ||
+      r.description.toLowerCase().includes(query)
   );
 
   const filteredBlogs = blogs.filter(
@@ -48,7 +48,7 @@ export default async function Home({
   const hasResults =
     filteredPapers.length > 0 ||
     filteredProjects.length > 0 ||
-    filteredNotebooks.length > 0 ||
+    filteredRepos.length > 0 ||
     filteredBlogs.length > 0;
 
   return (
@@ -204,7 +204,7 @@ export default async function Home({
         )}
 
         {/* Notebooks Section */}
-        {filteredNotebooks.length > 0 && (
+        {filteredRepos.length > 0 && (
           <section>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -225,7 +225,7 @@ export default async function Home({
               )}
             </div>
             <div className="grid gap-4">
-              {filteredNotebooks.map((notebook, i) => (
+              {filteredRepos.map((notebook, i) => (
                 <Link
                   key={i}
                   href={`/notebooks/${notebook.slug}`}

@@ -1,13 +1,13 @@
 ---
-slug: notebook-slug
-title: Notebook Title
-description: Brief description of the notebook.
+slug: repo-slug
+title: Repo Title
+description: Brief description of the repository.
 date: Dec 03, 2025
 ---
 
-# Notebook Title
+# Repo Title
 
-Explain your analysis/tutorial in Markdown. Include code blocks.
+Explain your repository/tutorial in Markdown. Include code blocks.
 
 ```python
 import numpy as np
