@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "documentType": "research-diary",
   "slug": "freezing-the-context-and-verifier-audit",
-  "title": "Freezing the Context-and-Verifier Audit",
+  "title": "Part 1: Freezing the Context-and-Verifier Audit",
   "subtitle": "A research day spent narrowing an ambitious claim into an eight-paragraph pilot that can fail cleanly.",
   "excerpt": "How a broad idea about reconstructing scientific reasoning became a preregistered audit of context dependence and verifier reliability.",
   "date": "2026-07-29",
