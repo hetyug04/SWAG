@@ -1,0 +1,262 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "research-diary",
+  "slug": "freezing-the-context-and-verifier-audit",
+  "title": "Freezing the Context-and-Verifier Audit",
+  "subtitle": "A research day spent narrowing an ambitious claim into an eight-paragraph pilot that can fail cleanly.",
+  "excerpt": "How a broad idea about reconstructing scientific reasoning became a preregistered audit of context dependence and verifier reliability.",
+  "date": "2026-07-29",
+  "readTime": "12 min read",
+  "tags": [
+    "Research diary",
+    "Scientific reasoning",
+    "LLM evaluation"
+  ],
+  "author": {
+    "name": "Het",
+    "role": "Research direction, protocol design, and interpretation"
+  },
+  "lede": "The day began with an ambitious question: can reconstructing a missing paragraph reveal scientific reasoning? It ended with a narrower and more defensible study. The frozen pilot will test whether relevant document context improves factual reconstruction, and whether a model-based verifier can detect consequential errors. No scientific generation was run today; the result was a protocol designed to make later evidence interpretable.",
+  "notebook": {
+    "label": "View the research repository and frozen protocol",
+    "githubUrl": "https://github.com/hetyug04/RsearchPaper"
+  },
+  "figureProvenance": "No figures or reconstructed experimental outputs are used in this entry. The diary is based on the repository history, research log, decision log, project tracker, research plan, and frozen pilot preregistration in hetyug04/RsearchPaper as of July 29, 2026.",
+  "entries": [
+    {
+      "id": "claim-boundary",
+      "navLabel": "Claim boundary",
+      "label": "Entry 01",
+      "phase": "Reframing",
+      "title": "The first task was to remove two claims the study could not support.",
+      "dek": "Masked reconstruction is not direct access to an author's reasoning, and model judgment is not automatically objective verification.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "A scientific paper records claims, evidence, and a polished argument. It usually does not expose the private sequence of thoughts that produced them. Reconstructing a masked paragraph can therefore test recovery of paper-specific claims, but it cannot by itself recover an author's hidden reasoning process.\n\nThe same correction applied to the learning frame. A language model judging another model is model-based feedback. Calling that RLVR would require a reward grounded in objective verification. The initial project was therefore reframed as a **context-and-verifier audit**: measure what relevant context contributes to factual reconstruction, then test whether the proposed judge can reliably recognize serious scientific errors."
+        },
+        {
+          "type": "note",
+          "label": "Decision D-002",
+          "markdown": "Do not describe the project as RLVR or as recovery of human reasoning traces. Stronger training claims require later evidence."
+        }
+      ]
+    },
+    {
+      "id": "two-questions",
+      "navLabel": "Two questions",
+      "label": "Entry 02",
+      "phase": "Decomposition",
+      "title": "One vague question became two separable empirical questions.",
+      "dek": "The study now distinguishes evidence dependence from evaluator reliability.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "The first question is generative: when a model reconstructs a masked scientific paragraph, how much factual improvement comes from relevant document evidence rather than generic prior knowledge? The second is evaluative: how reliably can a model-based judge detect planted and naturally occurring scientific errors?\n\nSeparating them prevents a common circularity. A reconstruction model cannot be credited with grounded scientific accuracy merely because another unvalidated model assigns it a high score. The context experiment and the verifier audit must each stand on their own evidence."
+        },
+        {
+          "type": "claims",
+          "groups": [
+            {
+              "title": "The pilot is designed to test",
+              "tone": "supported",
+              "items": [
+                "Whether true adjacent context improves atomic-claim recovery over prior-only generation.",
+                "Whether matched but irrelevant context separates evidence use from generic prompting effects.",
+                "Whether the proposed judge detects direction, magnitude, unit, entity, comparator, and condition errors."
+              ]
+            },
+            {
+              "title": "The pilot cannot establish",
+              "tone": "unsupported",
+              "items": [
+                "Recovery of authors' private reasoning.",
+                "RLVR or objectively verified reward.",
+                "Elimination of memorization or training-data contamination.",
+                "General scientific-reasoning ability across models and fields."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "context-controls",
+      "navLabel": "Context controls",
+      "label": "Entry 03",
+      "phase": "Experimental design",
+      "title": "Four context conditions were needed to identify where reconstruction signal comes from.",
+      "dek": "True context is informative only when compared with both no evidence and plausible distractors.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "Each target paragraph will be reconstructed under four conditions. **Prior-only** supplies a broad domain and paragraph category without paper-specific evidence. **True context** supplies the immediately adjacent relevant paragraphs. **Shuffled context** supplies length- and section-matched text from another eligible paper. **Same-paper distractor** supplies nonadjacent text from the correct paper that contains no evidence for the target claims.\n\nThe two distractor conditions matter. A true-context advantage over prior-only could reflect length, style matching, topic priming, or merely receiving more tokens. Matched external context controls for generic formatting and domain cues; a same-paper distractor controls for paper identity and vocabulary while withholding the target evidence."
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "4",
+              "label": "context conditions"
+            },
+            {
+              "value": "2",
+              "label": "generator checkpoints"
+            },
+            {
+              "value": "64",
+              "label": "planned primary pilot outputs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pilot-scope",
+      "navLabel": "Pilot scope",
+      "label": "Entry 04",
+      "phase": "Scope control",
+      "title": "The full study was held behind an eight-paragraph feasibility gate.",
+      "dek": "The immediate unknown is whether suitable paragraphs can be annotated rigorously and efficiently.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "The proposed full study contains 48 masked paragraphs, but annotation quality and throughput have not yet been demonstrated. Scaling immediately would make it easy to change inclusion rules after seeing inconvenient cases. The pilot therefore attempts eight paragraphs from approximately four recent open-access cohort studies in cardiovascular and metabolic epidemiology.\n\nThe planned mix is three Results paragraphs, three interpretation or reconciliation paragraphs, and two limitation paragraphs. Each usable item should contain two to four scoreable claims, with at least two recoverable from evidence outside the masked paragraph. Results, interpretations, hypotheses, limitations, and uncertainty remain distinct claim types so that epistemic status is not flattened into a single notion of correctness."
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "8",
+              "label": "attempted pilot paragraphs"
+            },
+            {
+              "value": "\\geq 6",
+              "label": "usable paragraphs required to proceed",
+              "latex": true
+            },
+            {
+              "value": "\\leq 15\\text{ min}",
+              "label": "human verification time per usable item",
+              "latex": true
+            }
+          ]
+        },
+        {
+          "type": "note",
+          "label": "Anti-selection rule",
+          "markdown": "Rejected items and rejection reasons remain in the dataset. Failed or inconvenient paragraphs cannot be silently replaced until the gate passes."
+        }
+      ]
+    },
+    {
+      "id": "verifier-audit",
+      "navLabel": "Verifier audit",
+      "label": "Entry 05",
+      "phase": "Measurement",
+      "title": "The judge must pass its own test before its scores can carry weight.",
+      "dek": "Controlled corruptions turn evaluator trust into a measurable prerequisite rather than an assumption.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "The verifier audit begins with 40 clean claim–evidence records. Each receives three controlled corruptions: one direction or sign error, one number, unit, or magnitude error, and one entity, comparator, exposure, or condition error. Together with the clean records, this creates 160 judge items.\n\nGPT-5.6 Sol at medium reasoning is the planned primary judge. Claude Opus is reserved for disputes, judge–human disagreements, and a frozen 25 percent audit subset. Human adjudication remains the reference standard, including a blinded 25 percent rescore. If the judge misses any preregistered gate, its scores become exploratory rather than primary."
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "\\geq 0.75",
+              "label": "required balanced accuracy",
+              "latex": true
+            },
+            {
+              "value": "\\leq 0.15",
+              "label": "critical-error false acceptance",
+              "latex": true
+            },
+            {
+              "value": "\\leq 0.10",
+              "label": "order-reversal disagreement",
+              "latex": true
+            }
+          ]
+        },
+        {
+          "type": "note",
+          "label": "Failure interpretation",
+          "markdown": "A failed verifier gate does not disappear from the record. It demotes model-judge results and makes human scoring primary."
+        }
+      ]
+    },
+    {
+      "id": "protocol-freeze",
+      "navLabel": "Protocol freeze",
+      "label": "Entry 06",
+      "phase": "Preregistration",
+      "title": "The day ended by freezing the choices that would be easiest to move after seeing outputs.",
+      "dek": "Domain, corpus, models, decoding, item rules, metrics, workload limits, and stop conditions were fixed before primary generation.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "The corpus was restricted to the PubMed Central Open Access Subset, using clinical and observational epidemiology with a cardiovascular and metabolic focus. Eligible studies must have an earliest public version on or after December 1, 2024. Titles and abstracts may support annotation but are excluded from generation prompts; tables and figures are outside the pilot.\n\nThe generators were fixed as `google/gemma-3-1b-it` and `google/gemma-3-4b-it`, loaded sequentially in 4-bit form with an 8,000-token input limit. Generation is deterministic: sampling disabled, temperature zero, and a 384-token output ceiling. These are operational choices for this pilot, not claims that the selected models are representative of all language models.\n\nThe repository moved from initialization through separate research-plan, preregistration, log, decision, and experiment-registry commits before the consolidated protocol-freeze commit. That history matters because it records the design before any primary scientific output exists."
+        },
+        {
+          "type": "status",
+          "title": "Scientific status",
+          "body": "Protocol frozen; experiment ready; no primary scientific generation has been run.",
+          "meta": "The repository records EXP-000 as operationally complete and EXP-001 as ready. There are no reconstruction results, effect estimates, or verifier-performance measurements to report yet."
+        }
+      ]
+    },
+    {
+      "id": "next-action",
+      "navLabel": "Next action",
+      "label": "Entry 07",
+      "phase": "Handoff",
+      "title": "The next study begins with candidate construction, not generation.",
+      "dek": "Eligibility and annotation must be verified before any primary output is produced.",
+      "blocks": [
+        {
+          "type": "nextStudies",
+          "title": "Decision-ordered next steps",
+          "items": [
+            {
+              "priority": 1,
+              "name": "Build the eligible-paper inventory",
+              "design": "Identify recent open-access cardiovascular and metabolic cohort studies under the frozen temporal and corpus rules.",
+              "decisionValue": "Determines whether the frozen corpus rules yield a viable candidate pool before annotation begins."
+            },
+            {
+              "priority": 2,
+              "name": "Attempt eight paragraph annotations",
+              "design": "Log every attempted item, its claim decomposition, evidence spans, ambiguity, eligibility, and human verification time.",
+              "decisionValue": "Tests whether at least six items are usable and whether verification stays within the 15-minute ceiling."
+            },
+            {
+              "priority": 3,
+              "name": "Freeze prompts and schemas",
+              "design": "Prepare deterministic generation inputs and machine-checkable records before producing primary outputs.",
+              "decisionValue": "Prevents prompt and record-format changes from being tuned against primary results."
+            },
+            {
+              "priority": 4,
+              "name": "Run only after the gate inputs are auditable",
+              "design": "Generate the 64 pilot outputs without changing selection rules in response to results.",
+              "decisionValue": "Preserves the pilot as a prospective feasibility test rather than a retrospectively curated demonstration."
+            }
+          ]
+        },
+        {
+          "type": "note",
+          "label": "Research-day result",
+          "markdown": "The output of July 29 was not a positive finding. It was a smaller claim, a frozen protocol, explicit failure conditions, and a durable trail showing how those decisions were made."
+        }
+      ]
+    }
+  ],
+  "footer": [
+    "Het directed the research question, scope, protocol choices, and claim boundaries. AI systems supported design review, adversarial critique, repository organization, and preparation of this diary.",
+    "This entry was constructed from the public `hetyug04/RsearchPaper` repository and its July 29, 2026 commit history. It reports protocol decisions only and does not imply that planned experiments have been executed."
+  ]
+}
+
