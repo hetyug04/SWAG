@@ -1,17 +1,12 @@
 ---
-slug: blog-post-slug
-title: Blog Post Title
-excerpt: Catchy summary of the blog post.
-date: Dec 03, 2025
-readTime: 5 min read
+title: "{{title}}"
+summary: "A concise reason to read this post."
+date: "{{date}}"
+readTime: "5 min"
+tags:
+  - notes
 ---
 
-# Blog Post
+# {{title}}
 
-Write in Markdown. Include images, code blocks, lists, etc.
-
-![Alt text](https://example.com/image.jpg)
-
-```ts
-const hello = 'world';
-```
+Start writing here.

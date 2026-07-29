@@ -1,158 +1,119 @@
-# Content Management
+# Publishing content
 
-This project uses a file-based content management system. All content is stored in the `content/` directory.
+S.W.A.G uses one Markdown file per standard entry and one structured JSON file per visual research diary. Both are discovered automatically at build time.
 
-## Directory Structure
-
-```
-content/
-├── papers/
-│   ├── _template.json
-│   └── your-paper.json
-├── projects/
-│   ├── _template.json
-│   └── your-project.json
-├── notebooks/
-│   ├── _template.json
-│   └── your-notebook.json
-└── blogs/
-    ├── _template.json
-    └── your-blog-post.json
-```
-
-## Creating New Content
-
-### Quick Start
-
-Run the content generator:
+## Create an entry
 
 ```bash
-npm run new
+npm run new -- paper "Paper title"
+npm run new -- project "Project title"
+npm run new -- notebook "Notebook title"
+npm run new -- blog "Post title"
+npm run new -- research-diary "Diary title"
 ```
 
-This will:
-1. Ask you to choose a content type (paper, project, notebook, or blog)
-2. Ask for a slug (URL-friendly identifier)
-3. Create a new file from the template
-4. Show you the next steps
+The command creates a file from the matching `_template.md`. Edit the frontmatter and write the content below it.
 
-### Example
+The generator never prompts for input and never overwrites an existing entry. Its optional flags are:
+
+```text
+--slug <slug>        Override the title-derived slug
+--date <YYYY-MM-DD>  Override today's UTC date
+--pdf <path>         For papers, copy a local PDF to the upload directory
+--preview <path>     For papers, copy a PNG/JPG/JPEG/WEBP/AVIF preview image
+--assets <dir>       Copy a directory of figures or other entry assets
+```
+
+## Upload files
+
+Put images, PDFs, datasets, or notebook exports in:
+
+```text
+public/uploads/<entry-slug>/
+```
+
+Reference them from Markdown or frontmatter with:
+
+```text
+/uploads/<entry-slug>/filename.ext
+```
+
+For a paper PDF, set:
+
+```yaml
+download: "/uploads/<entry-slug>/paper.pdf"
+```
+
+The paper page will embed that PDF and keep a direct download link. An optional static card preview uses:
+
+```yaml
+preview: "/uploads/<entry-slug>/preview.webp"
+```
+
+For the common paper workflow, one command creates the Markdown entry, copies supplied assets to deterministic names under `public/uploads/<slug>/`, and sets only the paths for assets that were supplied:
 
 ```bash
-$ npm run new
-
-🎨 Content Generator
-
-Content types:
-1. Paper
-2. Project
-3. Notebook
-4. Blog
-
-Select content type (1-4): 4
-Enter slug (lowercase-with-hyphens): my-first-blog-post
-
-✅ Created: content/blogs/my-first-blog-post.json
-
-📝 Edit the file to add your content, then:
-   git add content/blogs/my-first-blog-post.json
-   git commit -m "Add new blog: my-first-blog-post"
-   git push
-
-🚀 Vercel will automatically deploy your changes!
+npm run new -- paper "Paper title" --pdf "C:\path\to\paper.pdf" --preview "C:\path\to\preview.webp"
 ```
 
-## Manual Creation
+Without `--pdf` or `--preview`, the generated `download` and `preview` values are empty, so the site does not request nonexistent files.
 
-You can also manually create content files:
+## Research diary template
 
-1. Copy a `_template.json` file in the appropriate directory
-2. Rename it (e.g., `my-post.json`)
-3. Edit the content
-4. Commit and push to GitHub
-
-## Content Format
-
-All content files are JSON with specific fields:
-
-### Papers
-```json
-{
-  "slug": "paper-slug",
-  "title": "Paper Title",
-  "authors": "Author Name et al.",
-  "date": "2025",
-  "tags": ["Tag1", "Tag2"],
-  "abstract": "Brief summary...",
-  "link": "https://arxiv.org/abs/XXXX.XXXXX",
-  "content": "Full content with Markdown..."
-}
-```
-
-### Projects
-```json
-{
-  "slug": "project-slug",
-  "name": "project-name",
-  "description": "Short description...",
-  "stars": 0,
-  "forks": 0,
-  "language": "TypeScript",
-  "content": "Full documentation...",
-  "github": "https://github.com/username/repo"
-}
-```
-
-### Notebooks
-```json
-{
-  "slug": "notebook-slug",
-  "title": "Notebook Title",
-  "description": "Brief description...",
-  "date": "Dec 03, 2025",
-  "content": "Notebook content..."
-}
-```
-
-### Blogs
-```json
-{
-  "slug": "blog-slug",
-  "title": "Blog Title",
-  "excerpt": "Brief summary...",
-  "date": "Dec 03, 2025",
-  "readTime": "5 min read",
-  "content": "Full blog post with Markdown..."
-}
-```
-
-## Markdown Support
-
-The `content` field supports full Markdown formatting:
-
-- **Headings**: `# H1`, `## H2`, etc.
-- **Bold/Italic**: `**bold**`, `*italic*`
-- **Lists**: `- item` or `1. item`
-- **Links**: `[text](url)`
-- **Images**: `![alt](url)`
-- **Code blocks**: Triple backticks with language
-- **Inline code**: Single backticks
-
-## Deployment
-
-After creating or editing content:
+Research diaries live in `content/research-diaries/` and use `_template.json`. The JSON is the page content: adding a diary does not require editing React or a TypeScript array.
 
 ```bash
-git add content/
-git commit -m "Add/update content"
-git push
+npm run new -- research-diary "Ablating the Memory Path" --assets "C:\research\figures"
+npm run validate:content
 ```
 
-Vercel will automatically rebuild and deploy your site with the new content within 1-2 minutes.
+Each diary is a sequence of research entries. Entries accept the following blocks:
 
-## Tips
+- `prose`: Markdown with inline or display LaTeX
+- `math`: one or more labeled display equations
+- `figure`: an original image, dimensions, caption, and provenance
+- `stats`: consistently styled quantitative results
+- `note`: a decision, interpretation, or negative result
+- `claims`: supported and unsupported conclusions
+- `nextStudies`: decision-ordered follow-up experiments
+- `status`: scientific scope and review status
+- `quote`: a closing reflection
 
-- **Slugs**: Use lowercase with hyphens (e.g., `my-awesome-post`)
-- **Dates**: Papers use year only, others use "Month DD, YYYY"
-- **Images**: Use absolute URLs for images in content
-- **Testing**: Run `npm run dev` locally to preview before pushing
+Figure paths must use `/uploads/<slug>/filename` and should point to assets copied with `--assets` or placed in that directory manually.
+
+## Equations
+
+Use standard LaTeX delimiters:
+
+```md
+Inline: $E = mc^2$
+
+Display:
+
+$$
+\mathcal{L}(\theta) = \sum_i (y_i - f_\theta(x_i))^2
+$$
+```
+
+## AI-assisted publishing and API
+
+Give an AI assistant the source material and ask it to:
+
+1. Read `GET /api/ai/content-contract` when working through the deployed site, or inspect `_template.json` in the repository.
+2. Run the appropriate `npm run new` command, including paper assets or research-diary `--assets` when available.
+3. Copy any other attachments into `public/uploads/<slug>/`.
+4. Fill the generated Markdown or research-diary JSON without changing application code.
+5. For diaries, run `npm run validate:content`; then run `npm run lint` and `npm run build`.
+
+The public AI interface is intentionally read/validate only:
+
+```text
+GET  /api/ai/content-contract
+GET  /api/research-diaries
+GET  /api/research-diaries/<slug>
+POST /api/ai/research-diaries/validate
+```
+
+Publishing through an unauthenticated HTTP write endpoint is not supported. Vercel's deployed filesystem is immutable, and a public write route would let arbitrary visitors alter the site. An AI assistant publishes through a reviewed repository change instead.
+
+Root-level `AGENTS.md` contains the same machine-readable contract for coding agents.

@@ -1,7 +1,9 @@
-import { papers } from "@/lib/data";
+import { paperPdfUrl, papers } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { FileText, Calendar, ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { MarkdownContent } from "@/components/MarkdownContent";
+import { PaperPdfViewer } from "@/components/PaperPdfViewer";
 
 export function generateStaticParams() {
   return papers.map((paper) => ({
@@ -17,8 +19,10 @@ export default async function PaperPage({ params }: { params: Promise<{ slug: st
     notFound();
   }
 
+  const pdfSource = paperPdfUrl(paper);
+
   return (
-    <div className="bg-white min-h-screen pb-20">
+    <div className="min-h-screen pb-20">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <Link
           href="/papers"
@@ -32,7 +36,9 @@ export default async function PaperPage({ params }: { params: Promise<{ slug: st
           <div className="p-2 bg-blue-50 rounded-lg">
             <FileText className="w-8 h-8 text-blue-600" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900">{paper.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+            {paper.title}
+          </h1>
         </div>
 
         <div className="flex flex-wrap items-center gap-6 text-gray-500 mb-8 pb-8 border-b border-gray-100">
@@ -58,7 +64,7 @@ export default async function PaperPage({ params }: { params: Promise<{ slug: st
         </div>
 
         <div className="mb-8">
-          <div className="flex gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-6">
             {paper.tags.map((tag) => (
               <span
                 key={tag}
@@ -70,31 +76,21 @@ export default async function PaperPage({ params }: { params: Promise<{ slug: st
           </div>
           
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Abstract</h2>
-          <p className="text-xl text-gray-600 mb-8 font-medium leading-relaxed">
-            {paper.abstract}
-          </p>
+          <div className="prose prose-lg max-w-none text-gray-600 mb-8 font-medium leading-relaxed prose-p:my-0">
+            <MarkdownContent>{paper.abstract}</MarkdownContent>
+          </div>
+
+          {pdfSource && (
+            <PaperPdfViewer source={pdfSource} title={paper.title} />
+          )}
 
           {paper.content && (
             <>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Content</h2>
-              <div className="prose prose-lg max-w-none prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-p:text-gray-600 prose-p:leading-relaxed">
-                <div className="whitespace-pre-wrap">
-                  {paper.content}
-                </div>
+              <div className="prose max-w-none prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-p:text-gray-600 prose-p:leading-relaxed">
+                <MarkdownContent>{paper.content}</MarkdownContent>
               </div>
             </>
-          )}
-
-          {paper.pdf && (
-            <a
-              href={`/papers/${paper.pdf}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-              download={paper.pdf}
-            >
-              Download PDF
-            </a>
           )}
         </div>
       </div>

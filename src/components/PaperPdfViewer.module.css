@@ -1,0 +1,61 @@
+.reader {
+  margin: 2.5rem 0;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  margin: 0;
+  color: rgb(31 41 55);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  color: rgb(37 99 235);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 150ms;
+}
+
+.action:hover {
+  color: rgb(30 64 175);
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.frame {
+  display: block;
+  width: 100%;
+  height: min(84vh, 64rem);
+  min-height: 40rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: rgb(243 244 246);
+}
+
+@media (max-width: 640px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .frame {
+    height: 72vh;
+    min-height: 28rem;
+  }
+}

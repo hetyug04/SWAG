@@ -1,0 +1,145 @@
+.homeLink {
+  position: relative;
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  border-radius: 9999px;
+  color: #4b5563;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.homeLink:hover {
+  background: rgb(255 210 30 / 0.14);
+  color: #111827;
+}
+
+.homeLink:focus-visible {
+  outline: 2px solid #ffd21e;
+  outline-offset: 2px;
+}
+
+.houseIcon {
+  width: 1.4rem;
+  height: 1.4rem;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.housePiece {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 240ms ease;
+}
+
+.blast {
+  fill: #f97316;
+  stroke: #ffd21e;
+  stroke-width: 0.7;
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.debris {
+  fill: #f97316;
+  stroke: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 160ms ease,
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.homeLink:is(:hover, :focus-visible) .blast {
+  animation: house-blast 500ms ease-out both;
+}
+
+.homeLink:is(:hover, :focus-visible) .roof {
+  transform: translate(-0.3rem, -0.7rem) rotate(-18deg);
+}
+
+.homeLink:is(:hover, :focus-visible) .chimney {
+  transform: translate(0.65rem, -0.75rem) rotate(38deg);
+}
+
+.homeLink:is(:hover, :focus-visible) .leftWall {
+  transform: translate(-0.65rem, 0.35rem) rotate(-24deg);
+}
+
+.homeLink:is(:hover, :focus-visible) .rightWall {
+  transform: translate(0.7rem, 0.35rem) rotate(26deg);
+}
+
+.homeLink:is(:hover, :focus-visible) .door {
+  transform: translate(0.15rem, 0.8rem) rotate(18deg);
+}
+
+.homeLink:is(:hover, :focus-visible) .debris {
+  opacity: 1;
+}
+
+.homeLink:is(:hover, :focus-visible) .debrisOne {
+  transform: translate(-0.95rem, -0.35rem) scale(0.8);
+}
+
+.homeLink:is(:hover, :focus-visible) .debrisTwo {
+  transform: translate(0.95rem, -0.25rem) scale(1);
+}
+
+.homeLink:is(:hover, :focus-visible) .debrisThree {
+  transform: translate(-0.45rem, 0.95rem) scale(0.9);
+}
+
+.homeLink:is(:hover, :focus-visible) .debrisFour {
+  transform: translate(0.55rem, 0.9rem) scale(0.75);
+}
+
+@keyframes house-blast {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeLink,
+  .housePiece,
+  .debris {
+    transition: none;
+  }
+
+  .homeLink:is(:hover, :focus-visible) .blast {
+    animation: none;
+  }
+
+  .homeLink:is(:hover, :focus-visible) .debris {
+    display: none;
+  }
+
+  .homeLink:is(:hover, :focus-visible) .housePiece {
+    transform: none;
+  }
+}

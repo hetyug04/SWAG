@@ -3,16 +3,16 @@ import { BookOpen, Calendar } from "lucide-react";
 
 export default function BlogPage() {
   return (
-    <div className="bg-white min-h-screen pb-20">
+    <div className="min-h-screen pb-20">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="flex items-center gap-3 mb-8">
           <div className="p-2 bg-purple-50 rounded-lg">
             <BookOpen className="w-8 h-8 text-purple-600" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900">Blog</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Research Diary</h1>
         </div>
-        <p className="text-xl text-gray-600 mb-12 max-w-3xl">
-          Thoughts, tutorials, and updates.
+        <p className="text-lg text-gray-600 mb-12 max-w-3xl">
+          Research notes, tutorials, and updates.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -28,10 +28,10 @@ export default function BlogPage() {
                 <span>•</span>
                 <span>{blog.readTime}</span>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+              <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
                 {blog.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600 leading-relaxed">
                 {blog.excerpt}
               </p>
             </a>

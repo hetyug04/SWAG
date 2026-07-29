@@ -1,17 +1,18 @@
 import { papers } from "@/lib/data";
 import { FileText } from "lucide-react";
+import { MarkdownContent } from "@/components/MarkdownContent";
 
 export default function PapersPage() {
   return (
-    <div className="bg-white min-h-screen pb-20">
+    <div className="min-h-screen pb-20">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="flex items-center gap-3 mb-8">
           <div className="p-2 bg-blue-50 rounded-lg">
             <FileText className="w-8 h-8 text-blue-600" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900">Research Papers</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Research Papers</h1>
         </div>
-        <p className="text-xl text-gray-600 mb-12 max-w-3xl">
+        <p className="text-lg text-gray-600 mb-12 max-w-3xl">
           Collection of my research papers and publications.
         </p>
         
@@ -35,10 +36,10 @@ export default function PapersPage() {
                   {paper.date}
                 </span>
               </div>
-              <p className="text-gray-500 text-sm mt-3 line-clamp-2">
-                {paper.abstract}
-              </p>
-              <div className="flex gap-2 mt-3">
+              <div className="prose prose-sm max-w-none text-gray-500 mt-3 line-clamp-2 prose-p:my-0 prose-p:text-gray-500">
+                <MarkdownContent>{paper.abstract}</MarkdownContent>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-3">
                 {paper.tags.map((tag) => (
                   <span
                     key={tag}

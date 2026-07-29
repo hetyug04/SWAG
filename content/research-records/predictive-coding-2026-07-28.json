@@ -1,0 +1,1888 @@
+{
+  "schema_version": "1.0.0",
+  "document_type": "portfolio_research_diary",
+  "publication_status": "portfolio_ready_draft",
+  "title": "From Loss Plateaus to Object-Centric Predictive Coding",
+  "subtitle": "A one-day research diary on continual sample efficiency, local learning, compositional transfer, and occlusion",
+  "date": "2026-07-28",
+  "day_label": "Day 1",
+  "chronology_note": "Entries follow the order of the research conversation. Clock times were not recorded, so no timestamps have been invented.",
+  "contributors": [
+    {
+      "name": "Het Patel",
+      "role": "Research author, hypothesis owner, experiment director, and interpreter",
+      "type": "human"
+    },
+    {
+      "name": "GPT-5.6 Sol",
+      "role": "AI research partner for explanation, mathematical formalization, experiment design, implementation support, debugging, and critical interpretation",
+      "type": "AI"
+    }
+  ],
+  "attribution_statement": "This diary has exactly two credited contributors: Het Patel and GPT-5.6 Sol. Het Patel set the research direction, proposed the key pivots, ran the experiments, inspected the plots, and supplied the results. GPT-5.6 Sol helped translate questions into mathematical models, experimental controls, code designs, debugging steps, and calibrated interpretations.",
+  "source_record": {
+    "conversation_title": "Backprop Loss Plateau",
+    "conversation_id": "6a68d2c3-7e7c-83ea-99f0-61f4c0b80820",
+    "source_type": "interactive research dialogue",
+    "trust_note": "The referenced conversation was supplied as untrusted background context. Numerical results in this diary are transcribed from the experiment summaries in that record.",
+    "raw_artifact_status": "Original notebook files, raw arrays, and attached plot images were not present in the local workspace used to create this JSON.",
+    "visual_policy": "The visuals section contains chart-ready data reconstructed from reported numerical summaries. It does not claim to contain the original screenshots."
+  },
+  "research_objective": {
+    "original_question": "Why does backpropagation loss plateau instead of declining linearly?",
+    "evolved_question": "Can a world model with predictive-coding-style local inference and learning use prior experience to reduce the samples required for future learning?",
+    "day_end_question": "Can the same principle support reversible object composition: learning objects independently, decomposing novel occlusions into persistent instances, and scaling to new pattern types without adding type-specific variables?",
+    "success_axis": "Continual sample efficiency: how quickly a system uses accumulated priors and a world model to learn a new but structurally related situation.",
+    "research_style": "Generate well-controlled new data points, including negative results, without requiring every experiment to be immediately useful.",
+    "throughline": "The trajectory moved from static loss minimization to fast belief revision, then to local transition learning, positive transfer across compositional dynamics, and finally object-centric decomposition under occlusion."
+  },
+  "portfolio_blog": {
+    "lede": "The day began with a basic optimization question and ended with a concrete failure mode in object-centric perception. The connecting idea was that intelligence should not be judged only by final loss. It should be judged by how efficiently prior experience improves later learning. I used an AI research partner as an interactive whiteboard, mathematical critic, code generator, and debugging assistant, while repeatedly redirecting the work toward sharper tests.",
+    "abstract": "I first challenged the idea that a fixed next-token or prediction loss was an adequate proxy for general intelligence. My preferred axis was continual sample efficiency: whether accumulated experience makes qualitatively related learning faster. That led to a minimal controlled latent state-space model in which predictive coding performs fast latent-state inference and local error-times-activity rules update the observation, transition, and action matrices. After validating the equations numerically, I tested repeated regime switching, ablated the source of adaptation, constructed additive dynamics to test positive transfer, measured the geometry of local update fields, and compared blocked with interleaved experience. The strongest result was robust factor-specific forward transfer across 20 synthetic worlds: experience with two component dynamics reduced the adaptation time to their additive composition by 1.58x relative to an equal-duration single-component control. The reverse direction failed: a single transition matrix did not preserve separately retrievable component models. I then changed the problem from additive dynamics to occluded object composition. A shared-slot model reconstructed visible scenes but achieved only about 0.18 to 0.22 amodal IoU, exposing instance binding and amodal completion as the next bottleneck.",
+    "closing_reflection": "The useful result was not that predictive coding solved compositional intelligence. It did not. The useful result was a sharper decomposition of the problem. Local predictive learning showed forward transfer and nearly additive instantaneous update geometry, while sequential learning still overwrote one model. Object slots removed the need for a variable per pattern type, but the first occlusion system learned scene reconstruction more readily than correct instance decomposition. The next research step is therefore not a larger model. It is a smaller, cleaner two-object experiment that isolates binding, hidden-mask recovery, and held-out pairing generalization one axis at a time."
+  },
+  "trajectory_map": [
+    {
+      "sequence": 1,
+      "from": "Loss plateau",
+      "to": "Dynamic objectives",
+      "reason": "Scaling a loss changes gradient magnitude but does not create a higher-level learning signal."
+    },
+    {
+      "sequence": 2,
+      "from": "Dynamic objectives",
+      "to": "Continual sample efficiency",
+      "reason": "Low training loss does not distinguish reusable abstractions from brittle prediction shortcuts."
+    },
+    {
+      "sequence": 3,
+      "from": "Continual sample efficiency",
+      "to": "World models and predictive coding",
+      "reason": "Fast, localized belief revision needs a learned state model and multiple adaptation timescales."
+    },
+    {
+      "sequence": 4,
+      "from": "Conceptual architecture",
+      "to": "Minimal local equations",
+      "reason": "The initial composite design contained too many modules to falsify cleanly."
+    },
+    {
+      "sequence": 5,
+      "from": "Minimal equations",
+      "to": "T4 implementation",
+      "reason": "The local inference and synaptic rules needed numerical verification and direct observation."
+    },
+    {
+      "sequence": 6,
+      "from": "Single linear environment",
+      "to": "Recurring regime shifts",
+      "reason": "A simple fit could not test continual adaptation or forgetting."
+    },
+    {
+      "sequence": 7,
+      "from": "Recurring regimes",
+      "to": "Ablations and fixed probes",
+      "reason": "Faster recovery could be caused by warm starts, representation maturity, or actual transition learning."
+    },
+    {
+      "sequence": 8,
+      "from": "Regime relearning",
+      "to": "Composed F3 transfer",
+      "reason": "The stronger question was whether prior factors accelerate learning of a new combination."
+    },
+    {
+      "sequence": 9,
+      "from": "Forward transfer",
+      "to": "Backward decomposition",
+      "reason": "True compositional memory should ideally support both combining parts and recovering them."
+    },
+    {
+      "sequence": 10,
+      "from": "Additive dynamics",
+      "to": "Interleaved experience",
+      "reason": "Blocked regimes might create recency artifacts; one-example updates and random balanced order test spacing effects."
+    },
+    {
+      "sequence": 11,
+      "from": "Matrix composition",
+      "to": "Occluded objects",
+      "reason": "A tree in front of an object is a layered, partially observed composition, not simple matrix addition."
+    },
+    {
+      "sequence": 12,
+      "from": "Object slots",
+      "to": "Instance binding bottleneck",
+      "reason": "The first slot model reconstructed scenes without reliably decomposing full object instances."
+    }
+  ],
+  "day_by_day": [
+    {
+      "day": 1,
+      "date": "2026-07-28",
+      "title": "From a loss question to a falsifiable research program",
+      "entries": [
+        {
+          "entry_id": "D1-E01",
+          "phase": "Starting hypothesis",
+          "headline": "Loss plateaus because gradient descent removes a fraction of remaining error, but low loss is not the same as general intelligence",
+          "narrative": "The discussion started with why loss typically flattens rather than falling by a constant amount. The immediate mathematical answer was that gradient descent follows local slopes, so gradients usually shrink near a solution. Het then moved past the optimization mechanics and challenged the fixed objective itself. If a human learner masters arithmetic and moves to calculus, the target changes. Merely amplifying a small arithmetic loss would not create calculus. This shifted the problem from loss scaling to adaptive objectives, curriculum, transfer, and robust evaluation.",
+          "het_steering": "Het rejected a narrow answer about gradient size and reframed the issue around whether static prediction objectives can demonstrate generalization.",
+          "ai_partner_contribution": "GPT-5.6 Sol distinguished multiplying a loss from changing the training distribution and objective, and made explicit that low training loss cannot prove reusable algorithmic structure.",
+          "hypothesis_after_entry": "Intelligence should be evaluated by how accumulated knowledge changes the efficiency of future learning, not only by endpoint accuracy."
+        },
+        {
+          "entry_id": "D1-E02",
+          "phase": "Metric formation",
+          "headline": "Continual sample efficiency became the main axis of success",
+          "narrative": "Het proposed that a better measure of generalization is how quickly a system learns from new experience given a prior world model. This avoids a false binary between prediction and generalization: generalization is still prediction, but the important variable is how much new evidence, compute, and parameter change are required. The conversation separated fast state updates, episodic memory, structural model revision, and slow consolidation.",
+          "het_steering": "Het supplied the core metric and argued for localized prediction errors grounded by both internal simulation and real-world feedback.",
+          "ai_partner_contribution": "GPT-5.6 Sol sharpened the metric by noting that sample count alone can hide large inference or simulation costs, and warned that internal simulation is not independent evidence.",
+          "hypothesis_after_entry": "A plausible route to more general intelligence is a world model that actively seeks informative evidence and performs fast, selective belief revision before slower parameter consolidation."
+        },
+        {
+          "entry_id": "D1-E03",
+          "phase": "Architecture survey",
+          "headline": "LeCun-style latent world models provided a reference point, but not a complete continual learner",
+          "narrative": "The dialogue examined a hierarchical latent world-model program: encode observations into abstract states, predict future latent states under actions, evaluate predicted futures, and plan. The appeal was that the model need not predict every pixel. It could preserve objects, events, and causal constraints. The limitation was equally important: existing implementations still rely heavily on global gradient descent and do not by themselves solve rapid, local online revision.",
+          "het_steering": "Het asked why this approach had not displaced large language models and connected it to perception, curiosity, play, and the human ability to build new objectives.",
+          "ai_partner_contribution": "GPT-5.6 Sol explained the practical advantages that made language models scale first, and treated curiosity as expected information gain or learning progress rather than raw surprise.",
+          "hypothesis_after_entry": "A useful composite system would combine latent simulation with predictive-coding-style state correction and information-seeking action selection."
+        },
+        {
+          "entry_id": "D1-E04",
+          "phase": "Reduction to primitives",
+          "headline": "The overbuilt architecture was reduced to a controlled latent state-space model",
+          "narrative": "Het explicitly asked to strip the design to its primitives and rebuild it with the least machinery possible. The resulting core had an observation o_t, action a_t, latent state z_t, transition model f, observation model g, and cost c. Predictive coding was not treated as a separate module. It became the inference procedure that adjusts z_t to reconcile temporal predictions with current observations.",
+          "minimal_model": {
+            "state_transition": "z_t = f_theta(z_(t-1), a_(t-1)) + process_noise",
+            "observation_model": "o_t = g_theta(z_t) + observation_noise",
+            "sensory_error": "e_o = o_t - g_theta(z_t)",
+            "temporal_error": "e_z = z_t - f_theta(z_(t-1), a_(t-1))",
+            "energy": "E = 0.5 * e_o^T R^-1 e_o + 0.5 * e_z^T Q^-1 e_z",
+            "planning": "Choose an action sequence that minimizes predicted task cost, optionally minus expected information gain."
+          },
+          "het_steering": "Het noticed that the first minimal derivation still left the local update implicit and asked where predictive coding actually occurred.",
+          "ai_partner_contribution": "GPT-5.6 Sol then wrote the activity and synaptic rules explicitly and acknowledged the remaining weight-transport issue.",
+          "hypothesis_after_entry": "Fast latent inference and slow local synaptic learning can be tested separately, without claiming that predictive coding eliminates all uses of backpropagation."
+        },
+        {
+          "entry_id": "D1-E05",
+          "phase": "Local learning specification",
+          "headline": "Predictive coding became an explicit state-unit plus error-unit network",
+          "narrative": "For a linear baseline, the model predicted z_hat = A z_prev + B a_prev and o_hat = W z. Separate error populations represented e_z = z - z_hat and e_o = o - o_hat. Latent activities were iteratively corrected using nearby error signals. Each synaptic update used the error produced by that projection and the presynaptic activity.",
+          "local_rules": {
+            "activity_update": "z <- z + alpha * (W^T R^-1 e_o - Q^-1 e_z)",
+            "observation_weight_update": "Delta W = eta_o * (R^-1 e_o) z^T",
+            "transition_weight_update": "Delta A = eta_z * (Q^-1 e_z) z_prev^T",
+            "action_weight_update": "Delta B = eta_z * (Q^-1 e_z) a_prev^T",
+            "locality_definition": "Each synapse uses presynaptic activity, a postsynaptic prediction-error signal, and its connecting pathway. Local does not mean every unit is independent."
+          },
+          "het_steering": "Het insisted that the implementation expose the actual local update rather than hide it behind global energy notation.",
+          "ai_partner_contribution": "GPT-5.6 Sol translated the global energy gradient into explicit neuron- and synapse-level rules.",
+          "hypothesis_after_entry": "The simplest testable architecture is state units, error units, iterative local inference, and error-times-activity learning."
+        },
+        {
+          "entry_id": "D1-E06",
+          "phase": "Implementation and debugging",
+          "headline": "The mathematical model became a T4-oriented Python experiment with observable weights and activations",
+          "narrative": "Het requested a Colab-ready implementation optimized for a T4 GPU with live heatmaps. The implementation used parallel environments, mixed precision for repeated matrix operations, FP32 weights and accumulators, explicit local updates, and no optimizer or backward call in the predictive-coding training loop. The visualization design went through several revisions because a scientifically useful tool also had to be stable enough to inspect.",
+          "debugging_log": [
+            {
+              "problem": "Colab injected a -f kernel.json argument, causing argparse to exit.",
+              "resolution": "Remove the notebook command-line entry point and ignore unknown arguments in the standalone script."
+            },
+            {
+              "problem": "Repeated clear_output calls and new Matplotlib figures made the output cell flicker and jump.",
+              "resolution": "Record checkpoints during training and render static plots after training."
+            },
+            {
+              "problem": "A widget-based checkpoint browser failed silently and produced no visuals.",
+              "resolution": "Replace the widget with ordinary Matplotlib calls and explicit plt.show()."
+            },
+            {
+              "problem": "binary_cross_entropy was unsafe under automatic mixed precision.",
+              "resolution": "Use binary_cross_entropy_with_logits and a logits-based loss."
+            },
+            {
+              "problem": "Pattern color varied by instance when the experiment required one color per pattern type.",
+              "resolution": "Assign each pattern a fixed deterministic color without creating a type-specific output head."
+            }
+          ],
+          "het_steering": "Het repeatedly reported concrete runtime and visualization failures instead of accepting an uninspectable notebook, and later required fixed colors and preserved V13 naming.",
+          "ai_partner_contribution": "GPT-5.6 Sol iterated the notebook design, numerical checks, plotting strategy, and T4 optimization choices in response.",
+          "hypothesis_after_entry": "The code path and visualization path both need verification; a correct update rule is insufficient if the experiment cannot be inspected."
+        },
+        {
+          "entry_id": "D1-E07",
+          "phase": "Baseline validation",
+          "headline": "The local equations matched exact gradients and learned the intentionally easy linear environment",
+          "narrative": "The first run validated implementation fidelity. The hand-written W, A, B, and latent-drive updates matched autograd to floating-point tolerance. Posterior inference reduced current-observation error by about 72 percent, and a linear probe recovered the true state almost perfectly. The result established that the baseline worked, but not that it generalized. The environment was nearly identifiable: the observation space was close to the latent state and the latent dimension matched the true state.",
+          "key_result": "The implementation was correct and the model learned a simple linear environment; this was a code validation, not an intelligence result.",
+          "het_steering": "Het supplied the metrics and asked for an interpretation rather than assuming that a high R-squared proved representation learning.",
+          "ai_partner_contribution": "GPT-5.6 Sol separated prior prediction, posterior state inference, temporal consistency, linear-probe recoverability, and open-loop rollout quality.",
+          "hypothesis_after_entry": "The next test must create regime changes and recurring structure so adaptation and forgetting can be observed directly."
+        },
+        {
+          "entry_id": "D1-E08",
+          "phase": "Recurring dynamics",
+          "headline": "F1 -> F2 -> F1 revealed faster reacquisition, but not retrieval",
+          "narrative": "The first continual-learning test used three phases. Prediction error spiked at each regime change. The model learned F1, adapted to F2, and then recovered on F1 almost twice as fast as it had learned F1 initially. Het noticed that the returned-F1 curve fell faster and that the F1 and F2 distance curves traded off. The correct interpretation was not inverse proportionality but negative correlation: one effective transition matrix was moving between two targets.",
+          "key_result": "F1 recovered in 187 steps after the return, versus 370 steps during initial F1 learning, a 1.98x speedup.",
+          "het_steering": "Het interpreted the actual plots and asked to extend training rather than immediately changing the architecture.",
+          "ai_partner_contribution": "GPT-5.6 Sol distinguished shared infrastructure and warm-start geometry from explicit stored-regime recall.",
+          "hypothesis_after_entry": "Repeated exposure may create faster parameter movement along a familiar path even if the model stores only one active dynamics matrix."
+        },
+        {
+          "entry_id": "D1-E09",
+          "phase": "Long repeated switching",
+          "headline": "Five cycles showed improving recovery while global system identification worsened",
+          "narrative": "Het requested longer phases and more regime switches. Across ten 1,500-step phases, recovery improved from 1,123 to 712 steps for F1 and from 1,163 to 549 for F2. Starting errors and final prediction errors also fell. Yet the learned effective dynamics became farther from the true global matrices at the end of later visits. The model predicted its visited state distribution better without identifying the full transition matrix more accurately.",
+          "key_result": "Later visits started closer, adapted faster, and reached lower error floors, while F1 and F2 continued to overwrite a single model.",
+          "het_steering": "Het chose repeated alternation as the next pressure test and inspected the shapes of the curves, not only the printed summaries.",
+          "ai_partner_contribution": "GPT-5.6 Sol proposed fitting E(s) = E_inf + (E0 - E_inf) exp(-s/tau) to distinguish lower starting error from a genuinely faster adaptation timescale.",
+          "hypothesis_after_entry": "The speedup might come from faster transition-matrix learning, a mature latent representation, or a stable two-cycle in parameter space."
+        },
+        {
+          "entry_id": "D1-E10",
+          "phase": "Branch ablation",
+          "headline": "Most useful adaptation came from the local A update, while fixed probes exposed catastrophic forgetting",
+          "narrative": "Three branches started from one shared post-F1/F2 checkpoint and saw identical data: full plasticity, A-only plasticity, and inference-only. Full and A-only learning were nearly identical, showing that continued W and B learning was not the main source of adaptation. Inference-only remained specialized to the most recent F2 regime. Fitted tau decreased across exposures, especially for F1, so some acceleration was present in the curve shape. But final fixed probes showed approximately 41 times more error on F1 than F2 after ending on F2.",
+          "key_result": "Local A plasticity accounted for most adaptation, but the architecture catastrophically forgot the inactive regime.",
+          "het_steering": "Het ran the ablation and supplied the phase-by-phase fitted timescales and fixed-probe errors.",
+          "ai_partner_contribution": "GPT-5.6 Sol rejected the interpretation that this was stored-regime retrieval and proposed continuous-versus-reset A as the decisive warm-start control.",
+          "hypothesis_after_entry": "The model may be settling into a familiar parameter orbit rather than learning a reusable memory system."
+        },
+        {
+          "entry_id": "D1-E11",
+          "phase": "Compositional transfer",
+          "headline": "The question changed from relearning familiar regimes to learning a new additive composition",
+          "narrative": "Het asked a stronger question: if the model learns F1 and F2, does its loss fall faster on F3 than a normal control? The target was defined with a shared base so literal matrix addition would not simply double the dynamics: F1 = F0 + beta D1, F2 = F0 + beta D2, and F3 = F0 + beta(D1 + D2). All models remained plastic on the identical F3 stream. The key control was equal-duration F2-only history, not scratch, because it matched generic pretraining while omitting D1.",
+          "key_result": "In the first composed-F3 experiment, F1/F2 history produced tau 84.5 versus 104.0 for F2-only and 196.7 for scratch.",
+          "het_steering": "Het clarified that the goal was positive transfer under continued learning, not zero-shot prediction with frozen weights.",
+          "ai_partner_contribution": "GPT-5.6 Sol designed the shared-base composition and the F2-only control, and separated initial error, adaptation tau, final floor, and early-loss area.",
+          "hypothesis_after_entry": "If prior component experience shapes useful update directions, it should preferentially accelerate the composed target rather than arbitrary equally difficult dynamics."
+        },
+        {
+          "entry_id": "D1-E12",
+          "phase": "Forward specificity and backward prediction",
+          "headline": "A three-world test suggested direction-specific forward transfer but failed to show backward decomposition",
+          "narrative": "The next test compared the additive target, sign-flipped combinations, and a matched random target. F1/F2 history helped most when the target contained the previously seen positive D1 direction. It did not provide the same advantage when D1 appeared with the opposite sign. Phase 2 then trained F1 -> F2 -> F3 and froze the weights while probing F1 and F2. F3 training improved F1 prediction but damaged F2 prediction by 373 percent relative to the pre-F3 chain. The single matrix moved toward a compromise; it did not recover both components.",
+          "key_result": "Forward transfer looked composition-specific, but reverse decomposition was negative and three worlds were too few for a strong claim.",
+          "het_steering": "Het corrected the phase-2 protocol so that the same model experienced F1, then F2, then one F3 cycle before component probes.",
+          "ai_partner_contribution": "GPT-5.6 Sol framed the result as forward transfer without factor-preserving memory and proposed scaling to 20 worlds plus direct update-field measurements.",
+          "hypothesis_after_entry": "The architecture may reuse factor-aligned geometry without storing explicit modules."
+        },
+        {
+          "entry_id": "D1-E13",
+          "phase": "Twenty-world mechanism test",
+          "headline": "Batched replication established robust forward transfer and nearly additive instantaneous update geometry",
+          "narrative": "The experiment was packed across 20 worlds and multiple branches for the T4. F1/F2 history adapted to F3 with tau 69.1, versus 105.8 for F2-only and 217.2 from scratch. On a matched random target, history and F2-only were nearly tied. At a fixed checkpoint, the local transition-update field for F3 aligned strongly with U1 + U2 - U0, while the random target did not. The shared-base subtraction was essential because naive U1 + U2 double-counted F0. Sequential-phase alignment, however, was only 0.261, showing that clean superposition weakened once parameters, latents, and visitation distributions moved.",
+          "key_result": "Factor-specific forward transfer was robust across 20 synthetic worlds; explicit modular storage was still absent.",
+          "het_steering": "Het requested maximum T4 speed and then supplied the full 20-world summary.",
+          "ai_partner_contribution": "GPT-5.6 Sol batched worlds and branches, introduced the corrected update-field identity U3 approximately U1 + U2 - U0, and calibrated the mechanistic claim.",
+          "hypothesis_after_entry": "Instantaneous local error geometry can be additive even when sequential learning and memory are not."
+        },
+        {
+          "entry_id": "D1-E14",
+          "phase": "Interleaved experience",
+          "headline": "Alternating and random balanced mixtures were equivalent; blocked history was slightly worse",
+          "narrative": "Het replaced separate long regimes with one-example updates: an F1 example, a local update, an F2 example, and another local update. A second branch used an exactly balanced but randomly ordered 50/50 mixture. Alternating and random histories produced effectively identical F3 adaptation. Both modestly beat blocked F1 -> F2 history and clearly beat F2-only and scratch. This suggested that balanced exposure and reduced recency bias mattered more than strict alternation.",
+          "key_result": "Tau was 103.6 for alternating, 103.5 for random 50/50, 111.7 for blocked, 134.5 for F2-only, and 216.4 from scratch.",
+          "het_steering": "Het proposed interwoven examples and explicitly added a random exact-50/50 control.",
+          "ai_partner_contribution": "GPT-5.6 Sol preserved separate latent/environment streams for F1 and F2 so interleaving did not create invalid cross-regime state transitions.",
+          "hypothesis_after_entry": "For this learner, representative balanced experience matters more than deterministic alternation order."
+        },
+        {
+          "entry_id": "D1-E15",
+          "phase": "Object-centric pivot",
+          "headline": "The research moved from additive matrices to layered occlusion",
+          "narrative": "Het introduced the tree example: if a system knows an object and a tree separately, it should infer both when one occludes the other. This exposed a mismatch in the F1/F2/F3 setup. Occlusion is not simple addition; it is layered composition with masks and depth order. The correct target became amodal completion: recover the full hidden object and the full occluder from their visible composite.",
+          "environment_design": {
+            "patterns": "Four pattern families A, B, C, and D, each with one fixed color.",
+            "transformations": "Random rotation and position.",
+            "boundaries": "Flat and toroidal grids.",
+            "slots": "A fixed set of interchangeable instance slots with shared encoder and decoder.",
+            "scaling_rule": "New pattern types do not require new slots; more simultaneous object instances require more active slots.",
+            "training": "Interwoven isolated and non-overlapping scenes, with duplicate pattern instances allowed, but no occlusion during training.",
+            "testing": "Known pairings A/B and C/D, then held-out and random pairings with two to four instances, duplicates, reversed depth orders, and both boundary conditions."
+          },
+          "het_steering": "Het insisted that new pattern types must not require hard-coded variables and asked how multiple instances should be represented.",
+          "ai_partner_contribution": "GPT-5.6 Sol separated object type from object instance, proposed shared slots and permutation-invariant matching, and defined amodal-mask metrics.",
+          "hypothesis_after_entry": "A shared slot mechanism should generalize across pattern identities, while the number of slots should depend only on the maximum simultaneous instance count."
+        },
+        {
+          "entry_id": "D1-E16",
+          "phase": "First occlusion result",
+          "headline": "The slot model reconstructed scenes but did not reliably decompose them",
+          "narrative": "The V14 fixed-color run trained for 1,800 updates in 160.6 seconds. The primary amodal IoU ranged from 0.179 to 0.219. Hidden recall was sometimes much higher, but recall alone could be inflated by oversized masks. Duplicate types and higher object counts reduced performance, with four-object torus scenes falling to 0.154 amodal IoU and about 29 percent count accuracy. Recomposition MSE remained fairly low, showing that a model can recreate visible pixels using an incorrect slot decomposition.",
+          "key_result": "The bottleneck was instance binding and amodal mask inference, not the ability to render the visible scene.",
+          "het_steering": "Het ran the object-slot experiment and supplied the detailed flat-versus-torus, duplicate-instance, and object-count breakdown.",
+          "ai_partner_contribution": "GPT-5.6 Sol identified the gap between correct recomposition and correct decomposition, warned that hidden recall needed precision and IoU, and proposed simplifying the test.",
+          "hypothesis_after_entry": "Before adding more pattern families, the model needs a clean two-object benchmark that isolates binding, hidden-region precision, depth, and held-out pairing generalization."
+        }
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "experiment_id": "EXP-01",
+      "name": "Local-rule verification and baseline linear world model",
+      "purpose": "Verify the hand-written predictive-coding rules and establish a simple learning baseline.",
+      "design": {
+        "model": "Linear controlled latent state-space model with W, A, and B learned by explicit local error-times-activity rules.",
+        "training_steps": 1400,
+        "shift_used": false,
+        "inference": "Iterative latent-state correction.",
+        "evaluation": "Local-rule gradient check, one-step prior and posterior MSE, temporal MSE, linear probe, and 20-step open-loop rollout."
+      },
+      "results": {
+        "local_rule_max_abs_error": {
+          "W": 4.76837158203125e-07,
+          "A": 2.384185791015625e-07,
+          "B": 1.1920928955078125e-07,
+          "z_drive": 1.9073486328125e-06
+        },
+        "final_training_metrics": {
+          "prior_observation_mse": 0.00295,
+          "posterior_observation_mse": 0.000829,
+          "temporal_error_mse": 0.000715,
+          "posterior_reduction_fraction": 0.719
+        },
+        "held_out": {
+          "latent_linear_probe_r2": 0.9985,
+          "open_loop_observation_mse_20_step_average": 0.007816
+        }
+      },
+      "interpretation": "The equations were implemented correctly and the easy linear environment was learned. The high probe R-squared was expected under the nearly identifiable default and did not establish hard representation learning."
+    },
+    {
+      "experiment_id": "EXP-02",
+      "name": "Three-phase recurring switching dynamics",
+      "purpose": "Test adaptation, return-to-regime recovery, and the separation of latent inference from structural learning.",
+      "schedule": [
+        "F1",
+        "F2",
+        "F1"
+      ],
+      "steps_per_phase": 500,
+      "results": {
+        "initial_learning_F1_steps": 370,
+        "adaptation_F1_to_F2_steps": 353,
+        "recovery_when_F1_returns_steps": 187,
+        "return_to_F1_speedup": 1.98,
+        "thresholds": {
+          "F1": 0.0144,
+          "F2": 0.01373
+        },
+        "phase_final_metrics": [
+          {
+            "phase": "F1 first exposure",
+            "prior_mse": 0.01152,
+            "posterior_mse": 0.00308,
+            "inference_reduction_percent": 73.3
+          },
+          {
+            "phase": "F2 exposure",
+            "prior_mse": 0.010984,
+            "posterior_mse": 0.002746,
+            "inference_reduction_percent": 75.0
+          },
+          {
+            "phase": "F1 return",
+            "prior_mse": 0.00682,
+            "posterior_mse": 0.001583,
+            "inference_reduction_percent": 76.8
+          }
+        ]
+      },
+      "interpretation": "F1 was reacquired faster from a better-trained starting point. The result was consistent with retained structure but did not prove a stored regime because the model still required 187 updates and had only one effective transition matrix."
+    },
+    {
+      "experiment_id": "EXP-03",
+      "name": "Five recurring F1/F2 cycles",
+      "purpose": "Measure whether repeated exposure reduces recovery time over a longer alternating schedule.",
+      "steps_per_regime": 1500,
+      "cycles": 5,
+      "total_steps": 15000,
+      "thresholds": {
+        "F1": 0.003499,
+        "F2": 0.004258
+      },
+      "phase_table": [
+        {
+          "phase": 1,
+          "regime": "F1",
+          "exposure": 1,
+          "recovery_steps": 1123,
+          "start_prior": 0.070633,
+          "final_prior": 0.002799,
+          "final_posterior": 0.000789,
+          "inference_reduction_percent": 71.8,
+          "distance_F1": 0.68,
+          "distance_F2": 1.18
+        },
+        {
+          "phase": 2,
+          "regime": "F2",
+          "exposure": 1,
+          "recovery_steps": 1163,
+          "start_prior": 0.081698,
+          "final_prior": 0.003406,
+          "final_posterior": 0.000909,
+          "inference_reduction_percent": 73.3,
+          "distance_F1": 1.14,
+          "distance_F2": 0.68
+        },
+        {
+          "phase": 3,
+          "regime": "F1",
+          "exposure": 2,
+          "recovery_steps": 867,
+          "start_prior": 0.055917,
+          "final_prior": 0.002277,
+          "final_posterior": 0.000537,
+          "inference_reduction_percent": 76.4,
+          "distance_F1": 0.74,
+          "distance_F2": 1.07
+        },
+        {
+          "phase": 4,
+          "regime": "F2",
+          "exposure": 2,
+          "recovery_steps": 699,
+          "start_prior": 0.060419,
+          "final_prior": 0.002272,
+          "final_posterior": 0.000525,
+          "inference_reduction_percent": 76.9,
+          "distance_F1": 1.16,
+          "distance_F2": 0.69
+        },
+        {
+          "phase": 5,
+          "regime": "F1",
+          "exposure": 3,
+          "recovery_steps": 786,
+          "start_prior": 0.052664,
+          "final_prior": 0.002169,
+          "final_posterior": 0.000449,
+          "inference_reduction_percent": 79.3,
+          "distance_F1": 0.78,
+          "distance_F2": 1.07
+        },
+        {
+          "phase": 6,
+          "regime": "F2",
+          "exposure": 3,
+          "recovery_steps": 602,
+          "start_prior": 0.057141,
+          "final_prior": 0.002062,
+          "final_posterior": 0.000432,
+          "inference_reduction_percent": 79.1,
+          "distance_F1": 1.17,
+          "distance_F2": 0.72
+        },
+        {
+          "phase": 7,
+          "regime": "F1",
+          "exposure": 4,
+          "recovery_steps": 744,
+          "start_prior": 0.05051,
+          "final_prior": 0.002088,
+          "final_posterior": 0.000394,
+          "inference_reduction_percent": 81.1,
+          "distance_F1": 0.81,
+          "distance_F2": 1.08
+        },
+        {
+          "phase": 8,
+          "regime": "F2",
+          "exposure": 4,
+          "recovery_steps": 567,
+          "start_prior": 0.05525,
+          "final_prior": 0.001996,
+          "final_posterior": 0.000387,
+          "inference_reduction_percent": 80.6,
+          "distance_F1": 1.19,
+          "distance_F2": 0.75
+        },
+        {
+          "phase": 9,
+          "regime": "F1",
+          "exposure": 5,
+          "recovery_steps": 712,
+          "start_prior": 0.049753,
+          "final_prior": 0.002035,
+          "final_posterior": 0.000356,
+          "inference_reduction_percent": 82.5,
+          "distance_F1": 0.83,
+          "distance_F2": 1.09
+        },
+        {
+          "phase": 10,
+          "regime": "F2",
+          "exposure": 5,
+          "recovery_steps": 549,
+          "start_prior": 0.054588,
+          "final_prior": 0.001983,
+          "final_posterior": 0.00036,
+          "inference_reduction_percent": 81.8,
+          "distance_F1": 1.2,
+          "distance_F2": 0.78
+        }
+      ],
+      "summary": {
+        "F1_recovery_first": 1123,
+        "F1_recovery_latest": 712,
+        "F1_speedup": 1.58,
+        "F2_recovery_first": 1163,
+        "F2_recovery_latest": 549,
+        "F2_speedup": 2.12
+      },
+      "interpretation": "Recovery, initial error, and final error all improved. The learned matrix continued to oscillate between regimes, and prediction quality improved even while distance from the true global matrices worsened."
+    },
+    {
+      "experiment_id": "EXP-04",
+      "name": "Shared-checkpoint branch ablation",
+      "purpose": "Determine whether faster adaptation comes from A, continued W/B learning, or latent inference alone.",
+      "branches": [
+        "Full",
+        "A-only",
+        "Inference-only"
+      ],
+      "phase_fit_table": [
+        {
+          "branch": "Full",
+          "phase": 1,
+          "regime": "F1",
+          "exposure": 1,
+          "E0": 0.05647,
+          "E_inf": 0.002856,
+          "tau": 181.5,
+          "fit_r2": 0.9854
+        },
+        {
+          "branch": "Full",
+          "phase": 2,
+          "regime": "F2",
+          "exposure": 1,
+          "E0": 0.07776,
+          "E_inf": 0.003591,
+          "tau": 121.0,
+          "fit_r2": 0.9914
+        },
+        {
+          "branch": "Full",
+          "phase": 3,
+          "regime": "F1",
+          "exposure": 2,
+          "E0": 0.08093,
+          "E_inf": 0.003732,
+          "tau": 102.5,
+          "fit_r2": 0.9679
+        },
+        {
+          "branch": "Full",
+          "phase": 4,
+          "regime": "F2",
+          "exposure": 2,
+          "E0": 0.07706,
+          "E_inf": 0.003285,
+          "tau": 108.7,
+          "fit_r2": 0.99
+        },
+        {
+          "branch": "Full",
+          "phase": 5,
+          "regime": "F1",
+          "exposure": 3,
+          "E0": 0.08237,
+          "E_inf": 0.00366,
+          "tau": 94.0,
+          "fit_r2": 0.9647
+        },
+        {
+          "branch": "Full",
+          "phase": 6,
+          "regime": "F2",
+          "exposure": 3,
+          "E0": 0.07595,
+          "E_inf": 0.003174,
+          "tau": 104.7,
+          "fit_r2": 0.9895
+        },
+        {
+          "branch": "A-only",
+          "phase": 1,
+          "regime": "F1",
+          "exposure": 1,
+          "E0": 0.05643,
+          "E_inf": 0.002984,
+          "tau": 184.2,
+          "fit_r2": 0.9854
+        },
+        {
+          "branch": "A-only",
+          "phase": 2,
+          "regime": "F2",
+          "exposure": 1,
+          "E0": 0.07715,
+          "E_inf": 0.003783,
+          "tau": 124.7,
+          "fit_r2": 0.9909
+        },
+        {
+          "branch": "A-only",
+          "phase": 3,
+          "regime": "F1",
+          "exposure": 2,
+          "E0": 0.08026,
+          "E_inf": 0.003927,
+          "tau": 108.4,
+          "fit_r2": 0.9686
+        },
+        {
+          "branch": "A-only",
+          "phase": 4,
+          "regime": "F2",
+          "exposure": 2,
+          "E0": 0.07651,
+          "E_inf": 0.003529,
+          "tau": 115.6,
+          "fit_r2": 0.9897
+        },
+        {
+          "branch": "A-only",
+          "phase": 5,
+          "regime": "F1",
+          "exposure": 3,
+          "E0": 0.08142,
+          "E_inf": 0.003897,
+          "tau": 102.4,
+          "fit_r2": 0.966
+        },
+        {
+          "branch": "A-only",
+          "phase": 6,
+          "regime": "F2",
+          "exposure": 3,
+          "E0": 0.07552,
+          "E_inf": 0.003426,
+          "tau": 113.6,
+          "fit_r2": 0.9896
+        },
+        {
+          "branch": "Inference-only",
+          "phase": 1,
+          "regime": "F1",
+          "exposure": 1,
+          "E0": 0.06385,
+          "E_inf": 0.063846,
+          "tau": 1997.1,
+          "fit_r2": 0.0
+        },
+        {
+          "branch": "Inference-only",
+          "phase": 2,
+          "regime": "F2",
+          "exposure": 1,
+          "E0": 0.02158,
+          "E_inf": 0.003115,
+          "tau": 12.6,
+          "fit_r2": 0.9999
+        },
+        {
+          "branch": "Inference-only",
+          "phase": 3,
+          "regime": "F1",
+          "exposure": 2,
+          "E0": 0.10735,
+          "E_inf": 0.064106,
+          "tau": 12.5,
+          "fit_r2": 0.9969
+        },
+        {
+          "branch": "Inference-only",
+          "phase": 4,
+          "regime": "F2",
+          "exposure": 2,
+          "E0": 0.02148,
+          "E_inf": 0.003114,
+          "tau": 12.6,
+          "fit_r2": 0.9999
+        },
+        {
+          "branch": "Inference-only",
+          "phase": 5,
+          "regime": "F1",
+          "exposure": 3,
+          "E0": 0.10895,
+          "E_inf": 0.06414,
+          "tau": 12.6,
+          "fit_r2": 0.9973
+        },
+        {
+          "branch": "Inference-only",
+          "phase": 6,
+          "regime": "F2",
+          "exposure": 3,
+          "E0": 0.02128,
+          "E_inf": 0.003114,
+          "tau": 12.6,
+          "fit_r2": 0.9999
+        }
+      ],
+      "final_fixed_probe_normalized_mse": {
+        "Full": {
+          "F1": 0.743955,
+          "F2": 0.018134
+        },
+        "A-only": {
+          "F1": 0.763781,
+          "F2": 0.019983
+        },
+        "Inference-only": {
+          "F1": 0.819889,
+          "F2": 0.030793
+        }
+      },
+      "interpretation": "A-only nearly matched full plasticity, so local A updates carried most adaptation. The final checkpoint remained heavily specialized to F2, demonstrating catastrophic forgetting rather than stored-regime recall."
+    },
+    {
+      "experiment_id": "EXP-05",
+      "name": "Initial composed-F3 positive transfer",
+      "purpose": "Test whether exposure to D1 and D2 accelerates continued learning of D1 + D2 beyond generic pretraining.",
+      "construction": {
+        "F1": "F0 + beta D1",
+        "F2": "F0 + beta D2",
+        "F3": "F0 + beta(D1 + D2)",
+        "beta": 1.36647,
+        "spectral_radii": {
+          "F0": 0.662,
+          "F1": 0.723,
+          "F2": 0.783,
+          "F3": 0.864
+        }
+      },
+      "branch_results": [
+        {
+          "branch": "F1/F2 history",
+          "start_distance_F3": 0.588,
+          "final_distance_F3": 0.476,
+          "E0": 0.0182,
+          "E_inf": 0.001471,
+          "tau": 84.5,
+          "fit_r2": 0.9596,
+          "half_step": 48,
+          "early_auc": 0.00539,
+          "final_prior": 0.001019,
+          "final_posterior": 0.000236
+        },
+        {
+          "branch": "F2-only history",
+          "start_distance_F3": 0.628,
+          "final_distance_F3": 0.509,
+          "E0": 0.01865,
+          "E_inf": 0.001769,
+          "tau": 104.0,
+          "fit_r2": 0.956,
+          "half_step": 58,
+          "early_auc": 0.0065,
+          "final_prior": 0.001233,
+          "final_posterior": 0.000284
+        },
+        {
+          "branch": "Scratch on F3",
+          "start_distance_F3": 1.0,
+          "final_distance_F3": 0.639,
+          "E0": 0.09801,
+          "E_inf": 0.003819,
+          "tau": 196.7,
+          "fit_r2": 0.9931,
+          "half_step": 141,
+          "early_auc": 0.05016,
+          "final_prior": 0.003227,
+          "final_posterior": 0.000808
+        }
+      ],
+      "primary_comparisons": {
+        "tau_speedup_vs_F2_only": 1.23,
+        "tau_speedup_vs_scratch": 2.33,
+        "early_auc_reduction_vs_F2_only_percent": 17.1,
+        "early_auc_reduction_vs_scratch_percent": 89.3
+      },
+      "interpretation": "Prior D1 exposure added positive transfer beyond equal-duration F2-only history. The experiment did not yet distinguish explicit composition from shared subspaces, conditioning, or parameter proximity."
+    },
+    {
+      "experiment_id": "EXP-06",
+      "name": "Three-world bidirectional composition",
+      "purpose": "Test sign specificity in forward transfer and whether F1 -> F2 -> F3 preserves the ability to predict F1 and F2.",
+      "num_worlds": 3,
+      "forward_results_mean_sem": [
+        {
+          "target": "F1 + F2",
+          "branch": "F1/F2 history",
+          "tau_mean": 72.9,
+          "tau_sem": 13.2,
+          "early_auc_mean": 0.00472,
+          "early_auc_sem": 0.00059,
+          "final_prior_mean": 0.001157,
+          "final_prior_sem": 0.000085
+        },
+        {
+          "target": "F1 + F2",
+          "branch": "F2-only history",
+          "tau_mean": 110.1,
+          "tau_sem": 22.4,
+          "early_auc_mean": 0.0067,
+          "early_auc_sem": 0.00106,
+          "final_prior_mean": 0.001521,
+          "final_prior_sem": 0.000125
+        },
+        {
+          "target": "F1 + F2",
+          "branch": "Scratch",
+          "tau_mean": 167.9,
+          "tau_sem": 14.1,
+          "early_auc_mean": 0.04217,
+          "early_auc_sem": 0.00662,
+          "final_prior_mean": 0.003609,
+          "final_prior_sem": 0.000683
+        },
+        {
+          "target": "F1 - F2",
+          "branch": "F1/F2 history",
+          "tau_mean": 139.8,
+          "tau_sem": 8.4,
+          "early_auc_mean": 0.01503,
+          "early_auc_sem": 0.00363,
+          "final_prior_mean": 0.001906,
+          "final_prior_sem": 0.000288
+        },
+        {
+          "target": "F1 - F2",
+          "branch": "F2-only history",
+          "tau_mean": 169.4,
+          "tau_sem": 11.0,
+          "early_auc_mean": 0.01946,
+          "early_auc_sem": 0.0047,
+          "final_prior_mean": 0.002678,
+          "final_prior_sem": 0.00043
+        },
+        {
+          "target": "-F1 + F2",
+          "branch": "F1/F2 history",
+          "tau_mean": 106.8,
+          "tau_sem": 13.8,
+          "early_auc_mean": 0.00687,
+          "early_auc_sem": 0.00106,
+          "final_prior_mean": 0.001581,
+          "final_prior_sem": 0.000168
+        },
+        {
+          "target": "-F1 + F2",
+          "branch": "F2-only history",
+          "tau_mean": 92.4,
+          "tau_sem": 11.4,
+          "early_auc_mean": 0.00593,
+          "early_auc_sem": 0.00083,
+          "final_prior_mean": 0.001342,
+          "final_prior_sem": 0.00014
+        },
+        {
+          "target": "Matched random",
+          "branch": "F1/F2 history",
+          "tau_mean": 156.3,
+          "tau_sem": 6.3,
+          "early_auc_mean": 0.01305,
+          "early_auc_sem": 0.00131,
+          "final_prior_mean": 0.001599,
+          "final_prior_sem": 0.000291
+        },
+        {
+          "target": "Matched random",
+          "branch": "F2-only history",
+          "tau_mean": 159.6,
+          "tau_sem": 7.4,
+          "early_auc_mean": 0.01382,
+          "early_auc_sem": 0.00145,
+          "final_prior_mean": 0.001763,
+          "final_prior_sem": 0.000327
+        }
+      ],
+      "backward_component_prior_mse_mean_sem": [
+        {
+          "component": "F1",
+          "history": "F1->F2 before F3",
+          "mean": 0.012786,
+          "sem": 0.00134
+        },
+        {
+          "component": "F1",
+          "history": "F1->F2->F3",
+          "mean": 0.007122,
+          "sem": 0.001668
+        },
+        {
+          "component": "F1",
+          "history": "F2->F2->F3",
+          "mean": 0.007582,
+          "sem": 0.001693
+        },
+        {
+          "component": "F1",
+          "history": "F3 only",
+          "mean": 0.008205,
+          "sem": 0.001961
+        },
+        {
+          "component": "F2",
+          "history": "F1->F2 before F3",
+          "mean": 0.001673,
+          "sem": 0.000334
+        },
+        {
+          "component": "F2",
+          "history": "F1->F2->F3",
+          "mean": 0.007916,
+          "sem": 0.000541
+        },
+        {
+          "component": "F2",
+          "history": "F2->F2->F3",
+          "mean": 0.007863,
+          "sem": 0.000497
+        },
+        {
+          "component": "F2",
+          "history": "F3 only",
+          "mean": 0.009338,
+          "sem": 0.000894
+        }
+      ],
+      "interpretation": "Forward transfer was strongest for the aligned additive target. F3 training moved one matrix toward a compromise: F1 improved while F2 degraded sharply. The reverse decomposition claim was not supported."
+    },
+    {
+      "experiment_id": "EXP-07",
+      "name": "Batched 20-world composition mechanism test",
+      "purpose": "Replicate forward transfer, test matched-random specificity, measure backward component prediction, and inspect local update-field geometry.",
+      "configuration": {
+        "num_worlds": 20,
+        "batch_per_world": 96,
+        "inference_steps": 8,
+        "elapsed_seconds": 16.0,
+        "spectral_radius_mean": {
+          "F0": 0.644,
+          "F1": 0.758,
+          "F2": 0.733,
+          "F3": 0.831,
+          "random": 0.796
+        }
+      },
+      "forward_results_mean_sem": [
+        {
+          "target": "F3",
+          "branch": "history",
+          "tau_mean": 69.1,
+          "tau_sem": 6.4,
+          "early_auc_mean": 0.00721,
+          "early_auc_sem": 0.00064,
+          "final_prior_mean": 0.002195,
+          "final_prior_sem": 0.00012
+        },
+        {
+          "target": "F3",
+          "branch": "F2_only",
+          "tau_mean": 105.8,
+          "tau_sem": 8.8,
+          "early_auc_mean": 0.00972,
+          "early_auc_sem": 0.00099,
+          "final_prior_mean": 0.002702,
+          "final_prior_sem": 0.000197
+        },
+        {
+          "target": "F3",
+          "branch": "scratch",
+          "tau_mean": 217.2,
+          "tau_sem": 4.4,
+          "early_auc_mean": 0.05562,
+          "early_auc_sem": 0.00268,
+          "final_prior_mean": 0.007022,
+          "final_prior_sem": 0.000324
+        },
+        {
+          "target": "random",
+          "branch": "history",
+          "tau_mean": 153.5,
+          "tau_sem": 6.4,
+          "early_auc_mean": 0.01806,
+          "early_auc_sem": 0.00181,
+          "final_prior_mean": 0.003112,
+          "final_prior_sem": 0.000203
+        },
+        {
+          "target": "random",
+          "branch": "F2_only",
+          "tau_mean": 159.2,
+          "tau_sem": 6.6,
+          "early_auc_mean": 0.01931,
+          "early_auc_sem": 0.00198,
+          "final_prior_mean": 0.003302,
+          "final_prior_sem": 0.000223
+        },
+        {
+          "target": "random",
+          "branch": "scratch",
+          "tau_mean": 204.7,
+          "tau_sem": 5.6,
+          "early_auc_mean": 0.05342,
+          "early_auc_sem": 0.00274,
+          "final_prior_mean": 0.006253,
+          "final_prior_sem": 0.000251
+        }
+      ],
+      "forward_summary": {
+        "F3_tau_speedup_over_F2_only": 1.58,
+        "history_random_to_F3_tau_ratio": 2.97
+      },
+      "backward_component_prior_mse_mean_sem": [
+        {
+          "component": "F1",
+          "history": "pre_F3_chain",
+          "mean": 0.013825,
+          "sem": 0.001221
+        },
+        {
+          "component": "F1",
+          "history": "chain_post_F3",
+          "mean": 0.009416,
+          "sem": 0.000891
+        },
+        {
+          "component": "F1",
+          "history": "F2_post_F3",
+          "mean": 0.010184,
+          "sem": 0.000979
+        },
+        {
+          "component": "F1",
+          "history": "F3_only",
+          "mean": 0.010873,
+          "sem": 0.00089
+        },
+        {
+          "component": "F2",
+          "history": "pre_F3_chain",
+          "mean": 0.004241,
+          "sem": 0.00022
+        },
+        {
+          "component": "F2",
+          "history": "chain_post_F3",
+          "mean": 0.00915,
+          "sem": 0.000923
+        },
+        {
+          "component": "F2",
+          "history": "F2_post_F3",
+          "mean": 0.008863,
+          "sem": 0.000914
+        },
+        {
+          "component": "F2",
+          "history": "F3_only",
+          "mean": 0.011311,
+          "sem": 0.000959
+        }
+      ],
+      "update_direction_mechanism": {
+        "cosine_U3_vs_U1_plus_U2_minus_U0_mean": 0.8662,
+        "cosine_U3_vs_U1_plus_U2_minus_U0_sem": 0.0166,
+        "cosine_random_vs_U1_plus_U2_minus_U0_mean": -0.0225,
+        "cosine_random_vs_U1_plus_U2_minus_U0_sem": 0.0138,
+        "relative_residual_F3_mean": 0.4915,
+        "relative_residual_F3_sem": 0.0288,
+        "relative_residual_random_mean": 1.1216,
+        "relative_residual_random_sem": 0.0139,
+        "naive_cosine_U3_vs_U1_plus_U2_mean": 0.5739,
+        "naive_cosine_U3_vs_U1_plus_U2_sem": 0.0287,
+        "sequential_phase_cosine_F3_mean": 0.2607,
+        "sequential_phase_cosine_F3_sem": 0.015,
+        "sequential_phase_cosine_random_mean": 0.0516,
+        "sequential_phase_cosine_random_sem": 0.0066,
+        "paired_t": 38.37,
+        "two_sided_p": 1.81e-19
+      },
+      "interpretation": "Forward transfer was robust and target-specific. The instantaneous update field was approximately additive at a fixed checkpoint, but sequential learning weakened that geometry. The result supports reusable error geometry, not explicit modular storage."
+    },
+    {
+      "experiment_id": "EXP-08",
+      "name": "Interleaved and random-mixture F1/F2 pretraining",
+      "purpose": "Test whether strict alternation, random balanced order, blocking, single-regime history, or scratch best supports F3 adaptation.",
+      "configuration": {
+        "num_worlds": 20,
+        "pretraining_updates": 1200,
+        "F3_steps": 800,
+        "inference_steps": 8,
+        "elapsed_seconds": 11.8,
+        "balance": "Alternating, random, and blocked histories each contained exactly 50 percent F1 and 50 percent F2."
+      },
+      "results_mean_sem": [
+        {
+          "history": "Alternating 1-by-1",
+          "tau_mean": 103.6,
+          "tau_sem": 9.6,
+          "early_auc_mean": 0.00953,
+          "early_auc_sem": 0.00065,
+          "final_prior_mean": 0.003073,
+          "final_prior_sem": 0.000118,
+          "final_posterior_mean": 0.00109,
+          "final_posterior_sem": 0.000035,
+          "start_distance_F3_mean": 0.758,
+          "start_distance_F3_sem": 0.006,
+          "final_distance_F3_mean": 0.664,
+          "final_distance_F3_sem": 0.008
+        },
+        {
+          "history": "Random exact 50/50",
+          "tau_mean": 103.5,
+          "tau_sem": 9.6,
+          "early_auc_mean": 0.00951,
+          "early_auc_sem": 0.00064,
+          "final_prior_mean": 0.003072,
+          "final_prior_sem": 0.000119,
+          "final_posterior_mean": 0.001089,
+          "final_posterior_sem": 0.000035,
+          "start_distance_F3_mean": 0.758,
+          "start_distance_F3_sem": 0.006,
+          "final_distance_F3_mean": 0.664,
+          "final_distance_F3_sem": 0.008
+        },
+        {
+          "history": "Blocked F1 -> F2",
+          "tau_mean": 111.7,
+          "tau_sem": 8.9,
+          "early_auc_mean": 0.01059,
+          "early_auc_sem": 0.00082,
+          "final_prior_mean": 0.003099,
+          "final_prior_sem": 0.000123,
+          "final_posterior_mean": 0.001099,
+          "final_posterior_sem": 0.000036,
+          "start_distance_F3_mean": 0.771,
+          "start_distance_F3_sem": 0.005,
+          "final_distance_F3_mean": 0.664,
+          "final_distance_F3_sem": 0.008
+        },
+        {
+          "history": "F2-only",
+          "tau_mean": 134.5,
+          "tau_sem": 10.6,
+          "early_auc_mean": 0.01265,
+          "early_auc_sem": 0.00115,
+          "final_prior_mean": 0.003364,
+          "final_prior_sem": 0.000132,
+          "final_posterior_mean": 0.001196,
+          "final_posterior_sem": 0.000039,
+          "start_distance_F3_mean": 0.791,
+          "start_distance_F3_sem": 0.005,
+          "final_distance_F3_mean": 0.673,
+          "final_distance_F3_sem": 0.007
+        },
+        {
+          "history": "Scratch",
+          "tau_mean": 216.4,
+          "tau_sem": 4.7,
+          "early_auc_mean": 0.05837,
+          "early_auc_sem": 0.00328,
+          "final_prior_mean": 0.007076,
+          "final_prior_sem": 0.000234,
+          "final_posterior_mean": 0.002671,
+          "final_posterior_sem": 0.000076,
+          "start_distance_F3_mean": 1.0,
+          "start_distance_F3_sem": 0.0,
+          "final_distance_F3_mean": 0.742,
+          "final_distance_F3_sem": 0.007
+        }
+      ],
+      "comparisons": {
+        "alternating_speedup_over_blocked": 1.08,
+        "random_speedup_over_blocked": 1.08,
+        "alternating_to_random_tau_ratio": 1.0
+      },
+      "interpretation": "Strict alternation and random balanced order were indistinguishable. Balanced mixing slightly improved transfer relative to blocked experience, likely by reducing recency bias rather than creating a special alternating mechanism."
+    },
+    {
+      "experiment_id": "EXP-09",
+      "name": "Four-pattern object-slot occlusion experiment",
+      "purpose": "Test whether shared instance slots trained without occlusion can decompose novel overlaps, including duplicates and held-out pairings, without type-specific slots.",
+      "configuration": {
+        "device": "cuda",
+        "slots": 4,
+        "pattern_type_specific_outputs": 0,
+        "pattern_colors": "One fixed deterministic color per pattern family.",
+        "transform_bank_memory_mb": 21.2,
+        "training_steps": 1800,
+        "training_elapsed_seconds": 160.6,
+        "training_rate_iterations_per_second": 11.95,
+        "final_training_metrics": {
+          "mask_loss": 0.389,
+          "reconstruction_loss": 0.0222,
+          "total_loss": 1.232
+        },
+        "training_data": "Isolated and non-overlapping scenes with two to four instances, duplicate types allowed, flat and torus boundaries, no occlusion.",
+        "test_data": "Known A/B and C/D occlusions plus random two-to-four-instance occlusions with duplicates and held-out combinations."
+      },
+      "primary_results": [
+        {
+          "phase": "phase1_known_pairs",
+          "boundary": "flat",
+          "amodal_iou": 0.207758,
+          "hidden_recall": 0.534589,
+          "count_accuracy": 0.328125,
+          "recomposition_mse": 0.017121,
+          "n_scenes": 128
+        },
+        {
+          "phase": "phase1_known_pairs",
+          "boundary": "torus",
+          "amodal_iou": 0.218694,
+          "hidden_recall": 0.275419,
+          "count_accuracy": 0.5625,
+          "recomposition_mse": 0.018973,
+          "n_scenes": 128
+        },
+        {
+          "phase": "phase2_random_instances",
+          "boundary": "flat",
+          "amodal_iou": 0.191079,
+          "hidden_recall": 0.354931,
+          "count_accuracy": 0.445312,
+          "recomposition_mse": 0.026983,
+          "n_scenes": 128
+        },
+        {
+          "phase": "phase2_random_instances",
+          "boundary": "torus",
+          "amodal_iou": 0.179299,
+          "hidden_recall": 0.354068,
+          "count_accuracy": 0.523438,
+          "recomposition_mse": 0.031908,
+          "n_scenes": 128
+        }
+      ],
+      "multiple_instance_breakdown": [
+        {
+          "boundary": "flat",
+          "subset": "unique_types",
+          "amodal_iou": 0.204864,
+          "hidden_recall": 0.532118,
+          "count_accuracy": 0.458333,
+          "n_scenes": 48
+        },
+        {
+          "boundary": "flat",
+          "subset": "duplicate_types",
+          "amodal_iou": 0.185077,
+          "hidden_recall": 0.293301,
+          "count_accuracy": 0.4375,
+          "n_scenes": 80
+        },
+        {
+          "boundary": "flat",
+          "subset": "count_2",
+          "amodal_iou": 0.22648,
+          "hidden_recall": 0.642063,
+          "count_accuracy": 0.525,
+          "n_scenes": 40
+        },
+        {
+          "boundary": "flat",
+          "subset": "count_3",
+          "amodal_iou": 0.177967,
+          "hidden_recall": 0.305437,
+          "count_accuracy": 0.534884,
+          "n_scenes": 43
+        },
+        {
+          "boundary": "flat",
+          "subset": "count_4",
+          "amodal_iou": 0.184742,
+          "hidden_recall": 0.291528,
+          "count_accuracy": 0.288889,
+          "n_scenes": 45
+        },
+        {
+          "boundary": "torus",
+          "subset": "unique_types",
+          "amodal_iou": 0.205648,
+          "hidden_recall": 0.444231,
+          "count_accuracy": 0.672727,
+          "n_scenes": 55
+        },
+        {
+          "boundary": "torus",
+          "subset": "duplicate_types",
+          "amodal_iou": 0.165613,
+          "hidden_recall": 0.315321,
+          "count_accuracy": 0.410959,
+          "n_scenes": 73
+        },
+        {
+          "boundary": "torus",
+          "subset": "count_2",
+          "amodal_iou": 0.223936,
+          "hidden_recall": 0.524074,
+          "count_accuracy": 0.790698,
+          "n_scenes": 43
+        },
+        {
+          "boundary": "torus",
+          "subset": "count_3",
+          "amodal_iou": 0.191832,
+          "hidden_recall": 0.375289,
+          "count_accuracy": 0.529412,
+          "n_scenes": 34
+        },
+        {
+          "boundary": "torus",
+          "subset": "count_4",
+          "amodal_iou": 0.154214,
+          "hidden_recall": 0.299913,
+          "count_accuracy": 0.294118,
+          "n_scenes": 51
+        }
+      ],
+      "interpretation": "The model could reconstruct visible scenes but did not reliably recover correct full-object instances. Duplicates and higher counts exposed type-like slots and weak binding. Low recomposition error did not imply correct decomposition."
+    }
+  ],
+  "user_led_pivots": [
+    {
+      "pivot": "From gradient mechanics to changing objectives",
+      "user_move": "Het rejected simple loss amplification as the answer and reframed the issue around new levels of competence."
+    },
+    {
+      "pivot": "From benchmark accuracy to continual sample efficiency",
+      "user_move": "Het proposed learning speed given priors as the main axis of generalization."
+    },
+    {
+      "pivot": "From a broad modular architecture to primitives",
+      "user_move": "Het asked for the composite design to be stripped down and rebuilt mathematically from the ground up."
+    },
+    {
+      "pivot": "From implicit energy minimization to explicit local predictive coding",
+      "user_move": "Het asked where the local update actually was."
+    },
+    {
+      "pivot": "From theory to a T4 experiment",
+      "user_move": "Het requested runnable Python and weight/activation visualization."
+    },
+    {
+      "pivot": "From a single easy environment to recurring regimes",
+      "user_move": "Het chose F1 -> F2 -> F1, then demanded longer phases and more switches."
+    },
+    {
+      "pivot": "From familiar-regime recovery to positive transfer",
+      "user_move": "Het asked whether prior F1/F2 learning makes loss on a composed F3 fall faster under continued plasticity."
+    },
+    {
+      "pivot": "From forward transfer to reverse decomposition",
+      "user_move": "Het added a phase where an F1 -> F2 -> F3 model was probed on its components."
+    },
+    {
+      "pivot": "From blocked regimes to interwoven examples",
+      "user_move": "Het requested one-example updates and a separate exact random 50/50 mixture."
+    },
+    {
+      "pivot": "From additive matrices to object occlusion",
+      "user_move": "Het proposed the object-behind-a-tree analogy and required new pattern types without new type-specific variables."
+    },
+    {
+      "pivot": "From types to multiple instances",
+      "user_move": "Het asked how duplicate objects should be represented, leading to instance slots."
+    }
+  ],
+  "failures_and_negative_results": [
+    {
+      "finding": "Repeated regime switching did not produce stored-regime retrieval.",
+      "evidence": "Each switch still caused a large error spike and hundreds of updates; final fixed probes showed severe forgetting of the inactive regime."
+    },
+    {
+      "finding": "Low prediction error did not imply global system identification.",
+      "evidence": "Final prediction errors improved across cycles while effective-matrix distance to the true regime matrices often worsened."
+    },
+    {
+      "finding": "Instantaneous additive update geometry did not persist cleanly through sequential learning.",
+      "evidence": "Fixed-checkpoint cosine was 0.866, but sequential-phase cosine was only 0.261."
+    },
+    {
+      "finding": "Training on F3 did not recover both F1 and F2.",
+      "evidence": "F1 prediction improved after F3 while F2 prediction degraded, consistent with one compromise matrix rather than separate factor memories."
+    },
+    {
+      "finding": "Strict alternating order was not special.",
+      "evidence": "Alternating and random exact-50/50 histories had nearly identical tau, AUC, and final errors."
+    },
+    {
+      "finding": "The first object-slot model did not solve amodal decomposition.",
+      "evidence": "Amodal IoU remained around 0.18 to 0.22, duplicates reduced performance, and four-object torus scenes reached only 0.154 IoU."
+    },
+    {
+      "finding": "Visible reconstruction was an insufficient metric for object understanding.",
+      "evidence": "Recomposition MSE was low even when per-instance amodal masks were poor."
+    }
+  ],
+  "strongest_defensible_claims": [
+    {
+      "claim": "The explicit local predictive-coding update equations were implemented correctly in the linear baseline.",
+      "strength": "strong within the implementation",
+      "basis": "Hand-written local updates matched autograd gradients to approximately 1e-6 or better."
+    },
+    {
+      "claim": "Repeated experience reduced adaptation time in the synthetic switching system.",
+      "strength": "strong descriptive result",
+      "basis": "Recovery fell from 1123 to 712 steps for F1 and from 1163 to 549 for F2 across five cycles."
+    },
+    {
+      "claim": "Most adaptation in the shared-checkpoint experiment came from local transition-matrix plasticity.",
+      "strength": "strong within the ablation",
+      "basis": "A-only and full-plasticity tau curves were close, while inference-only failed on inactive F1."
+    },
+    {
+      "claim": "Component history produced factor-specific positive transfer to an additive target.",
+      "strength": "strong within the synthetic linear setting",
+      "basis": "Across 20 worlds, F1/F2 history achieved tau 69.1 versus 105.8 for F2-only on F3, while the same histories were nearly tied on matched random dynamics."
+    },
+    {
+      "claim": "The instantaneous local update field was approximately additive after correcting for the shared base.",
+      "strength": "strong mechanistic observation at a fixed checkpoint",
+      "basis": "Mean cosine between U3 and U1 + U2 - U0 was 0.866, versus -0.023 for matched random dynamics."
+    },
+    {
+      "claim": "The current single-matrix architecture does not provide modular compositional memory.",
+      "strength": "strong negative conclusion for this implementation",
+      "basis": "Backward component probes and fixed-regime probes showed compromise behavior and catastrophic forgetting."
+    },
+    {
+      "claim": "The first shared-slot occlusion model learned scene reconstruction more readily than correct instance decomposition.",
+      "strength": "strong descriptive result",
+      "basis": "Low recomposition MSE coexisted with low amodal IoU and count accuracy."
+    }
+  ],
+  "claims_not_supported": [
+    "Predictive coding has been shown here to produce artificial general intelligence.",
+    "The synthetic linear model stores F1 and F2 as explicit reusable modules.",
+    "Faster F3 adaptation alone proves symbolic composition.",
+    "The current slot model understands object permanence.",
+    "Low recomposition error proves correct object decomposition.",
+    "The three-world backward experiment alone provides stable population-level evidence."
+  ],
+  "scientific_candor": {
+    "scope": "The experiments are small synthetic studies designed to isolate learning dynamics. They are not evidence about large language models, human cognition, or embodied intelligence without further work.",
+    "controls_that_mattered": [
+      "F2-only history separated factor-specific transfer from generic pretraining.",
+      "Matched random dynamics separated compositional specificity from generic adaptability.",
+      "A-only and inference-only branches localized the source of adaptation.",
+      "Fixed probes exposed inactive-regime forgetting hidden by online curves.",
+      "Exact random 50/50 order separated balance from deterministic alternation.",
+      "Flat versus torus boundaries tested reliance on edge clipping cues."
+    ],
+    "remaining_confounds": [
+      "Synthetic dynamics can make additive update geometry mathematically easier than in nonlinear worlds.",
+      "Prediction error depends on the visited state distribution and may not identify global dynamics.",
+      "Some experiment stages used only three worlds before the 20-world replication.",
+      "The object-slot phase changed architecture, supervision, and data complexity at once.",
+      "Hidden recall was reported without hidden precision or hidden-region IoU.",
+      "The original raw arrays, plot images, and notebooks were not available for independent reproduction in this workspace."
+    ],
+    "review_status": "Not peer reviewed.",
+    "replication_status": "The numerical record is detailed, but exact independent replication requires the missing source notebook and random seeds."
+  },
+  "visuals": [
+    {
+      "figure_id": "FIG-01",
+      "title": "Baseline predictive correction",
+      "type": "grouped_bar",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-01 reported values",
+      "x": [
+        "Prior observation MSE",
+        "Posterior observation MSE",
+        "Temporal error MSE",
+        "20-step open-loop MSE"
+      ],
+      "y": [
+        0.00295,
+        0.000829,
+        0.000715,
+        0.007816
+      ],
+      "caption": "Posterior inference reduced current-observation error, while open-loop rollout accumulated transition error."
+    },
+    {
+      "figure_id": "FIG-02",
+      "title": "Recovery improves across five recurring exposures",
+      "type": "two_line_chart",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-03 phase table",
+      "x": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "series": [
+        {
+          "name": "F1 recovery steps",
+          "y": [
+            1123,
+            867,
+            786,
+            744,
+            712
+          ]
+        },
+        {
+          "name": "F2 recovery steps",
+          "y": [
+            1163,
+            699,
+            602,
+            567,
+            549
+          ]
+        }
+      ],
+      "caption": "Repeated visits reduced recovery time, but fixed probes later showed that this was not stored-regime recall."
+    },
+    {
+      "figure_id": "FIG-03",
+      "title": "A-only plasticity nearly matches full plasticity",
+      "type": "faceted_line_chart",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-04 fitted tau values",
+      "facets": [
+        {
+          "name": "F1",
+          "x": [
+            1,
+            2,
+            3
+          ],
+          "series": [
+            {
+              "name": "Full",
+              "y": [
+                181.5,
+                102.5,
+                94.0
+              ]
+            },
+            {
+              "name": "A-only",
+              "y": [
+                184.2,
+                108.4,
+                102.4
+              ]
+            }
+          ]
+        },
+        {
+          "name": "F2",
+          "x": [
+            1,
+            2,
+            3
+          ],
+          "series": [
+            {
+              "name": "Full",
+              "y": [
+                121.0,
+                108.7,
+                104.7
+              ]
+            },
+            {
+              "name": "A-only",
+              "y": [
+                124.7,
+                115.6,
+                113.6
+              ]
+            }
+          ]
+        }
+      ],
+      "caption": "The transition matrix A carried most of the useful online adaptation after the shared checkpoint."
+    },
+    {
+      "figure_id": "FIG-04",
+      "title": "Twenty-world forward transfer",
+      "type": "grouped_bar_with_sem",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-07 forward results",
+      "metric": "adaptation_tau_steps",
+      "groups": [
+        {
+          "target": "F3",
+          "bars": [
+            {
+              "branch": "F1/F2 history",
+              "mean": 69.1,
+              "sem": 6.4
+            },
+            {
+              "branch": "F2-only",
+              "mean": 105.8,
+              "sem": 8.8
+            },
+            {
+              "branch": "Scratch",
+              "mean": 217.2,
+              "sem": 4.4
+            }
+          ]
+        },
+        {
+          "target": "Matched random",
+          "bars": [
+            {
+              "branch": "F1/F2 history",
+              "mean": 153.5,
+              "sem": 6.4
+            },
+            {
+              "branch": "F2-only",
+              "mean": 159.2,
+              "sem": 6.6
+            },
+            {
+              "branch": "Scratch",
+              "mean": 204.7,
+              "sem": 5.6
+            }
+          ]
+        }
+      ],
+      "caption": "Component history accelerated the additive target but offered little advantage over F2-only history on matched random dynamics."
+    },
+    {
+      "figure_id": "FIG-05",
+      "title": "Instantaneous versus sequential compositional update geometry",
+      "type": "bar_with_sem",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-07 update-direction mechanism",
+      "metric": "cosine_alignment",
+      "bars": [
+        {
+          "label": "Fixed checkpoint: F3",
+          "mean": 0.8662,
+          "sem": 0.0166
+        },
+        {
+          "label": "Fixed checkpoint: random",
+          "mean": -0.0225,
+          "sem": 0.0138
+        },
+        {
+          "label": "Sequential phase: F3",
+          "mean": 0.2607,
+          "sem": 0.015
+        },
+        {
+          "label": "Sequential phase: random",
+          "mean": 0.0516,
+          "sem": 0.0066
+        }
+      ],
+      "caption": "The corrected additive field identity held strongly at a fixed checkpoint and weakened after model and trajectory changes."
+    },
+    {
+      "figure_id": "FIG-06",
+      "title": "Balanced mixture order",
+      "type": "bar_with_sem",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-08",
+      "metric": "F3 adaptation tau",
+      "bars": [
+        {
+          "label": "Alternating",
+          "mean": 103.6,
+          "sem": 9.6
+        },
+        {
+          "label": "Random 50/50",
+          "mean": 103.5,
+          "sem": 9.6
+        },
+        {
+          "label": "Blocked",
+          "mean": 111.7,
+          "sem": 8.9
+        },
+        {
+          "label": "F2-only",
+          "mean": 134.5,
+          "sem": 10.6
+        },
+        {
+          "label": "Scratch",
+          "mean": 216.4,
+          "sem": 4.7
+        }
+      ],
+      "caption": "Alternating and randomly balanced experience were effectively identical; both modestly beat blocked history."
+    },
+    {
+      "figure_id": "FIG-07",
+      "title": "Object-slot occlusion performance",
+      "type": "grouped_bar",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-09 primary results",
+      "groups": [
+        {
+          "condition": "Known pairs - flat",
+          "amodal_iou": 0.207758,
+          "hidden_recall": 0.534589
+        },
+        {
+          "condition": "Known pairs - torus",
+          "amodal_iou": 0.218694,
+          "hidden_recall": 0.275419
+        },
+        {
+          "condition": "Random instances - flat",
+          "amodal_iou": 0.191079,
+          "hidden_recall": 0.354931
+        },
+        {
+          "condition": "Random instances - torus",
+          "amodal_iou": 0.179299,
+          "hidden_recall": 0.354068
+        }
+      ],
+      "caption": "Hidden recall sometimes looked moderate, but low amodal IoU showed that recovered masks were not accurate full-object decompositions."
+    },
+    {
+      "figure_id": "FIG-08",
+      "title": "Amodal IoU falls with object count",
+      "type": "two_line_chart",
+      "rendering_status": "chart_ready_reconstruction",
+      "source": "EXP-09 multiple-instance breakdown",
+      "x": [
+        2,
+        3,
+        4
+      ],
+      "series": [
+        {
+          "name": "Flat",
+          "y": [
+            0.22648,
+            0.177967,
+            0.184742
+          ]
+        },
+        {
+          "name": "Torus",
+          "y": [
+            0.223936,
+            0.191832,
+            0.154214
+          ]
+        }
+      ],
+      "caption": "More simultaneous instances increased binding difficulty, especially in four-object torus scenes."
+    }
+  ],
+  "how_the_ai_partner_was_used": [
+    {
+      "mode": "Conceptual tutor",
+      "example": "Explaining why multiplying a small loss does not create a new learning objective."
+    },
+    {
+      "mode": "Mathematical formalizer",
+      "example": "Reducing the architecture to state-space equations and explicit local predictive-coding updates."
+    },
+    {
+      "mode": "Critical collaborator",
+      "example": "Rejecting overclaims of stored-regime memory, compositional decomposition, or intelligence."
+    },
+    {
+      "mode": "Experiment designer",
+      "example": "Adding F2-only, scratch, matched-random, A-only, inference-only, fixed-probe, and random-50/50 controls."
+    },
+    {
+      "mode": "Implementation partner",
+      "example": "Producing T4-oriented batched experiment designs, notebook cells, metrics, and plotting routines."
+    },
+    {
+      "mode": "Debugger",
+      "example": "Resolving Colab argument parsing, unstable output rendering, silent widgets, AMP loss incompatibility, and fixed-color requirements."
+    },
+    {
+      "mode": "Results interpreter",
+      "example": "Separating forward transfer, additive update geometry, catastrophic forgetting, and modular memory."
+    }
+  ],
+  "next_experiments": [
+    {
+      "priority": 1,
+      "name": "Two-object, two-slot amodal benchmark",
+      "design": "Use exactly two objects, two interchangeable slots, unique types, flat boundaries, explicit permutation-matched supervision for full masks, presence, and depth. Freeze weights during the primary occlusion test.",
+      "decision_value": "Determines whether the model can perform basic instance binding and amodal completion before adding duplicates or variable counts."
+    },
+    {
+      "priority": 2,
+      "name": "Held-out pairings only",
+      "design": "Train object identities without overlap, then test exactly two unique objects in pairings never used in any tuning set.",
+      "decision_value": "Separates general decomposition from pair-specific familiarity."
+    },
+    {
+      "priority": 3,
+      "name": "Hidden-region precision and IoU",
+      "design": "Report hidden-region precision, recall, IoU, mask area bias, and calibration rather than recall alone.",
+      "decision_value": "Prevents oversized masks from appearing successful."
+    },
+    {
+      "priority": 4,
+      "name": "Complexity ladder",
+      "design": "Add one factor at a time: held-out pairings, duplicates, three objects, four objects, torus boundaries, then a new pattern family E with the same slot count.",
+      "decision_value": "Locates the exact point at which instance binding or object priors fail."
+    },
+    {
+      "priority": 5,
+      "name": "Predictive refinement ablation",
+      "design": "Compare feed-forward slots with frozen-weight iterative slot refinement from identical initializations.",
+      "decision_value": "Tests whether predictive coding improves decomposition rather than merely reconstructing the observation."
+    },
+    {
+      "priority": 6,
+      "name": "Dynamic slot allocation",
+      "design": "Only after fixed-slot performance is strong, compare a fixed maximum slot pool with recurrent or birth-death slot allocation.",
+      "decision_value": "Tests scaling to unknown instance counts without tying slots to pattern types."
+    },
+    {
+      "priority": 7,
+      "name": "Sequential compositionality decomposition",
+      "design": "Hold checkpoint and trajectory factors fixed in a four-condition study: same checkpoint/same trajectory, updated checkpoint/same trajectory, same checkpoint/regime-specific trajectories, and updated checkpoint/regime-specific trajectories.",
+      "decision_value": "Explains why update alignment fell from 0.866 at a fixed checkpoint to 0.261 during sequential learning."
+    }
+  ],
+  "notebook_cleaning_status": {
+    "requested": true,
+    "performed_by": "delegated subagent",
+    "status": "blocked_missing_source",
+    "workspace_search_result": "The current task workspace contained no files. A broader read-only search found five unrelated notebooks from a different task and no predictive-coding, world-model, object-slot, or occlusion notebook.",
+    "action_taken": "No notebook was created, modified, or fabricated.",
+    "required_to_continue": "Provide or copy the intended .ipynb file into the current workspace."
+  },
+  "publication_notes": {
+    "recommended_title": "From Loss Plateaus to Object-Centric Predictive Coding",
+    "recommended_deck": "A day of turning a broad AGI hypothesis into local learning equations, controlled transfer experiments, and a concrete failure in occlusion.",
+    "suggested_pull_quote": "The useful result was not that predictive coding solved compositional intelligence. It was that forward transfer, additive update geometry, memory, and object decomposition separated into different empirical questions.",
+    "recommended_disclosure": "This project was directed and executed by Het Patel with GPT-5.6 Sol as an AI research partner. Results are from synthetic experiments and are not peer reviewed.",
+    "visual_disclosure": "Any portfolio charts rendered from this JSON should be labeled as reconstructions from logged summary statistics unless the original plots are later supplied."
+  }
+}

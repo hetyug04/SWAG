@@ -1,0 +1,452 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "research-diary",
+  "slug": "from-loss-plateaus-to-object-centric-predictive-coding",
+  "title": "From Loss Plateaus to Object-Centric Predictive Coding",
+  "subtitle": "A research arc through continual sample efficiency, local learning, compositional transfer, and the limits of scene reconstruction.",
+  "excerpt": "A one-day research diary on continual sample efficiency, local learning, compositional transfer, and occlusion.",
+  "date": "2026-07-28",
+  "readTime": "18 min read",
+  "tags": [
+    "Research diary",
+    "Predictive coding",
+    "Object-centric learning"
+  ],
+  "author": {
+    "name": "Het",
+    "role": "Research direction, experiments, and interpretation"
+  },
+  "lede": "The study began with a basic question about why optimization curves flatten. It ended with a concrete failure mode in object-centric perception. Between those points, a deliberately small local learner made it possible to distinguish faster adaptation from memory, transfer from composition, and scene reconstruction from object understanding.",
+  "notebook": {
+    "label": "View the original research notebook",
+    "githubUrl": "https://github.com/hetyug04/SWAG/blob/main/notebooks/ResearchDiary7_28_26.ipynb"
+  },
+  "figureProvenance": "All figures are original outputs extracted from the supplied research notebook.",
+  "entries": [
+    {
+      "id": "framing",
+      "navLabel": "The question",
+      "label": "Entry 01",
+      "phase": "Framing",
+      "title": "The loss plateau explained the curve, but not the research problem.",
+      "dek": "The useful metric became how prior experience changes the cost of learning what comes next.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "Gradient descent usually removes a changing fraction of the remaining error. Near a solution, local slopes tend to shrink, so the training curve approaches a floor instead of falling by a constant amount. That is an adequate explanation of the plateau. It is not an adequate account of intelligence.\n\nA fixed objective cannot decide which objective should follow it. Increasing the weight on a small arithmetic error does not create a calculus curriculum. The investigation therefore moved away from loss scaling and toward continual sample efficiency: how much new evidence, computation, and structural change are required after related experience.\n\nThis reframing separated four timescales that are often collapsed into one training curve: fast state inference, episodic retention, structural model revision, and slow consolidation. A latent world model supplied the state, transition, action, and observation structure. Predictive coding became the procedure for revising beliefs and local weights inside that model—not a claim that every use of backpropagation had been eliminated."
+        },
+        {
+          "type": "note",
+          "label": "Working criterion",
+          "markdown": "Measure how prior experience changes the samples, computation, and structural revision required to learn the next related regime."
+        }
+      ]
+    },
+    {
+      "id": "minimal-model",
+      "navLabel": "Minimal model",
+      "label": "Entry 02",
+      "phase": "Reduction",
+      "title": "The model was simplified until every failure had a plausible local cause.",
+      "dek": "State units, error units, iterative inference, and error-times-activity updates were enough for the first controlled test.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "The smallest useful system contained an observation, an action, a latent state, a transition model, and an observation model. Separate error populations represented disagreement with temporal and sensory predictions. Latent activity was revised for several inference steps, after which each synapse used the error produced by its own projection and the corresponding presynaptic activity."
+        },
+        {
+          "type": "math",
+          "equations": [
+            {
+              "formula": "\\hat{z}_t = A z_{t-1} + B a_{t-1} \\qquad \\hat{o}_t = W z_t",
+              "label": "Latent state and observation predictions"
+            },
+            {
+              "formula": "e_z = z_t - \\hat{z}_t \\qquad e_o = o_t - \\hat{o}_t",
+              "label": "Latent and observation prediction errors"
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "markdown": "The implementation targeted a T4 GPU with parallel environments, mixed precision for repeated matrix operations, FP32 weights and accumulators, explicit local updates, and live weight and activation plots. The predictive-coding training path contained no optimizer step and no backward call.\n\nBefore testing transfer, the handwritten updates for $W$, $A$, $B$, and the latent drive were checked against automatic differentiation. They agreed to approximately $10^{-6}$ or better. Posterior inference reduced current-observation error by about 72 percent, and a linear probe nearly recovered the hidden state. Because the environment was intentionally easy, this was a validation of the code path, not a result about intelligence."
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "\\leq 10^{-6}",
+              "label": "local-rule gradient discrepancy",
+              "latex": true
+            },
+            {
+              "value": "\\approx 72\\%",
+              "label": "posterior error reduction",
+              "latex": true
+            },
+            {
+              "value": "0",
+              "label": "optimizer or backward calls"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "first-return",
+      "navLabel": "First return",
+      "label": "Entry 03",
+      "phase": "Recurring dynamics",
+      "title": "A faster return looked like memory—until the weights were inspected.",
+      "dek": "The learner reacquired the first regime almost twice as quickly as it learned it initially.",
+      "blocks": [
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/recurring-f1-f2-f1.png",
+          "width": 1189,
+          "height": 790,
+          "alt": "Prediction error, posterior error, temporal error, and learned dynamics through the first regime, second regime, and return to the first.",
+          "caption": "Error spikes at each regime boundary. The lower plot shows one effective transition matrix moving between the two targets rather than retrieving two stored matrices.",
+          "provenance": "Notebook cell 02 · Original output"
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "370",
+              "label": "steps to learn the first regime"
+            },
+            {
+              "value": "353",
+              "label": "steps to adapt to the second"
+            },
+            {
+              "value": "187",
+              "label": "steps when the first returned"
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "markdown": "The 1.98-times reacquisition speedup was consistent with retained structure, but the plot blocked a stronger interpretation. Every switch still caused a large error spike. The effective transition matrix moved continuously away from one target and toward the other. Nothing in the run required explicit retrieval.\n\nThe two distance curves were negatively correlated because one set of parameters was being pulled between two solutions. They were not inversely proportional in a strict mathematical sense. The next run therefore extended both the regime duration and the number of returns."
+        },
+        {
+          "type": "note",
+          "label": "Interpretation",
+          "markdown": "Repeated exposure could be creating a familiar route through parameter space even if the architecture stored only one active dynamics matrix."
+        }
+      ]
+    },
+    {
+      "id": "repeated-cycles",
+      "navLabel": "Repeated cycles",
+      "label": "Entry 04",
+      "phase": "Longer schedule",
+      "title": "Five cycles made the apparent memory harder to defend.",
+      "dek": "Prediction improved on visited states even while the learned matrix sometimes moved farther from the true global dynamics.",
+      "blocks": [
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/five-recurring-cycles.png",
+          "width": 1489,
+          "height": 1089,
+          "alt": "Errors across ten alternating regimes, learned transition-matrix movement, and local plasticity magnitude.",
+          "caption": "Ten 1,500-step phases produced recurring spikes, lower error floors, and a continued oscillation of a single learned transition matrix.",
+          "provenance": "Notebook cell 03 · Original output"
+        },
+        {
+          "type": "prose",
+          "markdown": "Recovery fell from 1,123 to 712 steps for the first regime and from 1,163 to 549 for the second. Starting errors declined, final prediction floors improved, and posterior inference removed a larger fraction of current-observation error on later visits. These were real descriptive gains.\n\nThey did not amount to global system identification. Prediction error is weighted by the states the learner visits. A model can improve on that distribution while becoming less accurate elsewhere. The effective dynamics ended some later phases farther from the true matrix even as observed prediction error improved.\n\nThree explanations remained: adaptation concentrated in the transition matrix, a more mature latent representation, or a stable parameter-space cycle. A shared-checkpoint ablation was needed to localize the effect."
+        }
+      ]
+    },
+    {
+      "id": "ablation",
+      "navLabel": "Ablation",
+      "label": "Entry 05",
+      "phase": "Ablation",
+      "title": "Transition-matrix plasticity carried the adaptation without preserving both worlds.",
+      "dek": "Full plasticity and transition-only learning behaved alike; inference alone remained specialized to the most recent regime.",
+      "blocks": [
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/plasticity-branch-ablation.png",
+          "width": 1489,
+          "height": 1082,
+          "alt": "Full plasticity, transition-matrix-only plasticity, and inference-only branches on the same alternating data.",
+          "caption": "All branches began from one checkpoint and saw the same stream. Full and transition-only learning nearly overlap; inference-only cannot revise the structural model.",
+          "provenance": "Notebook cell 04 · Original output"
+        },
+        {
+          "type": "prose",
+          "markdown": "Continued learning in the observation and action projections contributed little after the shared checkpoint. Updating only $A$ nearly matched the fully plastic branch, which localized most useful adaptation to the transition model. The inference-only branch remained effective on the active second regime but could not recover inactive first-regime dynamics.\n\nFixed probes were decisive. After training ended on the second regime, normalized error was 0.744 on the first and 0.018 on the second—a roughly 41-times disparity. Faster online curves had been hiding catastrophic forgetting."
+        },
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/continuous-vs-reset-timescales.png",
+          "width": 1389,
+          "height": 489,
+          "alt": "Fitted adaptation timescales with continuous transition weights versus resetting the transition matrix each phase.",
+          "caption": "Preserving the transition matrix helped the continuous branch accelerate on the first regime, but neither condition turned one matrix into a two-regime memory.",
+          "provenance": "Notebook cell 05 · Original output",
+          "compact": true
+        },
+        {
+          "type": "note",
+          "label": "Negative result",
+          "markdown": "Repeated switching produced increasingly efficient movement along a familiar parameter path, not stored-regime retrieval."
+        }
+      ]
+    },
+    {
+      "id": "composition",
+      "navLabel": "Composition",
+      "label": "Entry 06",
+      "phase": "Compositional transfer",
+      "title": "A new target separated reusable experience from simple revisitation.",
+      "dek": "The stronger test asked whether prior factors made a genuinely new composed target easier to learn.",
+      "blocks": [
+        {
+          "type": "math",
+          "equations": [
+            {
+              "formula": "F_1 = F_0 + \\beta D_1",
+              "label": "First dynamics regime equals the shared base plus the first perturbation"
+            },
+            {
+              "formula": "F_2 = F_0 + \\beta D_2",
+              "label": "Second dynamics regime equals the shared base plus the second perturbation"
+            },
+            {
+              "formula": "F_3 = F_0 + \\beta(D_1 + D_2)",
+              "label": "Composed target equals the shared base plus both perturbations"
+            }
+          ]
+        },
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/composed-f3-transfer.png",
+          "width": 1489,
+          "height": 540,
+          "alt": "Learning curves for the composed target after component history, second-component-only history, and training from scratch.",
+          "caption": "Every branch remained plastic and received the identical composed-target stream. The second-component-only control matched generic pretraining time while withholding the first component.",
+          "provenance": "Notebook cell 06 · Original output"
+        },
+        {
+          "type": "prose",
+          "markdown": "A scratch comparison alone would have been too weak: almost any pretraining might improve conditioning. The useful control was equal-duration history on $F_2$. It matched generic experience and proximity to the second factor while withholding $D_1$.\n\nComponent history adapted to $F_3$ with a fitted time constant of 84.5, compared with 104.0 for the controlled history and 196.7 from scratch. Early loss area fell 17.1 percent relative to the controlled history and 89.3 percent relative to scratch.\n\nThis was positive transfer from the missing factor, but not yet evidence of explicit symbolic composition. Shared subspaces, favorable parameter proximity, and factor-aligned update directions remained viable explanations. A preliminary backward test was also negative: after training on the composed target, prediction of the second component degraded by 373 percent relative to the pre-composition chain."
+        }
+      ]
+    },
+    {
+      "id": "mechanism",
+      "navLabel": "Twenty-world test",
+      "label": "Entry 07",
+      "phase": "Replication",
+      "title": "Twenty worlds located a narrow additive mechanism.",
+      "dek": "The replication confirmed target-specific forward transfer and showed where the additive interpretation stopped working.",
+      "blocks": [
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/twenty-world-transfer-specificity.png",
+          "width": 1389,
+          "height": 514,
+          "alt": "Adaptation speed and early prediction loss for a composed target and matched random target across twenty worlds.",
+          "caption": "Component history clearly helped the aligned target. On matched random dynamics, component history and the controlled history were much closer.",
+          "provenance": "Notebook cell 08 · Original output"
+        },
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "69.1 \\pm 6.4",
+              "label": "adaptation time after component history",
+              "latex": true
+            },
+            {
+              "value": "105.8 \\pm 8.8",
+              "label": "after the controlled history",
+              "latex": true
+            },
+            {
+              "value": "217.2 \\pm 4.4",
+              "label": "from scratch",
+              "latex": true
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "markdown": "The matched random target separated factor-specific transfer from generic adaptability. Component history was much faster on the aligned composition, while the two pretrained histories were nearly tied on random dynamics. Across twenty independent worlds, the result no longer depended on a small collection of convenient systems.\n\nThe mechanism test compared the local transition update for the composed target with the corrected sum of its factors:"
+        },
+        {
+          "type": "math",
+          "equations": [
+            {
+              "formula": "U_3 \\approx U_1 + U_2 - U_0",
+              "label": "The composed update is approximately the sum of the component updates minus the shared base update"
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "markdown": "Subtracting the shared base was essential because the naive sum counted it twice. At a fixed checkpoint, mean cosine alignment was $0.866$ for the composed target and $-0.023$ for matched random dynamics. Once parameters, latents, and visited trajectories changed through sequential learning, alignment fell to $0.261$."
+        },
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/local-update-geometry.png",
+          "width": 1587,
+          "height": 495,
+          "alt": "Twenty-world cosine alignment, relative residual, and sequential update alignment.",
+          "caption": "The corrected additive identity is strong in the fixed-checkpoint field and substantially weaker after the learner and its trajectory have changed.",
+          "provenance": "Notebook cell 08 · Original output",
+          "compact": true
+        },
+        {
+          "type": "note",
+          "label": "Defensible claim",
+          "markdown": "Instantaneous local error geometry can be approximately additive. That does not establish modular compositional memory."
+        }
+      ]
+    },
+    {
+      "id": "interleaving",
+      "navLabel": "Interleaving",
+      "label": "Entry 08",
+      "phase": "Experience order",
+      "title": "Balanced exposure mattered more than a special schedule.",
+      "dek": "Exact alternation and a randomly ordered balanced mixture transferred almost identically.",
+      "blocks": [
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/mixed-experience-order.png",
+          "width": 1490,
+          "height": 669,
+          "alt": "Alternating, random balanced, blocked, and single-regime training streams with their online errors.",
+          "caption": "Every minibatch was followed by one local update. The alternating and random branches contained exactly equal counts of both regimes.",
+          "provenance": "Notebook cell 09 · Original output"
+        },
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/f3-after-mixed-history.png",
+          "width": 1490,
+          "height": 540,
+          "alt": "Composed-target learning curves after alternating, random balanced, blocked, single-regime, and scratch histories.",
+          "caption": "Alternating and randomly balanced histories overlap. Both modestly outperform blocked history and clearly outperform single-regime history and scratch.",
+          "provenance": "Notebook cell 09 · Original output",
+          "compact": true
+        },
+        {
+          "type": "prose",
+          "markdown": "Fitted adaptation time was 103.6 for strict alternation, 103.5 for random exact-50/50 order, 111.7 for blocked history, 134.5 for single-regime history, and 216.4 from scratch. Equal counts in the first three conditions isolated ordering from mere exposure.\n\nThere was no evidence for a privileged one-by-one alternation mechanism. Balanced experience likely helped by reducing recency bias and keeping both factor directions represented near the transfer point. The useful result was the equivalence, not a manufactured difference between nearly identical curves."
+        }
+      ]
+    },
+    {
+      "id": "occlusion",
+      "navLabel": "Occlusion",
+      "label": "Entry 09",
+      "phase": "Object-centric pivot",
+      "title": "Occlusion turned composition into a problem of instances, masks, and depth.",
+      "dek": "A visible scene can be reconstructed accurately while its objects are represented incorrectly.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "Additive matrices were not a faithful model of a tree hiding an object. Occlusion is layered composition: two complete objects remain present even when only fragments are visible. The target therefore changed to amodal completion—recovering full masks, presence, and depth order for both the occluded object and its occluder."
+        },
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/canonical-pattern-families.png",
+          "width": 949,
+          "height": 259,
+          "alt": "Four fixed-color pattern families used in the object-slot occlusion experiment.",
+          "caption": "Four canonical pattern families retained fixed colors. The model used four interchangeable slots and no pattern-type-specific output heads.",
+          "provenance": "Notebook cell 10 · Original output",
+          "compact": true
+        },
+        {
+          "type": "prose",
+          "markdown": "The fixed-color run trained for 1,800 updates in 160.6 seconds. It tested known and held-out pairings, duplicate types, variable instance counts, and both flat and toroidal boundaries. Primary amodal intersection-over-union ranged from 0.179 to 0.219. Four-object torus scenes fell to 0.154 with roughly 29 percent count accuracy."
+        },
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/occlusion-decomposition-metrics.png",
+          "width": 1582,
+          "height": 475,
+          "alt": "Amodal intersection-over-union, hidden-pixel recall, and instance-count accuracy across occlusion conditions.",
+          "caption": "Hidden recall can look moderate while amodal intersection-over-union remains poor: an oversized mask can cover hidden pixels without recovering the correct object.",
+          "provenance": "Notebook cell 10 · Original output"
+        },
+        {
+          "type": "figure",
+          "src": "/uploads/from-loss-plateaus-to-object-centric-predictive-coding/occlusion-decomposition-examples.png",
+          "width": 2028,
+          "height": 1136,
+          "alt": "Occluded inputs, feed-forward and refined predictions, and slot-level object reconstructions.",
+          "caption": "Qualitative outputs expose blurred and duplicated slot assignments. Visible recomposition was easier than correct instance decomposition.",
+          "provenance": "Notebook cell 10 · Original output"
+        },
+        {
+          "type": "note",
+          "label": "Failure that changed the next study",
+          "markdown": "The bottleneck was instance binding and amodal mask precision, not the ability to render visible pixels. Low recomposition error was rejected as evidence of object understanding."
+        }
+      ]
+    },
+    {
+      "id": "reflection",
+      "navLabel": "Reflection",
+      "label": "Entry 10",
+      "phase": "Research process",
+      "title": "Recording the work exposed gaps in how results were framed.",
+      "dek": "The first recorded research day became evidence for improving the research workflow itself.",
+      "blocks": [
+        {
+          "type": "claims",
+          "groups": [
+            {
+              "title": "Supported by these studies",
+              "tone": "supported",
+              "items": [
+                "The explicit local update equations matched exact gradients in the linear baseline.",
+                "Repeated experience reduced adaptation time in the synthetic switching system.",
+                "Component history produced target-specific positive transfer across twenty worlds.",
+                "The fixed-checkpoint local update field was approximately additive after correcting for the shared base."
+              ]
+            },
+            {
+              "title": "Not established",
+              "tone": "unsupported",
+              "items": [
+                "Repeated switching did not create explicit memories for both regimes.",
+                "Faster adaptation did not establish symbolic composition.",
+                "Low visible-scene error did not establish object permanence or correct decomposition.",
+                "The synthetic results do not support claims about human cognition, large language models, or AGI."
+              ]
+            }
+          ]
+        },
+        {
+          "type": "note",
+          "label": "Next study",
+          "markdown": "Extend predictive coding/gating mechanism to introduce long term memory matrix architecture"
+        },
+        {
+          "type": "status",
+          "title": "Scientific status",
+          "body": "The experiments are small synthetic studies designed to isolate learning dynamics. They are not evidence about large language models, human cognition, or embodied intelligence without further work.",
+          "meta": "Not peer reviewed. The numerical record is detailed, but exact independent replication requires the source notebook and random seeds."
+        },
+        {
+          "type": "quote",
+          "markdown": "Today was a successful run of the first time recording my research work, this is to help me understand how I research my self so I can improve my workflow and my scientific rigor. Today, I noticed that I lacked clear sight of exactly how I measured my results. Pivots from one hypotheses to another was better than usual, however I felt, in retrospect, that I should more intentionally design more specific result frameworks instead of looking too broad",
+          "attribution": "Het"
+        }
+      ]
+    }
+  ],
+  "footer": [
+    "Het directed the questions, experimental pivots, standards of evidence, and interpretation. The AI research partner supported mathematical review, implementation, debugging, experiment design, and adversarial checks.",
+    "Every figure in this diary was extracted directly from `ResearchDiary7_28_26.ipynb`. No reconstructed chart is presented as an original notebook output."
+  ]
+}

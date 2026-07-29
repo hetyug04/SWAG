@@ -1,13 +1,13 @@
 ---
-slug: project-slug
-name: project-name
-description: Short description of the project.
-stars: 0
-forks: 0
-language: TypeScript
-github: https://github.com/username/project-name
+title: "{{title}}"
+summary: "What the project does and why it exists."
+date: "{{date}}"
+tags:
+  - software
+language: "TypeScript"
+externalUrl: "https://github.com/hetyug04/{{slug}}"
 ---
 
-# Project Name
+# {{title}}
 
-Describe your project in Markdown.
+Describe the problem, approach, result, and how to run the project.

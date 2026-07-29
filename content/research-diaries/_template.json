@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "research-diary",
+  "slug": "{{slug}}",
+  "title": "{{title}}",
+  "subtitle": "State the research arc in one sentence.",
+  "excerpt": "A concise summary for the research diary index.",
+  "date": "{{date}}",
+  "readTime": "10 min read",
+  "tags": [
+    "Research diary",
+    "Topic"
+  ],
+  "author": {
+    "name": "Het",
+    "role": "Research direction, experiments, and interpretation"
+  },
+  "lede": "Open with the original question, the final question, and the most important change in understanding.",
+  "notebook": {
+    "label": "View the original research notebook",
+    "githubUrl": "https://github.com/hetyug04/SWAG/blob/main/notebooks/example.ipynb"
+  },
+  "figureProvenance": "Explain where the figures came from and whether they are original outputs.",
+  "entries": [
+    {
+      "id": "starting-question",
+      "navLabel": "Starting question",
+      "label": "Entry 01",
+      "phase": "Framing",
+      "title": "Write this entry as one meaningful turn in the research arc.",
+      "dek": "Summarize why this turn mattered.",
+      "blocks": [
+        {
+          "type": "prose",
+          "markdown": "Write in objective view. Standard Markdown and inline LaTeX such as $E = mc^2$ are supported."
+        },
+        {
+          "type": "note",
+          "label": "Decision",
+          "markdown": "Record the interpretation, negative result, or decision that moved the work forward."
+        }
+      ]
+    }
+  ],
+  "footer": [
+    "State authorship, AI assistance, source provenance, and any limits on reproducibility."
+  ]
+}

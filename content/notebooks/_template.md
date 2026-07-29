@@ -1,15 +1,11 @@
 ---
-slug: repo-slug
-title: Repo Title
-description: Brief description of the repository.
-date: Dec 03, 2025
+title: "{{title}}"
+summary: "What this notebook explores or demonstrates."
+date: "{{date}}"
+tags:
+  - notebook
 ---
 
-# Repo Title
+# {{title}}
 
-Explain your repository/tutorial in Markdown. Include code blocks.
-
-```python
-import numpy as np
-print(np.arange(5))
-```
+Explain the setup, analysis, and result. Add fenced code blocks directly in Markdown.

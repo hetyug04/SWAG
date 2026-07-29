@@ -3,15 +3,15 @@ import { Code, Star, GitFork } from "lucide-react";
 
 export default function ProjectsPage() {
   return (
-    <div className="bg-white min-h-screen pb-20">
+    <div className="min-h-screen pb-20">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="flex items-center gap-3 mb-8">
           <div className="p-2 bg-green-50 rounded-lg">
             <Code className="w-8 h-8 text-green-600" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900">Projects</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
         </div>
-        <p className="text-xl text-gray-600 mb-12 max-w-3xl">
+        <p className="text-lg text-gray-600 mb-12 max-w-3xl">
           Showcase of my personal and professional projects.
         </p>
 

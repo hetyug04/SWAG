@@ -1,15 +1,19 @@
 ---
-slug: paper-slug
-title: Paper Title
-authors: Author Name et al.
-date: "2025"
+title: "{{title}}"
+summary: "One or two sentences describing the question, method, and result."
+authors: "Het Patel"
+date: "{{date}}"
 tags:
-  - Tag1
-  - Tag2
-abstract: Brief summary of the paper (2-3 sentences).
-link: https://arxiv.org/abs/XXXX.XXXXX
+  - research
+externalUrl: ""
+download: "{{download}}"
+preview: "{{preview}}"
 ---
 
-# Full Paper Content
+# {{title}}
 
-Write your paper content in Markdown.
+Write or paste the paper in Markdown. Inline equations use `$E = mc^2$` and display equations use:
+
+$$
+E = mc^2
+$$

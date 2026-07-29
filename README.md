@@ -1,46 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# S.W.A.G
 
-## Project Structure
+A small research and software portfolio built with Next.js. Papers, projects, notebooks, and regular blog posts live as Markdown under `content/`; visual research diaries use structured JSON.
 
-This portfolio is structured as follows:
-
-- `src/app/papers`: Research papers and publications.
-- `src/app/projects`: Personal and professional projects.
-- `src/app/notebooks`: Jupyter notebooks.
-- `src/app/blog`: Blog posts.
-- `src/content`: Directory to store the actual content (markdown, notebooks, etc.).
-
-## Getting Started
-
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Quality checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## Add content
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run new -- paper "Paper title"
+npm run new -- project "Project title"
+npm run new -- notebook "Notebook title"
+npm run new -- blog "Post title"
+npm run new -- research-diary "Diary title" --assets "C:\path\to\figures"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a paper and copy its PDF and optional static preview into the correct public upload folder in one command:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run new -- paper "Paper title" --pdf "C:\path\to\paper.pdf" --preview "C:\path\to\preview.webp"
+```
 
-## Deploy on Vercel
+Run `npm run new -- --help` for deterministic `--slug` and `--date` overrides. Validate research-diary documents with `npm run validate:content`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The AI-facing content contract is available at `/api/ai/content-contract`. It exposes diary discovery, read, and validation endpoints; publishing remains a repository workflow because Vercel deployments have an immutable filesystem.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [content/README.md](content/README.md) for frontmatter, file uploads, equations, PDFs, and the AI-assisted workflow.
+
+## Deployment
+
+The repository is hosted on Vercel. A push to the connected production branch triggers a rebuild; local edits do not affect the live site.
