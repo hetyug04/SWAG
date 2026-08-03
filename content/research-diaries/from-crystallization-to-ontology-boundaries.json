@@ -328,6 +328,11 @@
               "decisionValue": "This separates stable effects from paths caused by one seed, one GPU, or one numerical mode."
             }
           ]
+        },
+        {
+          "type": "quote",
+          "markdown": "Along this path, I learned that AI-assisted research has to be steered very carefully over the long run. When extending or interpreting results, a model is strongly biased by whatever is written in the prompt. Tell it to find a problem, and it finds one. Tell it to find a fix, and it finds one. Ask it to judge results against a hypothesis, and 100% of the time it says, “The results support it partially, but the negative result is more revealing; investigate the negative.” This can become a loop: negative finding, new branch, another negative finding, another branch.\n\nThe problem is how to make an LLM hold the research direction without adding that direction as a new bias in every prompt. The effect compounds. Tell it to scrutinize A, and it splits A into B, C, and D; decides D is wrong; then redirects the project toward D. I need better control mechanisms that maintain a constant direction and allow deviation only when I explicitly ask for it.\n\nAt the same time, I find myself taking more control over the research direction as my own knowledge grows. With recent advances such as GPT Astra, I am convinced that current state-of-the-art AI can genuinely help with research and make new connections. A tool like this makes it easier for me, as a human, to form higher-quality abductive hypotheses that may lead to real advances.",
+          "attribution": "Author notes"
         }
       ]
     }
