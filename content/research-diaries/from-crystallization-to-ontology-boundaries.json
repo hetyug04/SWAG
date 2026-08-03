@@ -3,8 +3,8 @@
   "documentType": "research-diary",
   "slug": "from-crystallization-to-ontology-boundaries",
   "title": "From Crystallization to the Ontology Boundary",
-  "subtitle": "Three experiment sets trace where active symbolic world models work, where neural proposals help, and where the assumptions finally break.",
-  "excerpt": "A preservation-first account of 38 standalone experiment programs spanning automata learning, crystallized planning, symbolic abstraction, ontology acquisition, and exact certification—including every negative, null, interrupted, and failed result.",
+  "subtitle": "I asked a simple question: when can a machine turn experience into a small, exact theory of its world? Three experiment sets show where this works, where neural hints help, and where the idea breaks.",
+  "excerpt": "A plain-language record of 38 experiment programs on automata learning, symbolic planning, abstraction, ontology discovery, and exact checking. Failed, null, and unfinished results are included because they tell us where the idea stops working.",
   "date": "2026-08-03",
   "readTime": "28 min read",
   "tags": [
@@ -18,24 +18,24 @@
     "name": "Het",
     "role": "Research direction, experiments, and interpretation"
   },
-  "lede": "The archive began with a strong recurring idea: query a learned or hidden world, compress its behavior into an executable symbolic theory, and use contradictions to revise that theory. Across three notebooks, the idea succeeds repeatedly when the state space, grammar, reset operation, or verification contract is supplied. The most informative result arrives when those supports are removed: the ontology-free bootstrap fails across state discovery, graph recovery, transfer, and novelty handling. The record therefore narrows the claim rather than erasing the progress.",
+  "lede": "The idea was this: ask a world questions, turn its answers into a small theory that can run as code, and repair the theory whenever reality contradicts it. This worked surprisingly well when I gave the learner a clear set of states, a rule language, a reset button, or a precise way to check its answer. Then I removed those supports. The learner could no longer reliably discover the states, recover the transition graph, transfer old rules, or recognize something new. That failure does not erase the earlier results. It tells us exactly what those results depend on.",
   "notebook": {
     "label": "View the three cleaned notebooks and full scientific records",
     "githubUrl": "https://github.com/hetyug04/SWAG/tree/main/notebooks"
   },
-  "figureProvenance": "All eight figures are original PNG outputs extracted byte-for-byte from the supplied notebooks. No chart was reconstructed or cosmetically altered. Every number comes from stored stdout, stderr, error traces, machine-readable JSON, or these embedded figures. Detailed verbatim records and cell manifests are published under notebooks/records.",
+  "figureProvenance": "The eight figures below are the original PNG files from the notebooks, copied byte-for-byte. I did not redraw or beautify them. Every number comes from saved output, an error trace, machine-readable JSON, or one of these figures. The full cell-by-cell records are in notebooks/records.",
   "entries": [
     {
       "id": "preservation-before-interpretation",
       "navLabel": "Preservation",
       "label": "Entry 01",
       "phase": "Audit and cleanup",
-      "title": "The first result was that these were experiment archives, not ordinary notebooks.",
-      "dek": "Thirty-eight standalone experiment programs, several revisions, concatenated scripts, interrupted runs, and output/source mismatches had to be separated before the science could be summarized honestly.",
+      "title": "Before asking what the experiments meant, I had to find out what had actually run.",
+      "dek": "The notebooks mixed 38 programs, several revisions, joined scripts, stopped runs, and cases where the saved code did not match the saved output. I separated these before drawing conclusions.",
       "blocks": [
         {
           "type": "prose",
-          "markdown": "The three source files contained 40 code cells, of which 37 were nonempty. Two cells each concatenated two complete programs, yielding **38 standalone experiment programs plus one artifact-display utility**. There were no explanatory Markdown cells. Execution counts were non-monotone, global names were repeatedly redefined, and many programs wrote to the same transient `/content` directories. Embedded PNGs and verbose logs accounted for most of the 4.8 MB archive.\n\nThe cleanup kept every nonempty program and its original cell index, stripped stored outputs only after a cell-by-cell scientific audit, added section and provenance cells, separated concatenated programs, and moved artifacts into collision-free relative directories. The three original SHA-256 hashes are recorded in notebook metadata. Full textual outputs, including all 81 V5 gate configurations, remain in the published scientific records."
+          "markdown": "There were 40 code cells in the three source files; 37 contained code. Two cells each held two complete programs. The true count was therefore **38 experiment programs plus one small artifact-display utility**. There were no Markdown notes explaining the work. Cell numbers jumped around, programs reused the same global names, and many wrote into the same temporary `/content` folders. Most of the 4.8 MB came from long logs and embedded PNG figures.\n\nI kept every nonempty program and its original cell number. I removed saved outputs only after auditing every cell. I added headings and provenance, split the joined programs, and gave each experiment its own relative output folder. The cleaned notebooks record the SHA-256 hash of each original file. The detailed records still contain the full text output, including all 81 settings tested for the V5 gate."
         },
         {
           "type": "stats",
@@ -61,13 +61,13 @@
         {
           "type": "note",
           "label": "Evidence rule",
-          "markdown": "A repaired cell is reproducible code, not retroactive evidence. The deterministic FP32 arithmetic cell still has **no completed scientific result** because its archived source failed to parse. The V13 dtype repair follows the completed V13.1 correction, but the failed V13 run remains failed. Likewise, the V6 export fix present in the stored source was not validated by the older output that stopped during CSV writing."
+          "markdown": "Fixing code makes it runnable now; it does not create a result in the past. The deterministic FP32 arithmetic program still has **no completed result** because the archived version could not be parsed. V13 now contains the dtype repair later used successfully in V13.1, but the original V13 run is still recorded as a failure. The stored V6 code contains an export fix, but its old run stopped while writing CSV, so that fix was never tested by the archived execution."
         },
         {
           "type": "status",
           "title": "Reproducibility scope",
-          "body": "All programs parse in the cleaned notebooks and all registered settings, seeds, controls, and metrics are retained. Exact bitwise replay is not promised where the historical runs used AMP, BF16, TF32, cuDNN benchmarking, GPU-specific branches, unpinned dependencies, or a single seed.",
-          "meta": "Historical experiment record; not peer reviewed. Fast/dev modes are smoke tests, not substitutes for the recorded full runs."
+          "body": "Every program now parses, and the cleaned notebooks keep all recorded settings, seeds, controls, and measurements. Some old GPU runs used AMP, BF16, TF32, cuDNN benchmarking, unpinned packages, hardware-specific branches, or only one seed. For those runs, I do not claim bit-for-bit replay.",
+          "meta": "This is a historical experiment record, not a peer-reviewed paper. Fast and development modes only test whether the code runs; they do not repeat the full experiment."
         }
       ]
     },
@@ -76,12 +76,12 @@
       "navLabel": "Set I",
       "label": "Entry 02",
       "phase": "Active theories and abstraction",
-      "title": "Exact finite theories were recoverable; useful abstractions were conditional and sometimes harmful.",
-      "dek": "The first set moves from contradiction-driven automata revision through shared representations and reusable Boolean languages to extracting symbolic behavior from neural endpoints.",
+      "title": "Small exact theories could be recovered, but abstraction helped only under the right conditions.",
+      "dek": "The first set asks whether contradictions can repair an automaton, whether several worlds can share one description, and whether a neural model's behavior can be turned into symbols.",
       "blocks": [
         {
           "type": "prose",
-          "markdown": "**Residual NFA revision.** An inherited 22-state/64-arc theory with bounded accuracy 0.9663 was replaced in two rounds by an exact 9-state theory after 299 membership queries. The capacity-bounded variant also succeeded, with a one-arc version difference that remains unexplained rather than averaged away.\n\n**Mealy revision and its null control.** A 24-complexity inherited transducer collapsed to the exact six-state/twelve-arc world in two rounds. The uncapped control followed the identical trajectory, so the hard capacity limit had **no observed causal effect** in this run.\n\n**Unification and frame invention.** Bit-coded W-method experiments recovered a shared six-state latent machine across four renamed views, reducing 392 separate-description bits to 215 and recovering every hidden action translation. Unrelated worlds remained separate. A supplied register-program DSL then compressed four related 436-bit flat tables to a 138-bit `(2,3)` coordinate program while rejecting unrelated unification.\n\n**Reusable Boolean languages.** Paid NAND-derived macros recovered the planted mechanism in 8/9 families. Related code cost fell to 0.521 of baseline, but the evaluation-count confidence interval included no advantage and unrelated evaluation cost worsened to 1.792×. Sequential worlds produced two correct reusable gates, cutting related transfer cost 21→6, evaluations 73,876→3,480, and queries 12→8.33. A broader sample-complexity experiment found a strong semantics×price interaction, but two registered predictions failed: a disjoint vocabulary modestly helped rather than hurt, and the expensive correct vocabulary did not approximate baseline closely enough.\n\n**Fallible adoption.** A first broad endpoint misleadingly reported an MDL-positive library everywhere. The corrected planted-XOR/XNOR endpoint showed that target-library optimality collapsed with contamination and noise—for example, at fully related data it fell from 1.00 with no noise to 0.03 at 20% noise. Whenever the target was globally optimal, the greedy learner found it; the failure was evidential support, not local search.\n\n**Neural endpoints.** Symbolic regression recovered `force/mass` from analytic and three trained black boxes and rejected a random-network control, yet macros did not reduce the stable query count. A five-state DFA extracted from each of three imperfect transformers had perfect sampled truth generalization while matching each endpoint's imperfect long-sequence behavior; bounded certification must not be confused with proof at every length."
+          "markdown": "**Can contradictions repair a bad automaton?** The starting NFA had 22 states, 64 arcs, and bounded accuracy 0.9663. After 299 membership questions and two repair rounds, the learner found an exact 9-state theory. A capacity-limited version also worked. It differed by one arc, and I leave that difference visible because I cannot explain it.\n\n**Did the capacity limit cause the repair?** A second test began with a Mealy machine of complexity 24. Two rounds reduced it to the exact world: six states and twelve arcs. But the version without a capacity limit followed exactly the same path. In this run, the limit had **no measurable causal effect**.\n\n**Can several renamed worlds share one theory?** Yes, when they really are the same underneath. The W-method tests found one hidden six-state machine behind four renamed views. The description shrank from 392 bits for separate models to 215 bits, and every hidden action translation was recovered. Unrelated worlds stayed separate. With a supplied register-program language, four related 436-bit tables became one 138-bit `(2,3)` coordinate program; unrelated tables were again rejected.\n\n**Can a useful Boolean vocabulary be learned?** Sometimes. Paid NAND-based macros recovered the planted mechanism in 8 of 9 families. For related tasks, code cost fell to 0.521 of baseline. But the confidence interval for evaluation count still included no improvement, and unrelated tasks became worse at 1.792 times the baseline evaluation cost. In sequential worlds, two correct reusable gates cut transfer cost from 21 to 6, evaluations from 73,876 to 3,480, and queries from 12 to 8.33. A larger study found that meaning and price strongly interacted. It also disproved two predictions: a disjoint vocabulary helped a little instead of hurting, and an expensive correct vocabulary did not come close enough to baseline.\n\n**When should a learned library be trusted?** An early endpoint said the library was MDL-positive everywhere. That was misleading. In the corrected XOR/XNOR experiment, support for the true library collapsed as unrelated data and noise increased. With fully related data, target optimality fell from 1.00 at zero noise to 0.03 at 20% noise. Whenever the target library truly was the global optimum, the greedy search found it. The problem was lack of evidence, not failure of local search.\n\n**Can symbols be extracted from a neural model?** Symbolic regression recovered `force/mass` from the analytic system and from three trained black boxes, while rejecting a random-network control. The macros did not reduce the stable number of queries. In another test, a five-state DFA extracted from each of three imperfect transformers was perfect on the sampled hidden-language test while still matching each transformer's mistakes on long sequences. That is useful denoising on a bounded test. It is not a proof for every possible sequence length."
         },
         {
           "type": "figure",
@@ -89,7 +89,7 @@
           "width": 1361,
           "height": 611,
           "alt": "Bar chart comparing three transformers and their extracted symbolic DFAs on bounded and long hidden-language accuracy, beside the five-state extracted DFA graph.",
-          "caption": "The extracted five-state DFAs scored perfectly against the hidden language on the sampled long test while the neural endpoints remained imperfect. This is bounded/sample evidence of symbolic denoising, not proof of equivalence at every length.",
+          "caption": "On the sampled long test, the extracted five-state DFAs matched the hidden language perfectly while the neural models still made mistakes. This shows symbolic denoising on this test, not equivalence at every possible length.",
           "provenance": "Original embedded PNG from NFAWorldModel.ipynb, source cell 14 (tiny transformer to symbolic DFA)."
         },
         {
@@ -115,7 +115,7 @@
         },
         {
           "type": "prose",
-          "markdown": "**Evolving neural arithmetic.** A single-seed study extracted the exact five-state ADD/SUB machine from a recurrent neural endpoint. The ten-seed replication found first exact machines at epochs 10–19, often before sustained ≥.99 neural mastery, but the preregistered canonical four-state carry/borrow waypoint occurred in **0/10 seeds**. A paired learning-rate study again found zero canonical waypoints across 20 arms: slow learning produced frequent undersplitting; fast learning more often produced direct or oversplit paths. Among nine eligible fast-arm seeds, faithful exact extraction preceded mastery in 6/9. Many intermediate extractions hit the state cap or remained exactly wrong despite high sampled neural accuracy. The attempted deterministic FP32 rewrite did not run because its source had a syntax error."
+          "markdown": "**Does a neural arithmetic learner pass through a simple intermediate theory?** In one seed, I extracted the exact five-state ADD/SUB machine from a recurrent neural model. Across ten seeds, the first exact machines appeared at epochs 10–19, often before the neural model stayed above .99 accuracy. But the preregistered four-state carry/borrow waypoint appeared in **0 of 10 seeds**.\n\nA paired learning-rate test gave the same answer: zero canonical waypoints in 20 arms. Slow learning often produced too few states. Fast learning more often went directly to an exact machine or split into too many states. In 6 of 9 eligible fast arms, a faithful exact machine appeared before neural mastery. Many intermediate machines hit the state limit or were exactly wrong even when sampled neural accuracy was high. A planned deterministic FP32 rerun never started because the archived source had a syntax error."
         },
         {
           "type": "figure",
@@ -123,7 +123,7 @@
           "width": 1689,
           "height": 465,
           "alt": "Three-panel paired learning-rate result showing extracted state complexity, predeclared outcome fractions for slow and fast arms, and faithful exact recovery step versus neural mastery step.",
-          "caption": "The claim-closing run replaces the unsupported canonical-waypoint story with a directional result: slow arms undersplit more often, while fast arms more often reached direct exact or oversplit paths. Points below the diagonal in the right panel are cases where neural mastery came first.",
+          "caption": "The proposed four-state waypoint did not appear. Slow runs more often used too few states; fast runs more often went straight to an exact machine or used too many. In the right panel, points below the diagonal are cases where neural mastery came first.",
           "provenance": "Original embedded PNG from NFAWorldModel.ipynb, source cell 17 (paired learning-rate claim-closing experiment)."
         },
         {
@@ -157,12 +157,12 @@
       "navLabel": "Set II",
       "label": "Entry 03",
       "phase": "Planning, validity, and revision",
-      "title": "Crystallized planning held up; open-world rule invention did not know when to abstain.",
-      "dek": "The second set turns exact symbolic tables into planners and homeostatic memories, then calibrates when a persistent change should rewrite the model.",
+      "title": "Exact symbolic planning held up, but rule invention could not say, “I do not know.”",
+      "dek": "The second set asks whether a fixed symbolic table can plan better than a neural model, detect when its world changes, and decide when to rewrite itself.",
       "blocks": [
         {
           "type": "prose",
-          "markdown": "The original crystallization task gave both a finite machine and neural beam search 100% planning success, but median plans were only three steps and success allowed reaching the target position at any depth. The corrected protocol required an exact terminal state at an exact sampled horizon. The extracted 65-state machine remained perfect; neural beam success fell to **26.25%** while machine graph search stayed at **100%**, despite neural random-rollout state accuracy remaining 99.90% at horizon 128. The corrected experiment supersedes the easy planning claim.\n\nA prospective monitor predicted entry into a visible but symbolically omitted wind zone. Joint observation+action AUROC declined from .998 at one step to .922 at twelve, risky plans outranked paired safe plans 92.47% of the time, and joint tie-breaking cut actual exits from 47.5% to 22.25%. Yet only 74.5% of exits were prospectively detected, and held-out safe FPR was 5.78% against a 5% validation target. The unobservable-switch control stayed at chance. This is a statistical monitor, not a safety guarantee.\n\nHomeostatic re-grounding reduced single-shock integrated error from 19.596 to 1.000 and recovered 100%; the neural observer with the same observation benefited identically, so there is no symbolic exclusivity result. A balanced escalation policy reached 93.75% taxonomy accuracy with zero false L1/L2 revision and 98.83% permanent-change revision. Equal-budget active repair covered more transitions and slightly improved global accuracy (38.75% vs 36.11%) but was worse on-policy (39.21% vs 51.19%); neither learned a globally good table.\n\nRuntime MDL gating fixed that failure only because the candidate change family was supplied. Under transient shocks, naive patches grew to 118.36 states and 86.69% planning while the gated model stayed at 65 states and 100%. After a permanent force change, naive growth reached 296.35 states and 15.60% planning; the gate adopted one global rule after 33.91 steps and restored 100%. A full 81-setting calibration found exactly 27 feasible settings—all support-24 configurations. Extra confirmation probes added delay and queries without benefit once persistent support was sufficient."
+          "markdown": "**Does the symbolic machine really plan better?** At first, both the finite machine and neural beam search scored 100%. But the median plan was only three steps, and success counted if the target position appeared at any depth. The test was too easy. I changed it so the planner had to reach the exact final state at an exact sampled horizon. The 65-state symbolic machine stayed at **100%**. Neural beam search fell to **26.25%**, even though the neural model was still 99.90% accurate on random rollouts at horizon 128. The corrected test replaces the earlier easy claim.\n\n**Can the model warn us before it leaves its known world?** A monitor tried to predict entry into a visible wind zone missing from the symbolic model. Using observation and action together gave AUROC .998 one step ahead and .922 twelve steps ahead. It ranked the risky plan above its paired safe plan 92.47% of the time. As a tie-breaker, it reduced actual exits from 47.5% to 22.25%. But it warned about only 74.5% of exits, and its false-positive rate on held-out safe cases was 5.78%, above the 5% validation target. When the change was unobservable, performance stayed at chance. This is a useful statistical warning, not a safety proof.\n\n**Can the model re-ground itself after change?** After one shock, re-grounding reduced integrated error from 19.596 to 1.000 and recovered in every trial. A neural observer given the same information improved by exactly the same amount, so this does not show a uniquely symbolic advantage. A balanced escalation policy classified changes with 93.75% accuracy, made no false L1/L2 revisions, and revised 98.83% of permanent changes. With equal budgets, active repair covered more transitions and slightly improved global accuracy, 38.75% versus 36.11%, but it was worse on the policy's own data, 39.21% versus 51.19%. Neither method learned a good global table.\n\n**When should a persistent change rewrite the theory?** An MDL gate solved the patch-growth problem, but only because I supplied the possible family of changes. During temporary shocks, naive patching grew to 118.36 states and planning fell to 86.69%. The gate kept 65 states and 100% planning. After a permanent force change, naive patching grew to 296.35 states and planning fell to 15.60%. The gate adopted one global rule after 33.91 steps and returned to 100%. Testing all 81 settings found 27 feasible choices, all with support 24. Once that much persistent support was available, extra confirmation probes only added delay and queries."
         },
         {
           "type": "figure",
@@ -170,7 +170,7 @@
           "width": 1311,
           "height": 911,
           "alt": "Four-panel crystallized-world-model summary showing neural training loss, state accuracy by rollout horizon, position error, and machine-observation disagreement under nominal versus changed dynamics.",
-          "caption": "The corrected exact-horizon experiment retained a 100% accurate finite transition table and exposed a planning gap hidden by near-perfect random rollouts: machine planning was 100%, neural beam planning 26.25%.",
+          "caption": "The harder exact-horizon test revealed what random rollouts hid. The finite transition table planned successfully every time; neural beam search succeeded 26.25% of the time.",
           "provenance": "Original embedded PNG from Untitled18.ipynb, source cell 1 (corrected exact-horizon planning)."
         },
         {
@@ -179,7 +179,7 @@
           "width": 1411,
           "height": 1011,
           "alt": "Four-panel prospective-validity figure showing exit AUROC by forecast horizon, safe-plan selection, prospective versus postdictive alert time, and risk distributions for safe and zone-entering plans.",
-          "caption": "Joint observation/action context consistently outperformed either ablation and moved warnings before the domain exit, but performance weakened with forecast horizon and did not become a formal safety guarantee.",
+          "caption": "Observation and action together gave earlier, better warnings than either alone. The warning weakened farther into the future and was not reliable enough to count as a safety guarantee.",
           "provenance": "Original embedded PNG from Untitled18.ipynb, source cell 2 (prospective validity V2)."
         },
         {
@@ -188,7 +188,7 @@
           "width": 1390,
           "height": 985,
           "alt": "Four-panel calibrated compression gate figure showing false-adoption versus delay, permanent-change planning, selected-gate adoption delays, and safety/recovery rates across stress profiles.",
-          "caption": "The selected B24-G24-S24-Q0 gate sits at zero transient false adoption and recovers every tested permanent change; in the feasible support-24 region, more probes added cost without improving the decision.",
+          "caption": "The chosen B24-G24-S24-Q0 gate never adopted a temporary change and recovered every tested permanent change. With support 24, more probes cost time without improving the choice.",
           "provenance": "Original embedded PNG from Untitled18.ipynb, source cell 5 (calibrated compression gate V5)."
         },
         {
@@ -215,7 +215,7 @@
         {
           "type": "note",
           "label": "The decisive V6 boundary",
-          "markdown": "Grammar synthesis recovered representable changes exactly in 97.5% of active and passive trials; active did **not** beat passive, so registered P2 failed. Worse, parity and random-local-table controls were both outside the grammar yet a wrong in-grammar approximation was adopted in 100% of trials, with only 54.7%/56.2% transition accuracy and 18.9%/16.6% planning. The system could synthesize inside a supplied class but could not recognize that the class was wrong."
+          "markdown": "When the true change belonged to the supplied grammar, both active and passive synthesis found it exactly in 97.5% of trials. Active learning did **not** beat passive learning, so registered prediction P2 failed. The more serious result came from two changes outside the grammar: parity and a random local table. The system adopted a wrong in-grammar approximation in every trial. Transition accuracy was only 54.7% and 56.2%; planning was 18.9% and 16.6%. It could search a supplied rule class, but it could not recognize that the whole class was wrong."
         },
         {
           "type": "claims",
@@ -248,12 +248,12 @@
       "navLabel": "Set III",
       "label": "Entry 04",
       "phase": "Scaling and assumption removal",
-      "title": "Quotient transfer scaled; autonomous ontology discovery collapsed.",
-      "dek": "The third set extends the mechanism to language, large quotient spaces, raw observations, exact conformance, and non-enumerable program entropy.",
+      "title": "Transfer scaled when the pieces were named in advance. Discovering the pieces from scratch failed.",
+      "dek": "The third set pushes the method into language, larger rule spaces, raw observations, exact testing, and programs too numerous to list one by one.",
       "blocks": [
         {
           "type": "prose",
-          "markdown": "**V10.1 was interrupted.** On Tiny Shakespeare, GRU selection NLL was 1.8934 versus nanoGPT 2.4527 at step 100/2,000, but the run stopped during the next batch. No symbolic machine, hybrid gate, final validation, generation, or registered verdict exists. The early neural comparison is not a completed crystallization result.\n\n**V11 quotient transfer.** Four canonical templates compressed 1,728 raw bits to 703.2 bits (2.46×). Active and random both had median seven queries, but exact@8 was 100% versus 78.1%; the benefit was tail/fixed-budget success, not median cost. Novel detection was actually 95.8% for active versus 100% for dual and random by twelve queries. A repeated novel family was promoted after three worlds with zero promotions from twelve transient worlds.\n\n**V12 text8.** A one-pass variable-order MDL state machine scaled from 24,902 retained states at 1M characters to 832,572 at 90M. Test bpc improved from 2.1736 to 1.6359; top-1 accuracy reached 64.31%; deep order≤12 beat order≤4 (1.6359 vs 1.9762 bpc); and transition audits were exact. This was not a neural comparison, and two complete revisions had been concatenated and overwrote one artifact directory.\n\n**V13/V13.1.** The first BF16 implementation failed before training because BF16 messages were accumulated into float tensors. The corrected V13.1 turned 47.57% local neural table accuracy into 91.7% exact active crystallization at median eight observations, recovered all four recurring templates, and reached 100% unseen exact@8. Increasing proposal top-k was a material change: exact crystallization rose from 79.2% to 91.7%. An appended older V13 rerun and a nominally same-seed continuation were interrupted; their slight differences show that bitwise GPU reproducibility was not established.\n\n**V14 was the strongest negative result.** Without supplied state labels/count, action-effect labels/count, family labels, or a candidate grammar, mixture clustering looked promising (ARI .843) but behavioral ARI fell to .782, exact state count was only 22.2%, graph accuracy 15.3%, and all twelve prior graphs appeared unique. No recurring grammar was learned. Active and random both achieved 33.3% exact at median 25/36; novelty was never safely rejected or promoted. Predictions P1–P8 all failed. The printed `future exact=43/42` was a sentinel meaning “not reached,” not supernumerary success."
+          "markdown": "**V10.1: an unfinished result.** On Tiny Shakespeare, the GRU had selection NLL 1.8934 while nanoGPT had 2.4527 at step 100 of 2,000. Then the run stopped during the next batch. It never produced a symbolic machine, hybrid gate, final validation, text generation, or registered verdict. The early NLL comparison is real, but it is not a completed crystallization experiment.\n\n**V11: does quotient transfer save work?** Four reusable templates compressed 1,728 raw bits to 703.2 bits, a 2.46-fold reduction. Active and random search both needed a median of seven queries. At a fixed budget of eight, however, active search was exact in 100% of cases versus 78.1% for random. So active search improved the tail and fixed-budget success, not the median. For detecting new families by twelve queries, active scored 95.8%, while dual and random both scored 100%. A truly repeated new family was promoted after three worlds; none of twelve temporary worlds was promoted.\n\n**V12: can an MDL state machine scale to text8?** In one pass, the retained state count grew from 24,902 at 1 million characters to 832,572 at 90 million. Test bits per character improved from 2.1736 to 1.6359, and top-1 accuracy reached 64.31%. Deep contexts of order at most 12 beat shallow contexts of order at most 4: 1.6359 versus 1.9762 bpc. Transition audits were exact. There was no neural baseline, so this is not a neural comparison. The source cell also contained two full revisions that wrote over the same artifact folder; the cleaned notebook separates them.\n\n**V13 and V13.1: can neural guesses be corrected into an exact table?** The first BF16 program failed before training because it tried to add BF16 messages into float tensors. After that dtype error was fixed, V13.1 turned a local neural table with 47.57% accuracy into exact active crystallizations in 91.7% of trials, using a median of eight observations. It recovered all four recurring templates and reached 100% exact@8 on unseen cases. Increasing proposal top-k mattered: exact crystallization rose from 79.2% to 91.7%. An older V13 rerun and a nominally same-seed continuation both stopped early. Their small differences mean bit-for-bit GPU reproducibility was not established.\n\n**V14: what happens when I stop naming the world for the learner?** I removed the supplied state labels and count, action-effect labels and count, family labels, and candidate grammar. Early mixture clustering looked good, with ARI .843. But behavioral ARI fell to .782, the exact number of states was recovered only 22.2% of the time, graph accuracy was 15.3%, and all twelve old graphs looked unique. No repeated grammar was learned. Active and random search both reached 33.3% exact, with median costs of 25 and 36. New families were never safely rejected or promoted. Registered predictions P1 through P8 all failed. The printed line `future exact=43/42` was only a sentinel for “not reached,” not 43 successes out of 42."
         },
         {
           "type": "figure",
@@ -261,7 +261,7 @@
           "width": 1489,
           "height": 985,
           "alt": "Four-panel text8 MDL language-model scaling figure showing held-out bits per character, retained-state growth, suffix depths used, and unigram versus shallow and deep context ablation.",
-          "caption": "At 90 million one-pass observations the model retained 832,572 states and reached 1.6359 test bits per character. Deeper retained suffixes materially outperformed order≤4, but this experiment did not include a neural baseline.",
+          "caption": "After one pass over 90 million characters, the model kept 832,572 states and reached 1.6359 test bits per character. Deeper suffixes clearly beat order≤4. No neural baseline was tested.",
           "provenance": "Original embedded PNG from Untitled19.ipynb, source cell 3, second V12 program (250,000-state cap)."
         },
         {
@@ -270,7 +270,7 @@
           "width": 1489,
           "height": 985,
           "alt": "Four-panel V13.1 figure showing the imperfect neural checkpoint, neural table versus shuffled control versus exact active decoding, exact transfer on unseen state names, and MDL promotion after recurring residual worlds.",
-          "caption": "The supplied grammar and active evidence convert a roughly 48%-accurate neural table into 91.7% exact crystallization and retain recurring quotient rules. This is structured error correction, not autonomous ontology discovery.",
+          "caption": "With a supplied grammar and active evidence, a neural table that was only about 48% accurate led to exact tables in 91.7% of trials. This is structured error correction; the learner did not discover the ontology by itself.",
           "provenance": "Original embedded PNG from Untitled19.ipynb, source cell 5, completed V13.1 program."
         },
         {
@@ -279,12 +279,12 @@
           "width": 1489,
           "height": 985,
           "alt": "Four-panel V14 negative-result figure showing state ontology ARI below target, active and random transfer tied, zero mined grammar promotions, and ontology acquisition dominating query cost.",
-          "caption": "Removing the supplied ontology breaks the pipeline: behavioral state recovery misses the target, active transfer ties random, no recurring grammar is mined, and ontology acquisition dominates the interaction ledger.",
+          "caption": "When the ontology was removed, the pipeline broke. State recovery missed its target, active transfer tied random, no repeated grammar was found, and discovering the ontology used most of the interactions.",
           "provenance": "Original embedded PNG from Untitled19.ipynb, source cell 7 (ontology-free active learner V14)."
         },
         {
           "type": "prose",
-          "markdown": "**V16 narrowed the problem.** With an exact synthetic equivalence oracle, monotone suffix refinement recovered all 32 tested Moore machines up to 24 states; median membership queries rose from 89.5 at six states to 560 at 24. V16.1 replaced that oracle with charged W-method testing under a supplied eight-state bound. Every method certified exactly, but neural ranking used 829 median interactions—31.1% worse than the simple length heuristic, though 21.2% better than random. Charging 567,117 prior interactions made the amortized neural end-to-end cost 18,551 interactions per test.\n\n**V16.2 scaled entropy without enumeration.** At 20–80 program bits, Transformer token accuracy stayed near 98% while exact proposal rate fell from 90.6% to 76.9%; the local MLP fell from 83.8% to 54.6%. Twenty random hashes plus exact fallback produced 100% empirical correctness and no wrong accepts, with a fixed-wrong-proposal bound of $2^{-20}$, but fallback and mean query cost rose with entropy. Absolute exactness still required all $H$ identity bits. Training consumed 20,661,504 module observations—4,132 amortized per test program. The module ontology, four-bit identities, reset, and parity-hash interface were all supplied."
+          "markdown": "**V16: how much of the difficulty comes from checking the answer?** With an exact synthetic equivalence oracle, simple suffix refinement recovered all 32 tested Moore machines, up to 24 states. Median membership queries rose from 89.5 for six states to 560 for 24. V16.1 replaced the perfect oracle with charged W-method tests and a supplied eight-state upper bound. Every ranking method eventually certified the right machine. Neural ranking used a median 829 interactions. That was 21.2% better than random, but **31.1% worse than simply trying shorter tests first**. The neural ranker had already cost 567,117 interactions to acquire; including that cost raised the amortized total to 18,551 interactions per test.\n\n**V16.2: can verification scale when the program space cannot be listed?** From 20 to 80 program bits, Transformer token accuracy stayed near 98%, but exact whole-program proposals fell from 90.6% to 76.9%. The local MLP fell from 83.8% to 54.6%. Twenty random hashes followed by exact fallback gave 100% empirical correctness and accepted no wrong answer. For one fixed wrong proposal, the stated bound was $2^{-20}$. Still, fallback use and average query cost rose with program entropy. Absolute exactness required all $H$ identity bits. Training used 20,661,504 module observations, or 4,132 per test program after amortization. The module types, four-bit identities, reset operation, and parity-hash interface were all provided in advance."
         },
         {
           "type": "stats",
@@ -340,60 +340,60 @@
       "navLabel": "Adversarial pass",
       "label": "Entry 05",
       "phase": "Claim discipline",
-      "title": "The coherent conclusion is conditional usefulness, not autonomous symbolic intelligence.",
-      "dek": "The final pass treats every control, failure, incomplete run, and supplied interface as part of the result.",
+      "title": "The method is useful under clear conditions. It is not yet an autonomous symbolic scientist.",
+      "dek": "The failures, controls, unfinished runs, and supplied interfaces are not footnotes. They define what the positive results mean.",
       "blocks": [
         {
           "type": "prose",
-          "markdown": "Across the archive, finite-state learning, MDL compression, invariant quotienting, and neural-to-symbolic extraction repeatedly work when the learner receives a controlled contract: a resettable deterministic world, a state/action ontology, a finite grammar or DSL, an upper state bound, exact membership access, a parity-hash oracle, or private ground truth for audit. Those are valuable engineering and scientific results.\n\nThe strongest attempted assumption removal—V14—fails. The strongest open-world control—V6 out-of-grammar dynamics—fails by confidently adopting the wrong rule. The most direct learned-query comparison—V16.1—loses to length ordering once tested fairly and becomes extremely expensive when prior acquisition is charged. These outcomes do not cancel the earlier successes; they locate their boundary.\n\nThe scientific record also separates three forms of “exact”: formal finite equivalence, exactness conditional on a declared state bound/test suite, and perfect accuracy on a bounded or sampled audit. It separates learner-visible evidence from private ground-truth diagnostics. And it keeps incomplete source revisions out of the positive evidence count."
+          "markdown": "Here is the pattern I see. Finite-state learning, MDL compression, quotient transfer, and neural-to-symbolic extraction often work when the learner is given a clear contract. That contract may include a deterministic resettable world, named states and actions, a finite grammar or DSL, an upper bound on state count, exact membership questions, a parity-hash checker, or private ground truth for auditing. The results inside those contracts are real and useful.\n\nThen come three boundary tests. In V14, removing the supplied ontology caused the whole pipeline to fail. In V6, an out-of-grammar world made the system confidently choose the wrong rule every time. In V16.1, neural test ranking lost to the simple “short tests first” rule and became very expensive when its training cost was counted. These failures do not cancel the successes. They show where the successes stop.\n\nThe word **exact** also needs care. Sometimes it means formal equivalence for a finite machine. Sometimes it means exact only under a stated state bound and test suite. Sometimes it means perfect accuracy on a finite or sampled audit. These are different claims. I also keep apart the evidence the learner could see from private ground truth used only for diagnosis. An unfinished run never enters the positive evidence count."
         },
         {
           "type": "nextStudies",
-          "title": "Decision-ordered follow-up experiments",
+          "title": "What I would test next, in order",
           "items": [
             {
               "priority": 1,
               "name": "Calibrated abstention outside the grammar",
-              "design": "Repeat V6 with held-out representable rules and multiple unrepresentable families. Require a calibrated residual/evidence threshold that can return unknown; compare adoption, abstention, transition accuracy, and planning under fixed budgets.",
-              "decisionValue": "Determines whether symbolic invention can avoid the 100% wrong-adoption failure before any broader open-world claim."
+              "design": "Repeat V6 with some new rules that fit the grammar and several families that do not. Give the learner an evidence threshold and let it answer “unknown.” Under the same budget, measure correct adoption, abstention, transition accuracy, and planning.",
+              "decisionValue": "This asks whether the learner can avoid its 100% wrong-adoption failure before we make any larger open-world claim."
             },
             {
               "priority": 2,
               "name": "Factorized ontology recovery",
-              "design": "Replace V14's clustering-first pipeline with joint representation, intervention, and predictive-state refinement. Freeze train/test renderers and report ontology cost together with conditional transfer cost across seeds.",
-              "decisionValue": "Tests whether V14 failed because of the specific bootstrap or because the information contract is inadequate."
+              "design": "Replace V14's clustering-first method with one that learns representations, chooses interventions, and refines predictive states together. Fix the train and test renderers in advance. Across several seeds, report the cost of finding the ontology as well as the later transfer cost.",
+              "decisionValue": "This separates two explanations: perhaps V14 used the wrong bootstrap, or perhaps the available information was not enough."
             },
             {
               "priority": 3,
               "name": "Matched query-policy baselines",
-              "design": "Compare neural, length, random, entropy, and handcrafted structural rankings on the same W-method suite, with training acquisition, calibration, resets, actions, and wall time fully charged.",
-              "decisionValue": "Establishes when a learned proposal channel has positive end-to-end value rather than merely beating random."
+              "design": "Compare neural, shortest-first, random, entropy-based, and hand-built structural rankings on exactly the same W-method tests. Count every training query, calibration step, reset, action, and second of wall time.",
+              "decisionValue": "This tells us when learned ranking saves work overall, rather than merely beating random after its training cost has been hidden."
             },
             {
               "priority": 4,
               "name": "Multi-seed deterministic replication pack",
-              "design": "Rerun selected CPU-exact and GPU-sensitive experiments in containers with dataset hashes, dependency locks, serialized worlds/splits, query transcripts, and deterministic/AMP paired modes.",
-              "decisionValue": "Separates stable qualitative phenomena from single-seed or hardware-dependent trajectories."
+              "design": "Rerun selected CPU-exact and GPU-sensitive experiments in containers. Save dataset hashes, locked packages, generated worlds and splits, complete query transcripts, and paired deterministic/AMP runs.",
+              "decisionValue": "This separates stable effects from paths caused by one seed, one GPU, or one numerical mode."
             }
           ]
         },
         {
           "type": "status",
           "title": "Final evidential status",
-          "body": "The archive supports controlled finite-world learning, compression, transfer, and verification. It does not yet support robust autonomous ontology discovery, unrestricted concept invention, internal neural-state interpretation, or real-world scientific-law discovery.",
-          "meta": "All claims were checked against source cells, stored outputs, controls, errors, and version differences. Detailed records are published with the notebooks."
+          "body": "The experiments support learning, compression, transfer, and checking in controlled finite worlds. They do not yet support reliable ontology discovery from scratch, unrestricted invention of new concepts, claims about a neural model's hidden internal states, or discovery of scientific laws in the real world.",
+          "meta": "I checked each claim against the source cells, saved outputs, controls, errors, and version differences. The detailed records are published beside the notebooks."
         },
         {
           "type": "quote",
-          "markdown": "A failed assumption-removal experiment is not a detour from the research program. It is the point where the program finally says what it still needs.",
+          "markdown": "When an experiment fails after we remove an assumption, it has not wasted our time. It has told us which assumption was doing the work.",
           "attribution": "Research synthesis"
         }
       ]
     }
   ],
   "footer": [
-    "Het directed the research questions, experimental pivots, and interpretation. AI systems supported implementation, audit, cleanup, adversarial review, and preparation of this diary.",
-    "The cleaned notebooks preserve source-level provenance and remove stored outputs only after their scientific content was captured. No failed or interrupted run is presented as completed evidence.",
-    "The exhaustive cell-indexed audits and machine-readable cell manifests are available in `notebooks/records/`; they are the authority when this narrative summary omits a secondary metric."
+    "Het chose the research questions, experimental changes, and interpretation. AI systems helped with implementation, audit, cleanup, adversarial review, and preparation of this diary.",
+    "The cleaned notebooks preserve the source history. Saved outputs were removed only after their scientific content was recorded. No failed or interrupted run is counted as completed evidence.",
+    "The complete cell-by-cell audits and machine-readable manifests are in `notebooks/records/`. When this shorter account leaves out a secondary measurement, those records are the authority."
   ]
 }
