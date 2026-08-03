@@ -1,0 +1,292 @@
+[
+  {
+    "cell_index": 0,
+    "cell_type": "code",
+    "execution_count": 2,
+    "source_bytes": 21550,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 56928,
+    "purpose": "Warm-started NL*-style residual finite-state automaton learner revises an inherited NFA against a hidden regular-language oracle.",
+    "experiment_membership": "E1 NFA/RFSA theory revision, initial uncapped version",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 1,
+    "cell_type": "code",
+    "execution_count": 5,
+    "source_bytes": 24269,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 56014,
+    "purpose": "Hard-cap revision of E1; forces every emitted NFA hypothesis below a 10-state/24-arc budget.",
+    "experiment_membership": "E1 NFA/RFSA theory revision, budgeted revision",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 2,
+    "cell_type": "code",
+    "execution_count": 7,
+    "source_bytes": 24171,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 50365,
+    "purpose": "Warm-started active Mealy-machine learning under an 8-state/16-arc capacity.",
+    "experiment_membership": "E2 budgeted Mealy-world theory revision, compact-output version",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 3,
+    "cell_type": "code",
+    "execution_count": 8,
+    "source_bytes": 25619,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 54464,
+    "purpose": "Same budgeted Mealy experiment as cell 2 with every endpoint query printed and query charges separated.",
+    "experiment_membership": "E2 budgeted Mealy-world theory revision, full-query-log version",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 4,
+    "cell_type": "code",
+    "execution_count": 9,
+    "source_bytes": 25497,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 62895,
+    "purpose": "Uncapped control for the budgeted Mealy experiment.",
+    "experiment_membership": "E2 budgeted Mealy-world theory revision, uncapped control",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 5,
+    "cell_type": "code",
+    "execution_count": 10,
+    "source_bytes": 28786,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 41775,
+    "purpose": "Learns four local Mealy theories and selects a partition by description length in shared-world and unrelated-world cases.",
+    "experiment_membership": "E3 multi-framework automata unification, initial version",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 6,
+    "cell_type": "code",
+    "execution_count": 12,
+    "source_bytes": 34930,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 47425,
+    "purpose": "Strengthened multi-framework unification with a stated SUL upper bound, W-method-style conformance tests, bit-level coding cost, and exact action-translation audit.",
+    "experiment_membership": "E3 multi-framework automata unification, corrected/strengthened version",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 7,
+    "cell_type": "code",
+    "execution_count": 14,
+    "source_bytes": 30173,
+    "output_count": 1,
+    "output_types": {
+      "stream": 1
+    },
+    "output_json_bytes": 6910,
+    "purpose": "Searches over partitions and a finite register-program DSL to replace flat local transition tables with a shared latent coordinate program.",
+    "experiment_membership": "E4 program-synthesis frame invention",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 8,
+    "cell_type": "code",
+    "execution_count": 18,
+    "source_bytes": 33998,
+    "output_count": 1,
+    "output_types": {
+      "stream": 1
+    },
+    "output_json_bytes": 6245,
+    "purpose": "Infers paid executable Boolean macros from exact NAND programs, freezes the library, and measures related/unrelated transfer and ablations across nine mechanism families.",
+    "experiment_membership": "E5 executable Boolean library invention",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 9,
+    "cell_type": "code",
+    "execution_count": 33,
+    "source_bytes": 31590,
+    "output_count": 1,
+    "output_types": {
+      "stream": 1
+    },
+    "output_json_bytes": 2821,
+    "purpose": "Actively reconstructs sequential Boolean worlds, mines two paid macros, freezes them, and tests transfer to unseen sequential worlds.",
+    "experiment_membership": "E6 sequential Level-4 library invention",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 10,
+    "cell_type": "code",
+    "execution_count": 39,
+    "source_bytes": 41085,
+    "output_count": 1,
+    "output_types": {
+      "stream": 1
+    },
+    "output_json_bytes": 8837,
+    "purpose": "Factorial experiment testing how vocabulary semantics, macro cost, and operator ordering change passive sample complexity, search effort, and active identification.",
+    "experiment_membership": "E7 representation-dependent sample complexity",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 11,
+    "cell_type": "code",
+    "execution_count": 40,
+    "source_bytes": 27875,
+    "output_count": 1,
+    "output_types": {
+      "stream": 1
+    },
+    "output_json_bytes": 5996,
+    "purpose": "Greedy versus exhaustive-global-MDL Boolean concept-adoption study under contamination and observation noise; reports a broad 'any useful vocabulary' success definition.",
+    "experiment_membership": "E8 fallible concept adoption, broad-outcome version",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 12,
+    "cell_type": "code",
+    "execution_count": 41,
+    "source_bytes": 28767,
+    "output_count": 1,
+    "output_types": {
+      "stream": 1
+    },
+    "output_json_bytes": 5808,
+    "purpose": "Revised reporting of cell 11 using the stricter planted XOR+XNOR target as the primary outcome.",
+    "experiment_membership": "E8 fallible concept adoption, corrected strict-outcome version",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 13,
+    "cell_type": "code",
+    "execution_count": 3,
+    "source_bytes": 36717,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 71437,
+    "purpose": "Trains and freezes neural black-box worlds, recovers mechanics-equivalent symbolic expressions, mines a reusable macro, and tests a held-out channel plus analytic/random controls.",
+    "experiment_membership": "E9 black-box Newtonian law discovery",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 14,
+    "cell_type": "code",
+    "execution_count": 4,
+    "source_bytes": 29607,
+    "output_count": 5,
+    "output_types": {
+      "stream": 4,
+      "display_data": 1
+    },
+    "output_json_bytes": 87600,
+    "purpose": "Trains tiny transformers on a hidden regular language and extracts bounded-certified symbolic DFAs from black-box membership queries, with analytic and constant controls.",
+    "experiment_membership": "E10 tiny-transformer-to-symbolic-DFA extraction",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 15,
+    "cell_type": "code",
+    "execution_count": 6,
+    "source_bytes": 33676,
+    "output_count": 3,
+    "output_types": {
+      "stream": 2,
+      "display_data": 1
+    },
+    "output_json_bytes": 81691,
+    "purpose": "Extracts Mealy machines repeatedly while a neural addition/subtraction world trains, and compares with one-shot extraction from a pretrained network.",
+    "experiment_membership": "E11 evolving neural world, initial single-seed study",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 16,
+    "cell_type": "code",
+    "execution_count": 9,
+    "source_bytes": 52878,
+    "output_count": 5,
+    "output_types": {
+      "stream": 3,
+      "display_data": 2
+    },
+    "output_json_bytes": 229013,
+    "purpose": "Runs the initial single-seed evolving-world main and then a ten-seed dense-checkpoint replication testing canonical waypoints, one-split transitions, and whether exact recovery precedes NN mastery.",
+    "experiment_membership": "E11 evolving neural world plus E12 ten-seed waypoint replication",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 17,
+    "cell_type": "code",
+    "execution_count": 11,
+    "source_bytes": 85306,
+    "output_count": 5,
+    "output_types": {
+      "stream": 4,
+      "display_data": 1
+    },
+    "output_json_bytes": 473875,
+    "purpose": "Paired slow/fast learning-rate, valid-syntax, stepwise extraction study with model-plus-error MDL persistence, exact audits, doubled-cap controls, and dense transition snapshots.",
+    "experiment_membership": "E13 claim-closing valid-syntax stepwise theory revision",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 18,
+    "cell_type": "code",
+    "execution_count": 12,
+    "source_bytes": 86645,
+    "output_count": 1,
+    "output_types": {
+      "error": 1
+    },
+    "output_json_bytes": 478,
+    "purpose": "Deterministic-FP32/opt-in-AMP revision of cell 17 that fails to parse at source line 1562 and therefore yields no experiment results.",
+    "experiment_membership": "E13 reproducibility revision, failed run",
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 19,
+    "cell_type": "code",
+    "execution_count": null,
+    "source_bytes": 0,
+    "output_count": 0,
+    "output_types": {},
+    "output_json_bytes": 0,
+    "purpose": "Empty trailing cell.",
+    "experiment_membership": "none",
+    "scientifically_relevant": false
+  }
+]

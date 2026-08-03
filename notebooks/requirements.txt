@@ -1,0 +1,9 @@
+# Core packages used across the three August 2026 experiment notebooks.
+# The recorded GPU runs used torch 2.11.0+cu128. Install the CUDA-specific
+# wheel appropriate to your platform before using this file when necessary.
+numpy>=2.0,<3
+matplotlib>=3.9,<4
+torch>=2.11,<2.12
+scipy>=1.14,<2
+scikit-learn>=1.5,<2
+jupyterlab>=4.2,<5

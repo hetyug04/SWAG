@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/notebooks/outputs/
 
 # next.js
 /.next/
