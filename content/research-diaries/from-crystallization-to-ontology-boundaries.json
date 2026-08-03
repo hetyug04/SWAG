@@ -3,16 +3,15 @@
   "documentType": "research-diary",
   "slug": "from-crystallization-to-ontology-boundaries",
   "title": "From Crystallization to the Ontology Boundary",
-  "subtitle": "I asked a simple question: when can a machine turn experience into a small, exact theory of its world? Three experiment sets show where this works, where neural hints help, and where the idea breaks.",
-  "excerpt": "A plain-language record of 38 experiment programs on automata learning, symbolic planning, abstraction, ontology discovery, and exact checking. Failed, null, and unfinished results are included because they tell us where the idea stops working.",
+  "subtitle": "When can a machine turn experience into a small, exact theory of its world?",
+  "excerpt": "Thirty-eight experiments on automata learning, symbolic planning, abstraction, ontology discovery, and exact checking.",
   "date": "2026-08-03",
-  "readTime": "28 min read",
+  "readTime": "24 min read",
   "tags": [
     "Research diary",
     "World models",
     "Active learning",
-    "Symbolic abstraction",
-    "Reproducibility"
+    "Symbolic abstraction"
   ],
   "author": {
     "name": "Het",
@@ -20,61 +19,14 @@
   },
   "lede": "The idea was this: ask a world questions, turn its answers into a small theory that can run as code, and repair the theory whenever reality contradicts it. This worked surprisingly well when I gave the learner a clear set of states, a rule language, a reset button, or a precise way to check its answer. Then I removed those supports. The learner could no longer reliably discover the states, recover the transition graph, transfer old rules, or recognize something new. That failure does not erase the earlier results. It tells us exactly what those results depend on.",
   "notebook": {
-    "label": "View the three cleaned notebooks and full scientific records",
+    "label": "View the three notebooks",
     "githubUrl": "https://github.com/hetyug04/SWAG/tree/main/notebooks"
   },
-  "figureProvenance": "The eight figures below are the original PNG files from the notebooks, copied byte-for-byte. I did not redraw or beautify them. Every number comes from saved output, an error trace, machine-readable JSON, or one of these figures. The full cell-by-cell records are in notebooks/records.",
   "entries": [
-    {
-      "id": "preservation-before-interpretation",
-      "navLabel": "Preservation",
-      "label": "Entry 01",
-      "phase": "Audit and cleanup",
-      "title": "Before asking what the experiments meant, I had to find out what had actually run.",
-      "dek": "The notebooks mixed 38 programs, several revisions, joined scripts, stopped runs, and cases where the saved code did not match the saved output. I separated these before drawing conclusions.",
-      "blocks": [
-        {
-          "type": "prose",
-          "markdown": "There were 40 code cells in the three source files; 37 contained code. Two cells each held two complete programs. The true count was therefore **38 experiment programs plus one small artifact-display utility**. There were no Markdown notes explaining the work. Cell numbers jumped around, programs reused the same global names, and many wrote into the same temporary `/content` folders. Most of the 4.8 MB came from long logs and embedded PNG figures.\n\nI kept every nonempty program and its original cell number. I removed saved outputs only after auditing every cell. I added headings and provenance, split the joined programs, and gave each experiment its own relative output folder. The cleaned notebooks record the SHA-256 hash of each original file. The detailed records still contain the full text output, including all 81 settings tested for the V5 gate."
-        },
-        {
-          "type": "stats",
-          "items": [
-            {
-              "value": "3",
-              "label": "experiment sets"
-            },
-            {
-              "value": "38",
-              "label": "standalone experiment programs"
-            },
-            {
-              "value": "0",
-              "label": "recorded outputs silently discarded"
-            },
-            {
-              "value": "6",
-              "label": "narrow source/diagnostic repairs"
-            }
-          ]
-        },
-        {
-          "type": "note",
-          "label": "Evidence rule",
-          "markdown": "Fixing code makes it runnable now; it does not create a result in the past. The deterministic FP32 arithmetic program still has **no completed result** because the archived version could not be parsed. V13 now contains the dtype repair later used successfully in V13.1, but the original V13 run is still recorded as a failure. The stored V6 code contains an export fix, but its old run stopped while writing CSV, so that fix was never tested by the archived execution."
-        },
-        {
-          "type": "status",
-          "title": "Reproducibility scope",
-          "body": "Every program now parses, and the cleaned notebooks keep all recorded settings, seeds, controls, and measurements. Some old GPU runs used AMP, BF16, TF32, cuDNN benchmarking, unpinned packages, hardware-specific branches, or only one seed. For those runs, I do not claim bit-for-bit replay.",
-          "meta": "This is a historical experiment record, not a peer-reviewed paper. Fast and development modes only test whether the code runs; they do not repeat the full experiment."
-        }
-      ]
-    },
     {
       "id": "active-automata-and-reusable-languages",
       "navLabel": "Set I",
-      "label": "Entry 02",
+      "label": "Entry 01",
       "phase": "Active theories and abstraction",
       "title": "Small exact theories could be recovered, but abstraction helped only under the right conditions.",
       "dek": "The first set asks whether contradictions can repair an automaton, whether several worlds can share one description, and whether a neural model's behavior can be turned into symbols.",
@@ -155,7 +107,7 @@
     {
       "id": "crystallized-control-and-open-world-failure",
       "navLabel": "Set II",
-      "label": "Entry 03",
+      "label": "Entry 02",
       "phase": "Planning, validity, and revision",
       "title": "Exact symbolic planning held up, but rule invention could not say, “I do not know.”",
       "dek": "The second set asks whether a fixed symbolic table can plan better than a neural model, detect when its world changes, and decide when to rewrite itself.",
@@ -246,7 +198,7 @@
     {
       "id": "scaling-transfer-and-ontology-collapse",
       "navLabel": "Set III",
-      "label": "Entry 04",
+      "label": "Entry 03",
       "phase": "Scaling and assumption removal",
       "title": "Transfer scaled when the pieces were named in advance. Discovering the pieces from scratch failed.",
       "dek": "The third set pushes the method into language, larger rule spaces, raw observations, exact testing, and programs too numerous to list one by one.",
@@ -338,7 +290,7 @@
     {
       "id": "adversarial-conclusion-and-next-tests",
       "navLabel": "Adversarial pass",
-      "label": "Entry 05",
+      "label": "Entry 04",
       "phase": "Claim discipline",
       "title": "The method is useful under clear conditions. It is not yet an autonomous symbolic scientist.",
       "dek": "The failures, controls, unfinished runs, and supplied interfaces are not footnotes. They define what the positive results mean.",
@@ -376,24 +328,8 @@
               "decisionValue": "This separates stable effects from paths caused by one seed, one GPU, or one numerical mode."
             }
           ]
-        },
-        {
-          "type": "status",
-          "title": "Final evidential status",
-          "body": "The experiments support learning, compression, transfer, and checking in controlled finite worlds. They do not yet support reliable ontology discovery from scratch, unrestricted invention of new concepts, claims about a neural model's hidden internal states, or discovery of scientific laws in the real world.",
-          "meta": "I checked each claim against the source cells, saved outputs, controls, errors, and version differences. The detailed records are published beside the notebooks."
-        },
-        {
-          "type": "quote",
-          "markdown": "When an experiment fails after we remove an assumption, it has not wasted our time. It has told us which assumption was doing the work.",
-          "attribution": "Research synthesis"
         }
       ]
     }
-  ],
-  "footer": [
-    "Het chose the research questions, experimental changes, and interpretation. AI systems helped with implementation, audit, cleanup, adversarial review, and preparation of this diary.",
-    "The cleaned notebooks preserve the source history. Saved outputs were removed only after their scientific content was recorded. No failed or interrupted run is counted as completed evidence.",
-    "The complete cell-by-cell audits and machine-readable manifests are in `notebooks/records/`. When this shorter account leaves out a secondary measurement, those records are the authority."
   ]
 }
