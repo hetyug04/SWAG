@@ -1,0 +1,290 @@
+[
+  {
+    "cell_index": 0,
+    "cell_type": "code",
+    "purpose": "V10.1 Tiny Shakespeare comparison of nanoGPT, GRU, MDL context machine, and calibrated hybrid; run interrupted during neural training.",
+    "experiment_membership": [
+      "V10.1"
+    ],
+    "source_bytes": 65152,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 1109
+      },
+      {
+        "type": "stream",
+        "bytes": 166
+      },
+      {
+        "type": "stream",
+        "bytes": 151
+      },
+      {
+        "type": "error",
+        "bytes": 4553,
+        "ename": "KeyboardInterrupt",
+        "evalue": ""
+      }
+    ],
+    "total_output_bytes": 5979,
+    "scientifically_relevant": true,
+    "notes": "Early training metrics and interruption are relevant; no final crystallization result."
+  },
+  {
+    "cell_index": 1,
+    "cell_type": "code",
+    "purpose": "Completed quotient-MDL active transfer, novelty detection, and MDL promotion experiment over relabeled finite machines.",
+    "experiment_membership": [
+      "V11"
+    ],
+    "source_bytes": 25360,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 2438
+      }
+    ],
+    "total_output_bytes": 2438,
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 2,
+    "cell_type": "code",
+    "purpose": "Empty cell.",
+    "experiment_membership": [],
+    "source_bytes": 0,
+    "outputs": [],
+    "total_output_bytes": 0,
+    "scientifically_relevant": false
+  },
+  {
+    "cell_index": 3,
+    "cell_type": "code",
+    "purpose": "Two complete V12 text8 MDL language-model revisions executed sequentially (1M/3M/10M and A100 1M/10M/30M/90M).",
+    "experiment_membership": [
+      "V12 run A",
+      "V12 run B"
+    ],
+    "source_bytes": 58564,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 6994
+      },
+      {
+        "type": "display_data",
+        "bytes": 160747,
+        "mimes": [
+          "text/plain",
+          "image/png"
+        ]
+      },
+      {
+        "type": "stream",
+        "bytes": 8967
+      },
+      {
+        "type": "display_data",
+        "bytes": 164671,
+        "mimes": [
+          "text/plain",
+          "image/png"
+        ]
+      },
+      {
+        "type": "stream",
+        "bytes": 419
+      }
+    ],
+    "total_output_bytes": 341798,
+    "scientifically_relevant": true,
+    "notes": "Large size is mainly two embedded PNG summaries; second program overwrites first run artifacts."
+  },
+  {
+    "cell_index": 4,
+    "cell_type": "code",
+    "purpose": "Initial V13 neural-quotient implementation; fails during BF16/Float index accumulation.",
+    "experiment_membership": [
+      "V13 failed implementation"
+    ],
+    "source_bytes": 45209,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 588
+      },
+      {
+        "type": "error",
+        "bytes": 8059,
+        "ename": "RuntimeError",
+        "evalue": "index_add_(): self (Float) and source (BFloat16) must have the same scalar type"
+      }
+    ],
+    "total_output_bytes": 8647,
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 5,
+    "cell_type": "code",
+    "purpose": "Completed V13.1 neural-quotient experiment followed by an appended older V13 rerun that is interrupted.",
+    "experiment_membership": [
+      "V13.1 completed",
+      "V13 interrupted rerun"
+    ],
+    "source_bytes": 92943,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 5432
+      },
+      {
+        "type": "display_data",
+        "bytes": 212255,
+        "mimes": [
+          "text/plain",
+          "image/png"
+        ]
+      },
+      {
+        "type": "stream",
+        "bytes": 3393
+      },
+      {
+        "type": "error",
+        "bytes": 8607,
+        "ename": "KeyboardInterrupt",
+        "evalue": ""
+      }
+    ],
+    "total_output_bytes": 229687,
+    "scientifically_relevant": true,
+    "notes": "Large size is mainly one PNG. Completed and interrupted runs must remain separate."
+  },
+  {
+    "cell_index": 6,
+    "cell_type": "code",
+    "purpose": "V13.1 replicate reaching crystallization and proposal-sweep metrics before interruption.",
+    "experiment_membership": [
+      "V13.1 interrupted replicate"
+    ],
+    "source_bytes": 47718,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 3297
+      },
+      {
+        "type": "error",
+        "bytes": 17745,
+        "ename": "KeyboardInterrupt",
+        "evalue": ""
+      }
+    ],
+    "total_output_bytes": 21042,
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 7,
+    "cell_type": "code",
+    "purpose": "Completed V14 ontology-free state/action induction, grammar growth, transfer, and novelty experiment; mostly negative result.",
+    "experiment_membership": [
+      "V14"
+    ],
+    "source_bytes": 42581,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 3109
+      },
+      {
+        "type": "display_data",
+        "bytes": 149843,
+        "mimes": [
+          "text/plain",
+          "image/png"
+        ]
+      },
+      {
+        "type": "stream",
+        "bytes": 1505
+      }
+    ],
+    "total_output_bytes": 154457,
+    "scientifically_relevant": true,
+    "notes": "Large size is mainly embedded PNG; all failed predictions are scientifically important."
+  },
+  {
+    "cell_index": 8,
+    "cell_type": "code",
+    "purpose": "V16 unit experiment for monotone predictive-state discovery using observation-table suffix refinement.",
+    "experiment_membership": [
+      "V16 core"
+    ],
+    "source_bytes": 10786,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 662
+      }
+    ],
+    "total_output_bytes": 662,
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 9,
+    "cell_type": "code",
+    "purpose": "V16.1 neural ranking of conformance counterexamples under exact charged W-method verification.",
+    "experiment_membership": [
+      "V16.1"
+    ],
+    "source_bytes": 28406,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 1881
+      }
+    ],
+    "total_output_bytes": 1881,
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 10,
+    "cell_type": "code",
+    "purpose": "V16.2 20-to-80-bit compositional program calibration comparing Transformer and local MLP proposers with exact/PAC verification.",
+    "experiment_membership": [
+      "V16.2"
+    ],
+    "source_bytes": 14502,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 311
+      },
+      {
+        "type": "stream",
+        "bytes": 3199
+      }
+    ],
+    "total_output_bytes": 3510,
+    "scientifically_relevant": true
+  },
+  {
+    "cell_index": 11,
+    "cell_type": "code",
+    "purpose": "Prints the full V16.2 JSON artifact generated by cell 10, preserving precise metrics, ledger, guarantees, and scope boundary.",
+    "experiment_membership": [
+      "V16.2 artifact dump"
+    ],
+    "source_bytes": 106,
+    "outputs": [
+      {
+        "type": "stream",
+        "bytes": 10719
+      }
+    ],
+    "total_output_bytes": 10719,
+    "scientifically_relevant": true,
+    "notes": "Depends on /content/entropy_ladder_v16_2.json created by cell 10."
+  }
+]
