@@ -1,0 +1,221 @@
+.heartButton {
+  position: relative;
+  display: inline-grid;
+  width: auto;
+  height: 1.25em;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.heartButton:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 0.14em;
+}
+
+.heartImage {
+  display: block;
+  width: auto;
+  height: 1.25em;
+  object-fit: contain;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.heartButton:hover .heartImage,
+.heartButton:focus-visible .heartImage {
+  transform: scale(1.07);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 1000;
+  overflow: hidden;
+  background: #fff;
+  color: #111;
+  clip-path: circle(0 at var(--origin-x) var(--origin-y));
+  opacity: 0;
+  outline: none;
+  transition:
+    clip-path 500ms cubic-bezier(0.72, 0, 0.2, 1),
+    opacity 160ms ease;
+}
+
+.overlay[data-open="true"] {
+  clip-path: circle(150vmax at var(--origin-x) var(--origin-y));
+  opacity: 1;
+}
+
+.escapeButton {
+  position: absolute;
+  top: max(clamp(1.25rem, 3vw, 2.5rem), env(safe-area-inset-top));
+  left: max(clamp(1.25rem, 3vw, 2.5rem), env(safe-area-inset-left));
+  z-index: 20;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  mix-blend-mode: difference;
+  text-transform: lowercase;
+}
+
+.escapeButton:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 0.35rem;
+}
+
+.deck {
+  position: absolute;
+  inset: clamp(4.75rem, 9vh, 7rem) clamp(1.5rem, 8vw, 8rem) clamp(2.5rem, 7vh, 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4rem, 10vw, 10rem);
+  transition:
+    opacity 280ms ease,
+    transform 600ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.overlay[data-mode="inside"] .deck {
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.65);
+}
+
+.tile {
+  display: grid;
+  width: clamp(15rem, 24vw, 22rem);
+  max-width: min(72vw, calc((100dvh - 9rem) * 0.75));
+  border: 0;
+  background: transparent;
+  color: #111;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+}
+
+.tile:focus-visible {
+  outline: none;
+}
+
+.tileFrame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid #111;
+  border-radius: 0;
+  background: #010202;
+  box-shadow: none;
+}
+
+.tile:focus-visible .tileFrame {
+  outline: 1px solid #111;
+  outline-offset: 0.35rem;
+}
+
+.previewImage {
+  object-fit: cover;
+}
+
+.tileTitle {
+  margin-top: 1.25rem;
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  text-align: center;
+}
+
+.interior {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 4;
+  overflow: hidden;
+  background: #010202;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.76);
+  transition:
+    opacity 300ms ease,
+    transform 650ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.overlay[data-mode="inside"] .interior {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.exhibitionFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #010202;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .deck {
+    inset:
+      max(4.25rem, calc(env(safe-area-inset-top) + 3.25rem))
+      max(1.25rem, env(safe-area-inset-right))
+      max(1.5rem, env(safe-area-inset-bottom))
+      max(1.25rem, env(safe-area-inset-left));
+  }
+
+  .tile {
+    width: min(72vw, 18rem, calc((100dvh - 8rem) * 0.75));
+  }
+
+  .tileTitle {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-height: 560px) and (orientation: landscape) {
+  .deck {
+    inset-block: 2.5rem 1rem;
+  }
+
+  .tile {
+    width: min(34vw, calc((100dvh - 5rem) * 0.75));
+  }
+
+  .tileTitle {
+    margin-top: 0.55rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heartImage,
+  .overlay,
+  .deck,
+  .interior {
+    transition-duration: 1ms !important;
+  }
+}

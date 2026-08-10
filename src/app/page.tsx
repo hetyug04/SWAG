@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   BookOpen,
   Code,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 import { papers, projects, repos, blogs } from "@/lib/data";
 import { PaperPreviewCard } from "@/components/PaperPreviewCard";
+import { ExhibitionGallery } from "@/components/ExhibitionGallery";
 
 export default async function Home({
   searchParams,
@@ -65,14 +65,7 @@ export default async function Home({
               className="flex items-center justify-center gap-[0.16em] text-4xl md:text-6xl font-bold text-gray-900 mb-8 tracking-tight"
             >
               <span>i</span>
-              <Image
-                src="/heart-balloon.png"
-                alt=""
-                width={581}
-                height={671}
-                priority
-                className="h-[1.25em] w-auto object-contain"
-              />
+              <ExhibitionGallery />
               <span>GPUs</span>
             </h1>
             <div className="flex flex-wrap justify-center gap-4">
